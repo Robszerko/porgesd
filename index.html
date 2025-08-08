@@ -800,6 +800,27 @@
                     <div id="alphabet-panel"></div>
                 </section>
                 <section id="game-controls-section">
+                    <!-- === MÓDOSÍTOTT SZEKCIÓ KEZDETE === -->
+
+                    <!-- Játékvezérlők (Kerék, Gombok) -->
+                    <div id="wheel-wrapper">
+                        <div id="wheel-pointer"></div>
+                        <svg id="wheel" viewBox="0 0 100 100"></svg>
+                    </div>
+                    <div id="power-meter-container">
+                        <div id="power-meter-bar"></div>
+                    </div>
+                    <div id="host-message">Helló a stúdióban! Kezdéshez küldj meg egy pörgetést!</div>
+                    <div id="action-buttons">
+                        <button id="spin-button" class="action-btn">Pörgetés</button>
+                        <button id="solve-button" class="action-btn">Megfejtem</button>
+                        <button id="transfer-button" class="action-btn">Átutalás</button>
+                        <button id="lotto-button" class="action-btn">Napi Lottó</button>
+                        <button id="nyero21-button" class="action-btn">Nyerő21</button>
+                        <button id="new-game-button" class="action-btn">Új Játék</button>
+                    </div>
+                    
+                    <!-- Játékos Információs Panelek (HUD-ok) -->
                      <div id="all-huds-container">
                         <div id="main-hud" class="player-hud">
                             <div class="hud-label"><span id="millionaire-icon">👑</span><span id="main-hud-label">Összes Zseton</span></div>
@@ -838,22 +859,8 @@
                         <div class="prize-label">Bezsebelt extra</div>
                         <div id="won-prize-name" class="prize-name"></div>
                     </div>
-                    <div id="wheel-wrapper">
-                        <div id="wheel-pointer"></div>
-                        <svg id="wheel" viewBox="0 0 100 100"></svg>
-                    </div>
-                    <div id="power-meter-container">
-                        <div id="power-meter-bar"></div>
-                    </div>
-                    <div id="host-message">Helló a stúdióban! Kezdéshez küldj meg egy pörgetést!</div>
-                    <div id="action-buttons">
-                        <button id="spin-button" class="action-btn">Pörgetés</button>
-                        <button id="solve-button" class="action-btn">Megfejtem</button>
-                        <button id="transfer-button" class="action-btn">Átutalás</button>
-                        <button id="lotto-button" class="action-btn">Napi Lottó</button>
-                        <button id="nyero21-button" class="action-btn">Nyerő21</button>
-                        <button id="new-game-button" class="action-btn">Új Játék</button>
-                    </div>
+                    
+                    <!-- === MÓDOSÍTOTT SZEKCIÓ VÉGE === -->
                 </section>
             </div>
         </div>
@@ -3152,8 +3159,10 @@
                 if(round === 9) segments = [ /* High Stakes */ { label: 'CSŐD', value: 'bankrupt', color: '#37474F' }, { label: '7500', value: 7500, color: '#FFEE58' }, { label: 'FELEZŐ', value: 'halver', color: 'var(--halver-orange)' }, { label: '1500', value: 1500, color: '#F06292' }, { label: 'KÜLÖNDÍJ', value: 'special_prize', color: '#B39DDB' }, { label: '2500', value: 2500, color: '#9CCC65' }, { label: 'CSŐD', value: 'bankrupt', color: '#37474F' }, { label: '4000', value: 4000, color: '#D4E157' }, { label: 'DUPLA/SEMMI', value: 'double_or_nothing', color: '#5C6BC0'}, { label: '3000', value: 3000, color: '#FFB74D' }, { label: '+10000', value: 10000, color: '#42A5F5', isBonus: true }, { label: '5000', value: 5000, color: '#E91E63' } ];
                 if(round === 10) segments = [ /* Rich Wheel */ { label: '+10000', value: 10000, color: '#42A5F5', isBonus: true }, { label: '5000', value: 5000, color: '#FFEE58' }, { label: '4500', value: 4500, color: '#BA68C8' }, { label: '3000', value: 3000, color: '#D4E157' }, { label: 'KÜLÖNDÍJ', value: 'special_prize', color: '#B39DDB' }, { label: '4000', value: 4000, color: '#9CCC65' }, { label: 'INGYEN MÁNHANGZÓ', value: 'free_vowel', color: '#81C784' }, { label: '7500', value: 7500, color: '#FFCA28' }, { label: 'SEGÍTSÉG', value: 'assistance', color: '#64B5F6' }, { label: '2500', value: 2500, color: '#FFB74D' }, { label: '+7500', value: 7500, color: '#42A5F5', isBonus: true }, { label: 'MEGLEPETÉS', value: 'surprise', color: 'var(--surprise-purple)' } ];
                 
-                // Modify based on special prize won
-                if (gameState.specialPrizeWon && round > 1) {
+                // Final modifications, these override previous settings.
+                
+                // JAVÍTÁS: Cserélje le a Különdíj mezőt, ha már megnyerték.
+                if (gameState.specialPrizeWon) {
                     const prizeIndex = segments.findIndex(s => s.value === 'special_prize');
                     if (prizeIndex !== -1) segments[prizeIndex] = { label: '2000', value: 2000, color: '#4DB6AC' };
                 }
@@ -3829,7 +3838,7 @@
                         handleDoubleOrNothing();
                         break;
                     case 'special_prize':
-                        handleSpecialPrize();
+                        await handleSpecialPrize();
                         break;
                     case 'free_vowel':
                         gameState.hasFreeVowel = true;
@@ -3912,12 +3921,23 @@
             }
 
             async function handleSpecialPrize() {
-                gameState.specialPrizeWon = true; 
-                
                 const availablePrizes = SPECIAL_PRIZES.filter(p => !gameState.wonPrizes.includes(p.name));
-                const prize = availablePrizes.length > 0 ? availablePrizes[Math.floor(Math.random() * availablePrizes.length)] : SPECIAL_PRIZES[0];
+                
+                // JAVÍTÁS: Ha minden különdíjat megnyert a játékos, adjon pénzt helyette és lépjen ki.
+                if (availablePrizes.length === 0) {
+                    const cashAward = 50000;
+                    gameState.roundWinnings += cashAward;
+                    updateHostMessage(`Már az összes különdíjat bezsebelted! Gratulálunk! Jutalmad helyette <strong>${cashAward.toLocaleString('hu-HU')} Ft</strong>!`, true);
+                    gameState.specialPrizeWon = true; // Győződjünk meg róla, hogy a kerék frissül.
+                    endTurn();
+                    return;
+                }
+                
+                // Ha van még elérhető díj, a normál logika fut le.
+                const prize = availablePrizes[Math.floor(Math.random() * availablePrizes.length)];
                 const cashValue = Math.floor(prize.value / 2);
-
+                
+                // A 'specialPrizeWon' flaget csak a választás UTÁN állítjuk be, hogy a kerék a következő körben frissüljön.
                 try {
                     const choice = await showModal({
                         title: 'Különdíj!',
@@ -3937,6 +3957,8 @@
                      gameState.roundWinnings += cashValue;
                      updateHostMessage(`A biztos pénzt választottad, <strong>${cashValue.toLocaleString('hu-HU')}&nbsp;Ft</strong> jóváírva!`, true);
                 }
+                
+                gameState.specialPrizeWon = true; // Most állítjuk be, hogy a következő körre biztosan lecserélődjön a mező.
                 endTurn();
             }
             
@@ -4795,4 +4817,4 @@
         });
     </script>
 </body>
-</html>```
+</html>
