@@ -329,6 +329,16 @@
             justify-content: space-around; align-items: center; gap: 15px;
         }
 
+        /* Új konténerek stílusai */
+        #player-info-wrapper, #game-interaction-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+        }
+
+
         #wheel-wrapper {
             position: relative; width: clamp(280px, 40vh, 380px); aspect-ratio: 1 / 1;
         }
@@ -724,6 +734,7 @@
             margin-left: 10px; flex-shrink: 0;
         }
 
+        /* Responsive Layout Switch */
         @media (max-width: 900px) {
             body { padding: 10px; }
             header { flex-direction: column; gap: 5px; }
@@ -738,6 +749,17 @@
             #nyero21-joker { width: 100px; opacity: 0.2; }
             .lotto-number { width: 35px; height: 35px; }
         }
+
+        /* === ÚJ CSS SZABÁLY ASZTALI NÉZETHEZ === */
+        @media (min-width: 901px) {
+            #player-info-wrapper {
+                order: 1; /* HUD-ok megjelenítése elsőként */
+            }
+            #game-interaction-wrapper {
+                order: 2; /* Kerék és gombok megjelenítése másodikként */
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -800,67 +822,71 @@
                     <div id="alphabet-panel"></div>
                 </section>
                 <section id="game-controls-section">
-                    <!-- === MÓDOSÍTOTT SZEKCIÓ KEZDETE === -->
+                    
+                    <!-- === MÓDOSÍTOTT HTML SZERKEZET KEZDETE === -->
+                    <!-- A mobil nézet az alapértelmezett, ezért az interakciós blokk van elöl a kódban -->
+                    
+                    <div id="game-interaction-wrapper">
+                        <div id="wheel-wrapper">
+                            <div id="wheel-pointer"></div>
+                            <svg id="wheel" viewBox="0 0 100 100"></svg>
+                        </div>
+                        <div id="power-meter-container">
+                            <div id="power-meter-bar"></div>
+                        </div>
+                        <div id="host-message">Helló a stúdióban! Kezdéshez küldj meg egy pörgetést!</div>
+                        <div id="action-buttons">
+                            <button id="spin-button" class="action-btn">Pörgetés</button>
+                            <button id="solve-button" class="action-btn">Megfejtem</button>
+                            <button id="transfer-button" class="action-btn">Átutalás</button>
+                            <button id="lotto-button" class="action-btn">Napi Lottó</button>
+                            <button id="nyero21-button" class="action-btn">Nyerő21</button>
+                            <button id="new-game-button" class="action-btn">Új Játék</button>
+                        </div>
+                    </div>
 
-                    <!-- Játékvezérlők (Kerék, Gombok) -->
-                    <div id="wheel-wrapper">
-                        <div id="wheel-pointer"></div>
-                        <svg id="wheel" viewBox="0 0 100 100"></svg>
-                    </div>
-                    <div id="power-meter-container">
-                        <div id="power-meter-bar"></div>
-                    </div>
-                    <div id="host-message">Helló a stúdióban! Kezdéshez küldj meg egy pörgetést!</div>
-                    <div id="action-buttons">
-                        <button id="spin-button" class="action-btn">Pörgetés</button>
-                        <button id="solve-button" class="action-btn">Megfejtem</button>
-                        <button id="transfer-button" class="action-btn">Átutalás</button>
-                        <button id="lotto-button" class="action-btn">Napi Lottó</button>
-                        <button id="nyero21-button" class="action-btn">Nyerő21</button>
-                        <button id="new-game-button" class="action-btn">Új Játék</button>
-                    </div>
-                    
-                    <!-- Játékos Információs Panelek (HUD-ok) -->
-                     <div id="all-huds-container">
-                        <div id="main-hud" class="player-hud">
-                            <div class="hud-label"><span id="millionaire-icon">👑</span><span id="main-hud-label">Összes Zseton</span></div>
-                            <div id="score-display">0 Ft</div>
-                        </div>
-                        <div id="hourly-hud" class="player-hud">
-                            <div class="hud-label">Aktuális menet</div>
-                            <div id="hourly-winnings-display">0 Ft</div>
-                        </div>
-                         <div id="round-winnings-hud" class="player-hud">
-                            <div class="hud-label">Ebben a körben</div>
-                            <div id="round-winnings-display">0 Ft</div>
-                        </div>
-                         <div id="lotto-prize-hud" class="player-hud" style="display: none;">
-                            <div class="hud-label">☘️ Aktív Bónuszok</div>
-                            <div id="lotto-prize-label">Megtekintés</div>
-                            <div id="lotto-prize-count">0</div>
-                        </div>
-                        <div id="prize-chest-hud" class="player-hud" style="display: none;">
-                            <div class="hud-label">
-                               <svg class="prize-chest-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20 8H4C2.89543 8 2 8.89543 2 10V18C2 19.1046 2.89543 20 4 20H20C21.1046 20 22 19.1046 22 18V10C22 8.89543 21.1046 8 20 8Z" fill="#a97e41"/>
-                                <path d="M20 8H4C2.89543 8 2 8.89543 2 10V18C2 19.1046 2.89543 20 4 20H20C21.1046 20 22 19.1046 22 18V10C22 8.89543 21.1046 8 20 8Z" stroke="#6e5127" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M16 8V6C16 4.89543 15.1046 4 14 4H10C8.89543 4 8 4.89543 8 6V8" stroke="#6e5127" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M12 12V16" stroke="#6e5127" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M3 14H21" stroke="#d4ac0d" stroke-width="1.5"/>
-                                </svg>
-                                <span>Nyereményláda</span>
+                    <div id="player-info-wrapper">
+                        <div id="all-huds-container">
+                            <div id="main-hud" class="player-hud">
+                                <div class="hud-label"><span id="millionaire-icon">👑</span><span id="main-hud-label">Összes Zseton</span></div>
+                                <div id="score-display">0 Ft</div>
                             </div>
-                            <div id="prize-chest-label">Megtekintés</div>
-                            <div id="prize-chest-count">0</div>
+                            <div id="hourly-hud" class="player-hud">
+                                <div class="hud-label">Aktuális menet</div>
+                                <div id="hourly-winnings-display">0 Ft</div>
+                            </div>
+                             <div id="round-winnings-hud" class="player-hud">
+                                <div class="hud-label">Ebben a körben</div>
+                                <div id="round-winnings-display">0 Ft</div>
+                            </div>
+                             <div id="lotto-prize-hud" class="player-hud" style="display: none;">
+                                <div class="hud-label">☘️ Aktív Bónuszok</div>
+                                <div id="lotto-prize-label">Megtekintés</div>
+                                <div id="lotto-prize-count">0</div>
+                            </div>
+                            <div id="prize-chest-hud" class="player-hud" style="display: none;">
+                                <div class="hud-label">
+                                   <svg class="prize-chest-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20 8H4C2.89543 8 2 8.89543 2 10V18C2 19.1046 2.89543 20 4 20H20C21.1046 20 22 19.1046 22 18V10C22 8.89543 21.1046 8 20 8Z" fill="#a97e41"/>
+                                    <path d="M20 8H4C2.89543 8 2 8.89543 2 10V18C2 19.1046 2.89543 20 4 20H20C21.1046 20 22 19.1046 22 18V10C22 8.89543 21.1046 8 20 8Z" stroke="#6e5127" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16 8V6C16 4.89543 15.1046 4 14 4H10C8.89543 4 8 4.89543 8 6V8" stroke="#6e5127" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 12V16" stroke="#6e5127" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M3 14H21" stroke="#d4ac0d" stroke-width="1.5"/>
+                                    </svg>
+                                    <span>Nyereményláda</span>
+                                </div>
+                                <div id="prize-chest-label">Megtekintés</div>
+                                <div id="prize-chest-count">0</div>
+                            </div>
+                        </div>
+                         <div id="main-prize-progress"></div>
+                        <div id="won-prize-container">
+                            <div class="prize-label">Bezsebelt extra</div>
+                            <div id="won-prize-name" class="prize-name"></div>
                         </div>
                     </div>
-                     <div id="main-prize-progress"></div>
-                    <div id="won-prize-container">
-                        <div class="prize-label">Bezsebelt extra</div>
-                        <div id="won-prize-name" class="prize-name"></div>
-                    </div>
-                    
-                    <!-- === MÓDOSÍTOTT SZEKCIÓ VÉGE === -->
+
+                    <!-- === MÓDOSÍTOTT HTML SZERKEZET VÉGE === -->
                 </section>
             </div>
         </div>
@@ -1077,13 +1103,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             const allPuzzles = [
                 { category: "Tudomány és Feltalálók", puzzle: "NEUMANN JÁNOS", hints: ["A modern számítógépek működési elveinek megalkotója.", "A játékelmélet egyik atyja."] },
-    { category: "Tudomány és Feltalálók", puzzle: "SZENT-GYÖRGYI ALBERT", hints: ["Nobel-díjas magyar orvos, biokémikus.", "Izolálta a C-vitamint a paprikából."] },
-    { category: "Tudomány és Feltalálók", puzzle: "TELLER EDE", hints: ["A hidrogénbomba atyjaként ismert.", "Amerikában élt és dolgozott fizikus."] },
-    { category: "Tudomány és Feltalálók", puzzle: "GÁBOR DÉNES", hints: ["A holográfia feltalálásáért kapott Nobel-díjat.", "Találmánya a 3D képalkotás alapja."] },
-    { category: "Tudomány és Feltalálók", puzzle: "BÍRÓ LÁSZLÓ JÓZSEF", hints: ["A golyóstoll feltalálója.", "Találmánya forradalmasította az írást."] },
-    { category: "Történelem", puzzle: "HONFOGLALÁS", hints: ["A magyar törzsek bejövetele a Kárpát-medencébe.", "895-ben történt esemény."] },
-    { category: "Történelem", puzzle: "VÉGVÁRI CSATÁK", hints: ["A török elleni küzdelmek időszaka.", "Eger és Szigetvár híres helyszínei."] },
-    { category: "Tudomány és Feltalálók", puzzle: "NEUMANN JÁNOS", hints: ["A modern számítógépek működési elveinek megalkotója.", "A játékelmélet egyik atyja."] },
     { category: "Tudomány és Feltalálók", puzzle: "SZENT-GYÖRGYI ALBERT", hints: ["Nobel-díjas magyar orvos, biokémikus.", "Izolálta a C-vitamint a paprikából."] },
     { category: "Tudomány és Feltalálók", puzzle: "TELLER EDE", hints: ["A hidrogénbomba atyjaként ismert.", "Amerikában élt és dolgozott fizikus."] },
     { category: "Tudomány és Feltalálók", puzzle: "GÁBOR DÉNES", hints: ["A holográfia feltalálásáért kapott Nobel-díjat.", "Találmánya a 3D képalkotás alapja."] },
