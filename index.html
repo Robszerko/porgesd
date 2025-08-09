@@ -43,11 +43,41 @@
             color: var(--font-color-light);
             text-rendering: optimizeLegibility;
             transition: background 0.5s ease;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes sparkle {
+            0% { transform: translateY(0) scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
         }
 
         body.sunday-special {
-             background-image: radial-gradient(circle, #673AB7 0%, #311B92 80%);
+             background-color: #1A237E;
+             background-image:
+                radial-gradient(ellipse at 80% 20%, rgba(255, 215, 0, 0.25) 0%, transparent 40%),
+                radial-gradient(ellipse at 20% 80%, rgba(103, 58, 183, 0.4) 0%, transparent 50%),
+                linear-gradient(160deg, #1A237E 0%, #311B92 100%);
         }
+
+        body.sunday-special::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: transparent;
+            box-shadow:
+                -15vw 20vh 2px 1px #FFD700, 10vw 40vh 3px 1px #FFD700,
+                30vw 90vh 2px 0px #FFD700, 50vw 10vh 2px 1px #FFD700,
+                70vw 70vh 3px 1px #FFD700, 90vw 30vh 2px 1px #FFD700,
+                -5vw 80vh 2px 0px #FFD700, 40vw 55vh 3px 0px #FFD700;
+            animation: sparkle 25s linear infinite;
+        }
+
 
         header {
             width: 100%;
@@ -559,14 +589,15 @@
         #rules-container ul { list-style-type: none; padding: 0; }
         #rules-container li { margin-bottom: 15px; padding-left: 35px; position: relative; line-height: 1.5; font-size: 1rem; }
         #rules-container li::before {
+            content: '🎯';
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             font-size: 1.5rem; position: absolute; left: 0; top: 0;
         }
-        #rules-container li.goal::before { content: '🎯'; }
         #rules-container li.gameplay::before { content: '🔄'; }
         #rules-container li.lotto::before { content: '🎟️'; }
         #rules-container li.dynamic-wheel::before { content: '✨'; }
         #rules-container li.minigame::before { content: '🃏'; }
+        #rules-container li.prizes::before { content: '🎁'; }
         #rules-container li.week::before { content: '🗓️'; }
         #rules-container li.sunday::before { content: '🌟'; }
         #rules-container li.main-prize::before { content: '🏆'; }
@@ -729,7 +760,7 @@
         #nyero21-result-message.lose { color: var(--lose-red); }
 
         /* LOTTO STYLES */
-        #lotto-modal .modal-content { max-width: 540px; }
+        #lotto-modal .modal-content { max-width: 600px; }
         #lotto-betting-area { position: relative; }
         #lotto-ticket-svg {
             position: absolute;
@@ -750,12 +781,13 @@
             margin-bottom: 15px;
             text-shadow: none;
         }
-        #lotto-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin: 20px 0; }
+        #lotto-grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 8px; margin: 20px 0; }
         .lotto-number {
-            width: 40px; height: 40px; display: flex; justify-content: center; align-items: center;
+            width: 38px; height: 38px; display: flex; justify-content: center; align-items: center;
             background-color: #C5CAE9; color: var(--font-color-dark);
             border-radius: 50%; font-weight: bold; cursor: pointer;
             border: 2px solid transparent; transition: all 0.2s ease;
+            font-size: 0.9rem;
         }
         .lotto-number:hover { background-color: var(--accent-gold); }
         .lotto-number.selected {
@@ -805,12 +837,32 @@
             #game-area { flex-direction: column; align-items: center; gap: 25px; }
             #puzzle-section, #game-controls-section { width: 100%; max-width: 450px; }
             #rules-container h2 { font-size: 1.8rem; } #rules-container li { font-size: 0.9rem; }
-            #all-huds-container { flex-direction: column; align-items: center; }
-            .player-hud { width: 90%; max-width: 350px; }
-            #nyero21-joker { width: 100px; opacity: 0.2; }
-            .lotto-number { width: 35px; height: 35px; }
+            #lotto-grid { gap: 5px; }
+            .lotto-number { width: 32px; height: 32px; }
             #wheel-center-button { width: 70px; height: 70px; font-size: 0.9rem; }
             #booster-svg circle { stroke-width: 7; }
+
+            /* NEW MOBILE LAYOUT ORDERING */
+            #game-controls-section {
+                display: flex;
+                flex-direction: column;
+            }
+
+            #player-info-wrapper {
+                order: 2; /* Move HUDs section to the bottom */
+                display: flex;
+                flex-direction: column;
+            }
+
+            #game-interaction-wrapper {
+                order: 1; /* Move Wheel/Buttons section up */
+            }
+
+            /* Re-order children inside player-info-wrapper */
+            #all-huds-container { order: 2; margin-top: 15px; flex-direction: column; align-items: center; }
+            .player-hud { width: 90%; max-width: 350px; }
+            #main-prize-progress { order: 1; margin-bottom: 10px; }
+            #won-prize-container { order: 3; }
         }
 
         /* ASZTALI NÉZET (901px felett) */
@@ -856,7 +908,6 @@
             #host-message { display: none; }
             #host-message-desktop { display: flex; }
             
-            /* MODIFICATION: Hide the entire mobile button container on desktop */
             #action-buttons {
                 display: none;
             }
@@ -931,6 +982,7 @@
                 </section>
                 <section id="game-controls-section">
                     <div id="player-info-wrapper">
+                        <div id="main-prize-progress"></div>
                         <div id="all-huds-container">
                             <div id="main-hud" class="player-hud">
                                 <div class="hud-label"><span id="millionaire-icon">👑</span><span id="main-hud-label">Összes Zseton</span></div>
@@ -964,7 +1016,6 @@
                                 <div id="prize-chest-count">0</div>
                             </div>
                         </div>
-                         <div id="main-prize-progress"></div>
                         <div id="won-prize-container">
                             <div class="prize-label">Bezsebelt extra</div>
                             <div id="won-prize-name" class="prize-name"></div>
@@ -1004,17 +1055,19 @@
         <h2>Játékszabályok</h2>
         <ul>
             <li class="goal"><strong>Cél:</strong> Gyűjtsd a legtöbb zsetont a feladványok megfejtésével! Pörgess a szerencsekeréken, tippelj betűket, és fejtsd meg a rejtvényt, mielőtt csődbe mész!</li>
-            <li class="gameplay"><strong>Játékmenet:</strong> Minden órában 10 feladvány vár. Pörgess, hogy meghatározd a következő mássalhangzó értékét. Ha a tipped helyes, annyiszor kapod meg az összeget, ahányszor a betű szerepel. Magánhangzót a körben gyűjtött pénzedből vásárolhatsz.</li>
-            <li class="lotto"><strong>Napi Lottó:</strong> Vásárolj lottószelvényt a megnyert zsetonjaidból! Adj meg 5 számot, és ha este 7-kor a tieid a nyerők, exkluzív, egész hétre szóló bónuszokat nyerhetsz, mint pl. CSŐD-védelem vagy dupla pénz!</li>
-            <li class="dynamic-wheel"><strong>Dinamikus Kerék:</strong> A kerék tartalma minden fordulóban változik! Ahogy haladsz előre, egyre nagyobb nyeremények, de új kihívások is megjelennek, mint a <strong>Felező</strong> vagy a <strong>Dupla vagy Semmi</strong>.</li>
-            <li class="minigame"><strong>Nyerő21 Minijáték:</strong> Ha épp nem te pörgetsz, vagy csak egy kis extra izgalomra vágysz, próbáld ki a Nyerő21-et! Tegyél fel a zsetonjaidból, és húzz lapokat. Ha eléred a 21-et, a téted ötszörösét nyered! De vigyázz, ha túlléped, a tét elvész!</li>
-            <li class="week"><strong>Heti Kassza:</strong> Minden, amit hétköznap nyersz, a Heti Kasszádba kerül. Ezt a pénzt vasárnap teszed kockára.</li>
-            <li class="sunday"><strong>Prémium Vasárnap:</strong> Vasárnap a Heti Kasszádból tett tétekkel játszol. A cél, hogy a nap végére te gyűjtsd a legtöbb pénzt és elnyerd a <strong>Hét Milliomosa</strong> címet!</li>
-            <li class="main-prize"><strong>Fődíj Játék:</strong> Ha egy óra alatt legalább 150.000 Ft-ot gyűjtesz, az óra végén esélyt kapsz a Fődíj Játékra! Itt az óra alatt gyűjtött pénzedet kockáztatva, egyetlen feladvány megfejtésével megduplázhatod azt!</li>
-            <li class="millionaire"><strong>A Hét Milliomosa:</strong> A játékos, aki vasárnap estére a legmagasabb egyenleggel zár, elnyeri "A Hét Milliomosa" címet, ami a következő hétre extra bónuszokat és előnyöket biztosít számára.</li>
+            <li class="gameplay"><strong>Játékmenet:</strong> Minden órában 10, egyre nehezedő feladvány vár. Pörgess a keréken, ami meghatározza a következő mássalhangzó-tipped értékét. Ha a betű szerepel a táblán, annyiszor kapod meg a pörgetett összeget, ahányszor a betű előfordul. A körben gyűjtött zsetonjaidból vásárolhatsz magánhangzót (az áruk egyre nő), vagy megkísérelheted a megfejtést, amiért extra bónusz zseton jár.</li>
+            <li class="lotto"><strong>Napi Lottó:</strong> Minden nap este 7-ig vásárolhatsz lottószelvényt a megnyert zsetonjaidból. Adj meg <strong>5 számot a 45-ből!</strong> A sorsolás minden este 7-kor történik. A nyeremények a találatok számától függnek, és a Nyereményládádba kerülnek, ahonnan aktiválhatod őket. A nyeremények lehetnek több napig vagy akár a hét végéig tartó bónuszok, mint például CSŐD-védelem, dupla pénz, vagy a főnyeremény, a LottóBajnok cím!</li>
+            <li class="dynamic-wheel"><strong>Dinamikus Kerék:</strong> A kerék tartalma minden fordulóban változhat! Ahogy haladsz előre, egyre nagyobb nyeremények, de új mezők is megjelennek. Ilyenek például a <strong>CSŐD</strong> (elveszti a körös pénzed), <strong>Felező</strong> (felezi a körös pénzed), <strong>Dupla vagy Semmi</strong> (kockáztathatod a körös pénzed egy betűtippel), <strong>Különdíj</strong> (értékes tárgynyeremény vagy annak pénzbeli megfelelője), és a <strong>Meglepetés</strong> (egy véletlenszerű pozitív vagy negatív esemény).</li>
+            <li class="minigame"><strong>Nyerő21 Minijáték:</strong> Ha épp nem te pörgetsz, vagy csak egy kis extra izgalomra vágysz, próbáld ki a Nyerő21-et! Tegyél fel a zsetonjaidból, és húzz lapokat egy 10 lapos (2-11 értékű) pakliból. Ha a lapjaid összege eléri a 21-et, a téted ötszörösét nyered! Ha az összeg 18 és 20 között van, a téted duplája jár vissza. De vigyázz, ha túlléped a 21-et, a tét elvész! Óránként korlátozott számban játszhatsz.</li>
+            <li class="prizes"><strong>Bónuszok és Nyeremények:</strong> A játék során többféle bónuszt szerezhetsz. A Lottón nyert jutalmak a <strong>Nyereményládába</strong> kerülnek, ahonnan manuálisan kell aktiválnod őket. Az aktivált bónuszok egy ideig (pl. 24 óráig vagy a hét végéig) extra előnyöket adnak. A keréken pörgethető <strong>Különdíj</strong> pedig egy azonnali választási lehetőséget kínál egy értékes tárgy és a készpénz között.</li>
+            <li class="week"><strong>Heti Kassza:</strong> Minden, amit hétköznap (hétfőtől szombatig) nyersz, a Heti Kasszádba kerül. Ezt a pénzt vasárnap teszed kockára.</li>
+            <li class="sunday"><strong>Prémium Vasárnap:</strong> Vasárnap a Heti Kasszádból tett tétekkel játszol. Minden vasárnapi feladvány előtt a Heti Kasszádból kell tétet megtenned. A cél, hogy a nap végére minél többet gyűjts és elnyerd a <strong>Hét Milliomosa</strong> címet!</li>
+            <li class="main-prize"><strong>Fődíj Játék:</strong> Ha egy órás játékblokk végére (a 10. feladvány után) legalább 150.000 Ft-ot gyűjtöttél az adott órában, esélyt kapsz a Fődíj Játékra! Itt az óra alatt gyűjtött teljes pénzedet kockáztatva, egyetlen fődíj-feladvány megfejtésével megduplázhatod azt! A játékhoz ki kell választanod 5 mássalhangzót és 1 magánhangzót, majd 30 másodperced van a megfejtésre. Ha nem gyűlt össze a limit, de a teljes vagyonodból ki tudod pótolni a hiányzó összeget, akkor is játszhatsz.</li>
+            <li class="millionaire"><strong>A Hét Milliomosa:</strong> Az a játékos, aki a vasárnapi játék végére a legmagasabb egyenleggel zár (minimum 1.000.000 Ft felett), elnyeri "A Hét Milliomosa" címet. Ez a cím a teljes következő hétre exkluzív bónuszokat és előnyöket biztosít számára a játékban.</li>
             <li class="exit"><strong>Kilépés:</strong> Ha egy órán belül kilépsz a játékból, majd visszatérsz, a második kilépésnél az adott órában szerzett összes nyereményed elvész. Gondold meg jól!</li>
         </ul>
     </div>
+
 
     <!-- Modális ablakok -->
 
@@ -1107,7 +1160,7 @@
                  <div id="lotto-betting-area" style="display: none;">
                     <svg id="lotto-ticket-svg" viewBox="0 0 100 150" preserveAspectRatio="none"><path d="M0 5 Q 0 0 5 0 H95 Q 100 0 100 5 V145 Q 100 150 95 150 H5 Q 0 150 0 145 V5 Z" fill="#E8EAF6" stroke="#BDBDBD" stroke-width="0.5"></path><path d="M0 40 L100 40 M20 0 V40 M80 0 V40" stroke="#CFD8DC" stroke-width="0.5" stroke-dasharray="2"></path></svg>
                     <div id="lotto-ticket-content">
-                        <p>Válassz ki 5 számot a 35-ből! <br>A szelvény ára: <strong>5.000 Ft</strong></p>
+                        <p>Válassz ki 5 számot a 45-ből! <br>A szelvény ára: <strong>5.000 Ft</strong></p>
                         <div id="lotto-selected-display">Nyerőszámaid: -</div>
                         <div id="lotto-grid"></div>
                         <div class="modal-buttons">
@@ -1157,6 +1210,19 @@
     { category: "Történelem", puzzle: "RENDSZERVÁLTÁS", hints: ["A szocialista rendszer vége Magyarországon.", "1989-ben zajlott le."] },
     { category: "Irodalom", puzzle: "A PÁL UTCAI FIÚK", hints: ["Molnár Ferenc ifjúsági regénye.", "A grundért folyik a harc benne."] },
     { category: "Irodalom", puzzle: "EGRI CSILLAGOK", hints: ["Gárdonyi Géza történelmi regénye.", "Az 1552-es egri ostromról szól."] },
+    { category: "Tudomány és Feltalálók", puzzle: "NEUMANN JÁNOS", hints: ["A modern számítógépek működési elveinek megalkotója.", "A játékelmélet egyik atyja."] },
+    { category: "Tudomány és Feltalálók", puzzle: "SZENT-GYÖRGYI ALBERT", hints: ["Nobel-díjas magyar orvos, biokémikus.", "Izolálta a C-vitamint a paprikából."] },
+    { category: "Tudomány és Feltalálók", puzzle: "TELLER EDE", hints: ["A hidrogénbomba atyjaként ismert.", "Amerikában élt és dolgozott fizikus."] },
+    { category: "Tudomány és Feltalálók", puzzle: "GÁBOR DÉNES", hints: ["A holográfia feltalálásáért kapott Nobel-díjat.", "Találmánya a 3D képalkotás alapja."] },
+    { category: "Tudomány és Feltalálók", puzzle: "BÍRÓ LÁSZLÓ JÓZSEF", hints: ["A golyóstoll feltalálója.", "Találmánya forradalmasította az írást."] },
+    { category: "Történelem", puzzle: "HONFOGLALÁS", hints: ["A magyar törzsek bejövetele a Kárpát-medencébe.", "895-ben történt esemény."] },
+    { category: "Történelem", puzzle: "VÉGVÁRI CSATÁK", hints: ["A török elleni küzdelmek időszaka.", "Eger és Szigetvár híres helyszínei."] },
+    { category: "Tudomány és Feltalálók", puzzle: "NEUMANN JÁNOS", hints: ["A modern számítógépek működési elveinek megalkotója.", "A játékelmélet egyik atyja."] },
+    { category: "Tudomány és Feltalálók", puzzle: "SZENT-GYÖRGYI ALBERT", hints: ["Nobel-díjas magyar orvos, biokémikus.", "Izolálta a C-vitamint a paprikából."] },
+    { category: "Tudomány és Feltalálók", puzzle: "TELLER EDE", hints: ["A hidrogénbomba atyjaként ismert.", "Amerikában élt és dolgozott fizikus."] },
+    { category: "Tudomány és Feltalálók", puzzle: "GÁBOR DÉNES", hints: ["A holográfia feltalálásáért kapott Nobel-díjat.", "Találmánya a 3D képalkotás alapja."] },
+    { category: "Tudomány és Feltalálók", puzzle: "BÍRÓ LÁSZLÓ JÓZSEF", hints: ["A golyóstoll feltalálója.", "Találmánya forradalmasította az írást."] },
+    { category: "Történelem", puzzle: "HONFOGLALÁS", hints: ["A magyar törzsek bejövetele a Kárpát-medencébe.", "895-ben történt esemény."] },
     { category: "Irodalom", puzzle: "AZ ARANY EMBER", hints: ["Jókai Mór regénye.", "Főhőse Tímár Mihály."] },
     { category: "Irodalom", puzzle: "BÁNK BÁN", hints: ["Katona József drámája.", "A leghíresebb magyar történelmi tragédia."] },
     { category: "Irodalom", puzzle: "JÁNOS VITÉZ", hints: ["Petőfi Sándor elbeszélő költeménye.", "Kukorica Jancsi és Iluska története."] },
@@ -2669,6 +2735,7 @@
     { category: "Fődíj Feladvány", puzzle: "BOHEMIAN RHAPSODY A QUEEN EGYÜTTES", hints: [] },
     { category: "Fődíj Feladvány", puzzle: "WOLFGANG AMADEUS MOZART", hints: [] },
             ];
+
             
 
            const SPECIAL_PRIZES = [
@@ -2720,7 +2787,7 @@
             const MINIGAME_PLAYS_PER_HOUR = 10;
             const LOTTO_COST = 5000;
             const MAX_LOTTO_TICKETS_PER_DAY = 5;
-            const LOTTO_NUM_RANGE = 35;
+            const LOTTO_NUM_RANGE = 45;
             const LOTTO_PRIZES = {
                 1: { id: 'one_hit_wonder', name: '1 Találat Bónusz', duration: '24h', description: '24 órás CSŐD védelem + 1 ingyen magánhangzó minden feladványban.' },
                 2: { id: 'two_hit_reveal', name: 'Könnyített Kezdés', duration: 'weekly', description: 'A hét végéig 2 ajándék betű a 8 karakternél hosszabb feladványoknál.' },
@@ -4661,7 +4728,9 @@
                 todaysTickets.push({ numbers: lottoState.selectedNumbers.sort((a,b) => a-b), timestamp: new Date().toLocaleTimeString('hu-HU') });
                 localStorage.setItem(`lottoTickets_${todayStr}`, JSON.stringify(todaysTickets));
                 
-                setTimeout(() => closeModal('lotto-modal'), 500);
+                lottoInfoArea.style.display = 'block';
+                lottoBettingArea.style.display = 'none';
+                launchLotto(); // Refresh the lotto modal view
             }
             
             function checkForLottoWinnings() {
@@ -4751,7 +4820,7 @@
             [nyero21Button, nyero21ButtonDesktop].forEach(btn => btn.addEventListener('click', launchNyero21));
             
             lottoBuyTicketBtn.addEventListener('click', showLottoBettingView);
-            lottoCancelBtn.addEventListener('click', () => closeModal('lotto-modal', false));
+            lottoCancelBtn.addEventListener('click', () => lottoModal.classList.remove('visible'));
             lottoCancelBetBtn.addEventListener('click', () => {
                 lottoBettingArea.style.display = 'none';
                 lottoInfoArea.style.display = 'block';
