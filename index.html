@@ -1016,22 +1016,20 @@
         </ul>
     </div>
 
-    <!-- JAVÍTÁS: A HIÁNYZÓ MODÁLIS ABLAKOK HOZZÁADÁSA -->
+    <!-- Modális ablakok -->
 
-    <!-- Általános célú modális ablak a megfejtéshez és egyéb üzenetekhez -->
     <div id="custom-modal" class="modal-overlay">
         <div class="modal-content">
             <h3 id="custom-modal-title">Megfejtés</h3>
             <p id="custom-modal-text">Na, mi a megfejtés?</p>
             <input id="solve-input" type="text" class="modal-input" placeholder="ÍRD BE A MEGFEJTÉST...">
-            <div class="modal-buttons">
+            <div class="modal-buttons" id="custom-modal-buttons">
                 <!-- A gombok dinamikusan generálódnak JavaScriptből -->
             </div>
         </div>
     </div>
     
-    <!-- Fődíj játék modális ablaka -->
-    <div id="main-prize-modal" class="modal-overlay">
+    <div id="main-prize-modal">
          <h2 id="main-prize-title">Fődíj Játék</h2>
          <h3 id="main-prize-category">Fődíj Kategória</h3>
          <div id="main-prize-board"></div>
@@ -1046,7 +1044,6 @@
          </div>
     </div>
 
-    <!-- Nyerő21 minijáték modális ablaka -->
     <div id="nyero21-modal" class="modal-overlay">
         <div class="modal-content">
             <div id="nyero21-content-wrapper">
@@ -1091,7 +1088,6 @@
         </div>
     </div>
     
-    <!-- Napi Lottó modális ablak -->
     <div id="lotto-modal" class="modal-overlay">
         <div class="modal-content">
              <div id="lotto-content-wrapper">
@@ -1124,7 +1120,6 @@
         </div>
     </div>
     
-    <!-- Aktív Bónuszok modális ablak -->
     <div id="active-bonuses-modal" class="modal-overlay">
          <div class="modal-content">
              <div id="bonuses-content-wrapper">
@@ -1137,7 +1132,6 @@
         </div>
     </div>
     
-    <!-- Nyereményláda modális ablak -->
     <div id="prize-chest-modal" class="modal-overlay">
         <div class="modal-content">
              <div id="chest-content-wrapper">
@@ -1152,10 +1146,14 @@
     </div>
 
     <script>
-        // JAVÍTÁS: Hiányzó nyitó kapcsos zárójel hozzáadva
         document.addEventListener('DOMContentLoaded', () => {
             
           const allPuzzles = [
+  
+    { "category": "Földrajz", "puzzle": "A DUNA-DELTA", "hints": ["A Duna Fekete-tengeri torkolatvidéke, Európa legnagyobb és legjobb állapotban megőrzött deltatorkolata.", "Rendkívül gazdag élővilággal rendelkezik, a Világörökség része."] },
+    { "category": "Sorozat", "puzzle": "BREAKING BAD - TOTÁL SZÍVÁS", "hints": ["Sorozat egy kémiatanárról, aki rákos lesz és drogfőzésre adja a fejét, hogy a családját biztosítsa.", "A főszereplő, Walter White átalakulása a központi téma."] },
+    { "category": "Sportág", "puzzle": "CSELGÁNCS (JUDO)", "hints": ["Japán eredetű küzdősport, 'a lágy út' a jelentése.", "A cél az ellenfél dobása, leszorítása vagy feladásra kényszerítése."] },
+    { "category": "Kifejezés", "puzzle": "AKHILLEUSZ-SAROK", "hints": ["Valakinek vagy valaminek a gyenge, sebezhető pontja.", "A görög hős egyetlen sebezhető pontja a sarka volt, ahol anyja fogta, mikor a Sztüx folyóba mártotta."] },
     { category: "Történelem", puzzle: "RENDSZERVÁLTÁS", hints: ["A szocialista rendszer vége Magyarországon.", "1989-ben zajlott le."] },
     { category: "Irodalom", puzzle: "A PÁL UTCAI FIÚK", hints: ["Molnár Ferenc ifjúsági regénye.", "A grundért folyik a harc benne."] },
     { category: "Irodalom", puzzle: "EGRI CSILLAGOK", hints: ["Gárdonyi Géza történelmi regénye.", "Az 1552-es egri ostromról szól."] },
@@ -2620,7 +2618,6 @@
     { "category": "Sportág", "puzzle": "CSELGÁNCS (JUDO)", "hints": ["Japán eredetű küzdősport, 'a lágy út' a jelentése.", "A cél az ellenfél dobása, leszorítása vagy feladásra kényszerítése."] },
     { "category": "Kifejezés", "puzzle": "AKHILLEUSZ-SAROK", "hints": ["Valakinek vagy valaminek a gyenge, sebezhető pontja.", "A görög hős egyetlen sebezhető pontja a sarka volt, ahol anyja fogta, mikor a Sztüx folyóba mártotta."] },
 
-                // --- ÚJ FŐDÍJ FELADVÁNYOK ---
     { category: "Fődíj Feladvány", puzzle: "ADDIG JÁR A KORSÓ A KÚTRA MÍG EL NEM TÖRIK", hints: [] },
     { category: "Fődíj Feladvány", puzzle: "NEM MIND ARANY AMI FÉNYLIK", hints: [] },
     { category: "Fődíj Feladvány", puzzle: "JOBB FÉLNI MINT MEGIJEDNI", hints: [] },
@@ -2937,6 +2934,9 @@
             const wonPrizeName = document.getElementById('won-prize-name');
             const autoHintsContainer = document.getElementById('auto-hints-container');
             const modalOverlay = document.getElementById('custom-modal');
+            const modalTitle = document.getElementById('custom-modal-title');
+            const modalText = document.getElementById('custom-modal-text');
+            const modalButtons = document.getElementById('custom-modal-buttons');
             const solveInput = document.getElementById('solve-input');
             const mainPrizeModal = document.getElementById('main-prize-modal');
             const mainPrizeTitle = document.getElementById('main-prize-title');
@@ -3091,6 +3091,8 @@
                     inMainPrizeSelection: false,
                     noMoreConsonants: false,
                     guessedLetters: [],
+                    mainPrizeConsonants: [],
+                    mainPrizeVowels: [],
                     specialPrizeWon: false,
                     wonPrizes: [],
                     mainPrizeQualifiedNotified: false,
@@ -3156,8 +3158,8 @@
                 });
             }
 
-            function createAlphabetPanel() {
-                alphabetPanel.innerHTML = '';
+            function createAlphabetPanel(container = alphabetPanel) {
+                container.innerHTML = '';
                 FULL_ALPHABET.split('').forEach(letter => {
                     const key = document.createElement('button');
                     key.className = 'alphabet-key';
@@ -3165,7 +3167,7 @@
                     key.dataset.letter = letter;
                     if (VOWELS.includes(letter)) key.classList.add('vowel');
                     key.addEventListener('click', () => handleLetterGuess(letter));
-                    alphabetPanel.appendChild(key);
+                    container.appendChild(key);
                 });
             }
             
@@ -3180,18 +3182,19 @@
             }
             
             function updateAlphabetPanel() {
-                const inMainPrizeMode = gameState.inMainPrizeSelection;
-                const selectedConsonants = gameState.mainPrizeConsonants?.length || 0;
-                const selectedVowels = gameState.mainPrizeVowels?.length || 0;
+                const container = gameState.inMainPrizeSelection ? mainPrizeAlphabetContainer : alphabetPanel;
+                document.querySelectorAll('.alphabet-key').forEach(key => {
+                    if (!container.contains(key)) return;
 
-                document.querySelectorAll('#alphabet-panel .alphabet-key, #main-prize-alphabet-panel-container .alphabet-key').forEach(key => {
                     const letter = key.dataset.letter;
                     const isVowel = VOWELS.includes(letter);
                     let isDisabled = false;
 
-                    if (inMainPrizeMode) {
+                    if (gameState.inMainPrizeSelection) {
                         const isSelected = gameState.guessedLetters.includes(letter);
-                        isDisabled = isSelected || (isVowel && selectedVowels >= 1) || (!isVowel && selectedConsonants >= 5);
+                        const consonantsFull = !isVowel && gameState.mainPrizeConsonants.length >= 5;
+                        const vowelsFull = isVowel && gameState.mainPrizeVowels.length >= 1;
+                        isDisabled = isSelected || consonantsFull || vowelsFull;
                     } else {
                         isDisabled = !gameState.gameInProgress || gameState.guessedLetters.includes(letter) || gameState.isSpinning;
                         if (isVowel) {
@@ -3323,15 +3326,15 @@
                 
                 freeVowelIndicator.style.display = gameState.hasFreeVowel ? 'block' : 'none';
                 
-                const buttonsToDisable = (!gameState.gameInProgress || gameState.isSpinning || gameState.awaitingConsonant || gameState.isDoubleOrNothingTurn);
+                const buttonsToDisable = (!gameState.gameInProgress || gameState.isSpinning || gameState.awaitingConsonant || gameState.isDoubleOrNothingTurn || gameState.inMainPrizeSelection);
 
                 wheelCenterButton.disabled = buttonsToDisable || gameState.noMoreConsonants || gameState.isPoweringUp;
                 if(gameState.isPoweringUp) wheelCenterButton.disabled = false;
                 
                 [solveButton, solveButtonDesktop].forEach(btn => btn.disabled = buttonsToDisable);
-                [nyero21Button, nyero21ButtonDesktop].forEach(btn => btn.disabled = !gameState.gameInProgress || isSunday);
+                [nyero21Button, nyero21ButtonDesktop].forEach(btn => btn.disabled = !gameState.gameInProgress || isSunday || gameState.inMainPrizeSelection);
                 [transferButton, transferButtonDesktop].forEach(btn => btn.disabled = buttonsToDisable || gameState.transferUsedThisHour || isSunday || gameState.playerScore <= 0);
-                [lottoButton, lottoButtonDesktop].forEach(btn => btn.disabled = !gameState.gameInProgress);
+                [lottoButton, lottoButtonDesktop].forEach(btn => btn.disabled = !gameState.gameInProgress || gameState.inMainPrizeSelection);
 
                 lottoBajnokIcon.style.display = isPrizeActive('lotto_bajnok') ? 'block' : 'none';
                 
@@ -3362,7 +3365,7 @@
             }
 
             function updateMainPrizeProgress() {
-                if (isSunday || !gameState.gameInProgress || gameState.currentRound > gameState.totalRounds) {
+                if (isSunday || !gameState.gameInProgress || gameState.currentRound > gameState.totalRounds || gameState.inMainPrizeSelection) {
                     mainPrizeProgress.style.display = 'none';
                     return;
                 }
@@ -3380,62 +3383,48 @@
                 }
             }
             
-            function showModal({modalId = 'custom-modal', title, text, showInput = false, inputType='text', confirmText = 'Rendben', cancelText = 'Mégse', showCancel = true}) {
-                const modal = document.getElementById(modalId);
-                const titleEl = modal.querySelector('.modal-content h3');
-                const textEl = modal.querySelector('.modal-content p');
-                const inputEl = modal.querySelector('.modal-input');
-                const buttonsEl = modal.querySelector('.modal-buttons');
-
+            function showModal({title, text, showInput = false, inputType='text', confirmText = 'Rendben', cancelText = 'Mégse', showCancel = true}) {
                 return new Promise((resolve, reject) => {
-                    if (buttonsEl) buttonsEl.innerHTML = ''; 
+                    modalTitle.textContent = title;
+                    modalText.innerHTML = text;
+                    solveInput.type = inputType;
+                    solveInput.style.display = showInput ? 'block' : 'none';
+                    if(showInput) {
+                      solveInput.value = '';
+                      setTimeout(() => solveInput.focus(), 100);
+                    }
+                    
+                    modalButtons.innerHTML = ''; 
 
                     const confirmBtn = document.createElement('button');
                     confirmBtn.className = 'modal-btn confirm';
                     confirmBtn.textContent = confirmText;
                     confirmBtn.onclick = () => {
-                        const value = inputEl && inputEl.style.display !== 'none' ? inputEl.value : true;
-                        closeModal(modalId, value);
+                        closeModal(solveInput.style.display !== 'none' ? solveInput.value : true);
                     };
-                    if (buttonsEl) buttonsEl.appendChild(confirmBtn);
+                    modalButtons.appendChild(confirmBtn);
 
                     if (showCancel) {
                         const cancelBtn = document.createElement('button');
                         cancelBtn.className = 'modal-btn cancel';
                         cancelBtn.textContent = cancelText;
-                        cancelBtn.onclick = () => closeModal(modalId, false);
-                         if (buttonsEl) buttonsEl.appendChild(cancelBtn);
-                    }
-
-                    if (titleEl) titleEl.textContent = title;
-                    if (textEl) textEl.innerHTML = text;
-                    
-                    if (inputEl) {
-                        inputEl.type = inputType;
-                        inputEl.style.display = showInput ? 'block' : 'none';
-                        if (showInput) {
-                            inputEl.value = '';
-                            setTimeout(() => inputEl.focus(), 100);
-                        }
+                        cancelBtn.onclick = () => closeModal(false);
+                        modalButtons.appendChild(cancelBtn);
                     }
                     
-                    modal.classList.add('visible');
-                    currentModal = { resolve, reject, modalId };
+                    modalOverlay.classList.add('visible');
+                    currentModal = { resolve, reject };
                 });
             }
 
-            function closeModal(modalId, value) {
-                const modal = document.getElementById(modalId);
-                if (modal) modal.classList.remove('visible');
-                
-                if (currentModal && currentModal.modalId === modalId) {
-                    if (value !== false && currentModal.resolve) {
-                        currentModal.resolve(value);
-                    } else if (value === false && currentModal.reject) {
-                        currentModal.reject();
-                    }
-                    currentModal = { resolve: null, reject: null, modalId: null };
+            function closeModal(value) {
+                modalOverlay.classList.remove('visible');
+                if (value !== false && currentModal.resolve) {
+                    currentModal.resolve(value);
+                } else if (value === false && currentModal.reject) {
+                    currentModal.reject();
                 }
+                currentModal = { resolve: null, reject: null };
             }
             
             function spinWheel(power) {
@@ -3489,7 +3478,7 @@
                 if (!autoSolve) {
                     try {
                         attempt = await showModal({
-                            title: 'Megfejtés', text: 'Na, mi a megfejtés?', showInput: true, inputType: 'text', confirmText: 'Beküldöm!', modalId: 'custom-modal'
+                            title: 'Megfejtés', text: 'Na, mi a megfejtés?', showInput: true, inputType: 'text', confirmText: 'Beküldöm!'
                         });
                         if (attempt === false) return;
                     } catch { return; }
@@ -3552,7 +3541,7 @@
                 }
             }
 
-            async function startMainPrizeGame(stakeAmount = gameState.hourlyWinnings) {
+            async function startMainPrizeGame() {
                  const mainPrizePuzzles = allPuzzles.filter(p => p.category === 'Fődíj Feladvány');
                  if (mainPrizePuzzles.length === 0) {
                      alert("Hiba: Nincs Fődíj Feladvány a rendszerben!");
@@ -3567,8 +3556,7 @@
                  gameState.mainPrizeVowels = [];
                  
                  mainPrizeModal.style.display = 'flex';
-                 mainPrizeAlphabetContainer.innerHTML = '';
-                 mainPrizeAlphabetContainer.appendChild(alphabetPanel);
+                 createAlphabetPanel(mainPrizeAlphabetContainer);
                  
                  mainPrizeTitle.textContent = "Fődíj - Betűválasztás";
                  mainPrizeCategory.textContent = "Válassz 5 mássalhangzót és 1 magánhangzót";
@@ -3581,20 +3569,22 @@
                  mainPrizeBoard.innerHTML = '';
                  setupPuzzleBoard(mainPrizeBoard, mainPrizePuzzle);
                  mainPrizeGivenLetters.innerHTML = '';
-                 updateAlphabetPanel();
+                 updateUI();
             }
 
             function handleMainPrizeLetterSelection(letter) {
-                if (gameState.guessedLetters.includes(letter)) return;
+                if (!gameState.inMainPrizeSelection || gameState.guessedLetters.includes(letter)) return;
                 
                 const isVowel = VOWELS.includes(letter);
                 
                 if (isVowel && gameState.mainPrizeVowels.length < 1) {
                     gameState.mainPrizeVowels.push(letter);
+                    gameState.guessedLetters.push(letter);
                 } else if (!isVowel && gameState.mainPrizeConsonants.length < 5) {
                     gameState.mainPrizeConsonants.push(letter);
+                    gameState.guessedLetters.push(letter);
                 }
-                gameState.guessedLetters.push(letter);
+
                 updateAlphabetPanel();
 
                 const consonantsLeft = 5 - gameState.mainPrizeConsonants.length;
@@ -3615,7 +3605,6 @@
                  mainPrizeTitle.textContent = "Fődíj Játék";
                  mainPrizeCategory.textContent = mainPrizePuzzle.category;
                  mainPrizeAlphabetContainer.style.display = 'none';
-                 document.getElementById('puzzle-section').appendChild(alphabetPanel);
 
                  mainPrizeInstructions.style.display = 'block';
                  mainPrizeSolveInput.style.display = 'block';
@@ -3635,7 +3624,7 @@
                  mainPrizeTimer.classList.remove('timer-low');
                  mainPrizeSolveInput.disabled = false;
                  mainPrizeConfirmBtn.disabled = false;
-                 mainPrizeSolveInput.focus();
+                 setTimeout(() => mainPrizeSolveInput.focus(), 100);
                  
                  mainPrizeTimerInterval = setInterval(() => {
                      timeLeft--;
@@ -3657,9 +3646,11 @@
 
                 if (isWin) {
                     const winnings = stake * 2;
-                    gameState.playerScore += winnings;
-                    updateHostMessage(getRandomMessage('main_prize_win', { winnings: winnings.toLocaleString('hu-HU') }), true);
+                    gameState.playerScore += winnings; // Csak a duplázott összeget adjuk hozzá, a stake már benne volt
+                    updateHostMessage(getRandomMessage('main_prize_win', { winnings: (stake + winnings).toLocaleString('hu-HU') }), true);
                 } else {
+                    // Vereség esetén a feltett hourlyWinnings elvész, ezt levonjuk a playerScore-ból
+                    gameState.playerScore -= stake;
                     updateHostMessage(getRandomMessage(isTimeout ? 'main_prize_lose_timeout' : 'main_prize_lose'), true);
                 }
                 
@@ -3668,6 +3659,10 @@
                  
                 setTimeout(() => {
                     mainPrizeModal.style.display = 'none';
+                    gameState.inMainPrizeSelection = false;
+                    // Visszahelyezzük az alphabet panelt az eredeti helyére
+                    document.getElementById('puzzle-section').insertBefore(alphabetPanel, document.getElementById('desktop-action-buttons'));
+                    createAlphabetPanel(); // Újrageneráljuk a normál játékhoz
                     gameOver();
                 }, 5000);
             }
@@ -4101,12 +4096,13 @@
             }
 
             function handleLetterGuess(letter) {
-                if (document.querySelector(`.alphabet-key[data-letter="${letter}"]`).disabled) return;
-                
                 if (gameState.inMainPrizeSelection) {
                     handleMainPrizeLetterSelection(letter);
                     return;
                 }
+
+                if (document.querySelector(`#alphabet-panel .alphabet-key[data-letter="${letter}"]`).disabled) return;
+                
                 const isVowel = VOWELS.includes(letter);
                 
                 if (gameState.isDoubleOrNothingTurn) {
@@ -4357,10 +4353,10 @@
                  }
 
                 setupPuzzleBoard(puzzleBoard, puzzleData);
+                createAlphabetPanel();
                 gameState.guessedLetters.forEach(letter => {
                      document.querySelectorAll(`.puzzle-tile[data-letter="${letter}"]`).forEach(tile => tile.classList.add('revealed'));
                 });
-                createAlphabetPanel();
                 updateUI();
             }
 
@@ -4368,9 +4364,14 @@
                 updateHostMessage("Fantasztikus játék volt, mind a 10 feladványt megfejtetted!", true);
 
                 const canPlay = gameState.hourlyWinnings >= MAIN_PRIZE_THRESHOLD;
-                const neededToTopUp = MAIN_PRIZE_THRESHOLD - gameState.hourlyWinnings;
-                const canTopUp = gameState.playerScore >= neededToTopUp;
-
+                let neededToTopUp = 0;
+                let canTopUp = false;
+                
+                if (!canPlay) {
+                    neededToTopUp = MAIN_PRIZE_THRESHOLD - gameState.hourlyWinnings;
+                    canTopUp = gameState.playerScore >= neededToTopUp;
+                }
+                
                 try {
                     if (canPlay) {
                         const play = await showModal({
@@ -4378,7 +4379,15 @@
                             text: `Gratulálok, játszhatsz a Fődíjért! Kockáztatod a menetben gyűjtött <strong>${gameState.hourlyWinnings.toLocaleString('hu-HU')} Ft</strong>-ot a duplájáért?`,
                             confirmText: 'Kockáztatok!', cancelText: 'Inkább nem'
                         });
-                        if (play) startMainPrizeGame(); else gameOver(`Okos döntés! A nyereményed már a zsebedben van.`);
+                        if (play) {
+                             startMainPrizeGame();
+                        } else { 
+                            // Ha nem játszik, hozzáadjuk a pénzt és lezárjuk a játékot
+                            gameState.playerScore += gameState.hourlyWinnings;
+                            gameState.hourlyWinnings = 0;
+                            saveWeeklyScore(gameState.playerScore);
+                            gameOver(`Okos döntés! A nyereményed már a zsebedben van.`); 
+                        }
                     } else if (canTopUp) {
                         const topUp = await showModal({
                             title: 'Fődíj Játék - Kipótlás',
@@ -4386,21 +4395,34 @@
                             confirmText: 'Igen, pótolom!', cancelText: 'Nem, köszönöm'
                         });
                         if (topUp) {
+                            // A játékos a teljes vagyonából fizeti a kipótlást. A hourlyWinnings-t beállítjuk a küszöbre.
+                            // A stake a teljes hourlyWinnings lesz, amit levonunk a végén, ha veszít.
                             gameState.playerScore -= neededToTopUp;
                             gameState.hourlyWinnings = MAIN_PRIZE_THRESHOLD;
                             saveWeeklyScore(gameState.playerScore);
                             updateUI();
                             startMainPrizeGame();
-                        } else { gameOver(`Rendben van! A nyereményed már biztos helyen van.`); }
+                        } else { 
+                            gameState.playerScore += gameState.hourlyWinnings;
+                            gameState.hourlyWinnings = 0;
+                            saveWeeklyScore(gameState.playerScore);
+                            gameOver(`Rendben van! A nyereményed már biztos helyen van.`); 
+                        }
                     } else {
                         await showModal({
                             title: 'Játék Vége',
                             text: `Sajnos nem gyűlt össze a Fődíj Játékhoz szükséges összeg, és a teljes vagyonodból sem tudod kipótolni. Gratulálok az eddigi nyereményedhez!`,
                             showCancel: false
                         });
+                        gameState.playerScore += gameState.hourlyWinnings;
+                        gameState.hourlyWinnings = 0;
+                        saveWeeklyScore(gameState.playerScore);
                         gameOver();
                     }
-                } catch {
+                } catch { // Ha a játékos bezárja a modális ablakot
+                    gameState.playerScore += gameState.hourlyWinnings;
+                    gameState.hourlyWinnings = 0;
+                    saveWeeklyScore(gameState.playerScore);
                     gameOver(`Döntés nélkül a nyereményed már a zsebedben van. Gratulálok!`);
                 }
             }
@@ -4729,25 +4751,28 @@
             [nyero21Button, nyero21ButtonDesktop].forEach(btn => btn.addEventListener('click', launchNyero21));
             
             lottoBuyTicketBtn.addEventListener('click', showLottoBettingView);
-            lottoCancelBtn.addEventListener('click', () => closeModal('lotto-modal'));
+            lottoCancelBtn.addEventListener('click', () => closeModal('lotto-modal', false));
             lottoCancelBetBtn.addEventListener('click', () => {
                 lottoBettingArea.style.display = 'none';
                 lottoInfoArea.style.display = 'block';
             });
             lottoSubmitBtn.addEventListener('click', submitLottoTicket);
             lottoPrizeHud.addEventListener('click', showActiveBonuses);
-            activeBonusesCloseBtn.addEventListener('click', () => closeModal('active-bonuses-modal'));
+            activeBonusesCloseBtn.addEventListener('click', () => activeBonusesModal.classList.remove('visible'));
             prizeChestHud.addEventListener('click', showPrizeChest);
-            prizeChestCloseBtn.addEventListener('click', () => closeModal('prize-chest-modal'));
+            prizeChestCloseBtn.addEventListener('click', () => prizeChestModal.classList.remove('visible'));
+            
             mainPrizeSelectConfirmBtn.addEventListener('click', runMainPrizeCountdown);
             mainPrizeConfirmBtn.addEventListener('click', () => {
-                 const mainPrizePuzzle = allPuzzles.filter(p => p.category === 'Fődíj Feladvány')[gameState.puzzleHourId % allPuzzles.filter(p => p.category === 'Fődíj Feladvány').length];
+                 const mainPrizePuzzles = allPuzzles.filter(p => p.category === 'Fődíj Feladvány');
+                 const mainPrizePuzzle = mainPrizePuzzles[gameState.puzzleHourId % mainPrizePuzzles.length];
                  const cleanPuzzle = mainPrizePuzzle.puzzle.toUpperCase().trim().replace(/\s+/g, ' ');
                  const attempt = mainPrizeSolveInput.value.toUpperCase().trim().replace(/\s+/g, ' ');
                  endMainPrizeGame(attempt === cleanPuzzle);
             });
+
             nyero21StartGameBtn.addEventListener('click', startNyero21);
-            nyero21CancelBtn.addEventListener('click', () => closeModal('nyero21-modal'));
+            nyero21CancelBtn.addEventListener('click', () => nyero21Modal.classList.remove('visible'));
             nyero21HitBtn.addEventListener('click', () => {
                 const unflippedCard = nyero21CardDeck.querySelector('.nyero21-card:not(.flipped)');
                 if (unflippedCard) unflippedCard.dispatchEvent(new Event('click'));
@@ -4758,7 +4783,7 @@
                 nyero21StakingArea.style.display = 'block';
                 nyero21PlaysLeft.textContent = `Ebben az órában még ${MINIGAME_PLAYS_PER_HOUR - gameState.nyero21PlaysThisHour} alkalommal játszhatsz.`;
             });
-            nyero21CloseBtn.addEventListener('click', () => closeModal('nyero21-modal'));
+            nyero21CloseBtn.addEventListener('click', () => nyero21Modal.classList.remove('visible'));
 
             initializeGame();
         });
