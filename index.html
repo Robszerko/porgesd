@@ -512,7 +512,7 @@
         #millionaire-icon { display: none; font-size: 1.5rem; animation: pulse 2s infinite; }
         body.millionaire-active #millionaire-icon { display: inline-block; }
 
-        #score-display, #hourly-winnings-display, #round-winnings-display, #lotto-prize-label, #sunday-multiplier-display {
+        #score-display, #hourly-winnings-display, #round-winnings-display, #lotto-prize-label {
             font-family: 'Montserrat', sans-serif; font-size: clamp(1.6rem, 3vw, 2rem);
             color: var(--accent-gold); font-weight: 700;
             text-shadow: 0 0 8px var(--accent-gold); line-height: 1;
@@ -521,13 +521,14 @@
         #round-winnings-display {
             color: var(--accent-teal); text-shadow: 0 0 8px var(--accent-teal);
         }
-        
+
         #sunday-bet-display {
             margin-top: 8px;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 700;
-            color: #FF7043;
-            text-shadow: 0 0 5px #FF7043;
+            color: #FF8A65;
+            text-shadow: 0 0 5px #FF8A65;
+            line-height: 1.2;
         }
         
         #lotto-prize-label, #prize-chest-label {
@@ -536,11 +537,6 @@
         #prize-chest-label {
             color: #d4ac0d; text-shadow: 0 0 8px #d4ac0d;
         }
-        
-        #sunday-multiplier-display {
-            color: #FF7043; text-shadow: 0 0 8px #FF7043;
-        }
-
 
         #main-prize-progress {
             background-color: rgba(255, 193, 7, 0.1); border: 1px solid var(--accent-gold);
@@ -1043,10 +1039,6 @@
                                 <div id="round-winnings-display">0 Ft</div>
                                 <div id="sunday-bet-display" style="display: none;"></div>
                             </div>
-                            <div id="sunday-multiplier-hud" class="player-hud" style="display: none; border-color: #FF7043;">
-                                <div class="hud-label">Tét Szorzó</div>
-                                <div id="sunday-multiplier-display">0x</div>
-                            </div>
                              <div id="lotto-prize-hud" class="player-hud" style="display: none;">
                                 <div class="hud-label">☘️ Aktív Bónuszok</div>
                                 <div id="lotto-prize-label">Megtekintés</div>
@@ -1116,7 +1108,7 @@
             <li class="sunday"><strong>Prémium Vasárnap:</strong> Vasárnap a Heti Kasszádból tett tétekkel játszol. Minden vasárnapi feladvány előtt tétet kell megtenned.
                 <div class="sub-rule">
                     <ul>
-                        <li><strong>Tét Szorzó:</strong> A keréken megjelenik a "Tét Szorzó" mező. Ahányszor ezt kipörgeted, annyiszor kapod meg a forduló végén a feltett tétedet extra nyereményként. Egy külön számláló jelzi a játék során, hogy hányszoros szorzónál jársz.</li>
+                        <li><strong>Tét Szorzó:</strong> A keréken megjelenik a "Tét Szorzó" mező. A szorzó minden pörgetéssel duplázódik (az első pörgetés 1x, a második 2x, a harmadik 4x, stb.).</li>
                         <li><strong>Sikeres Forduló:</strong> Ha csőd nélkül fejted meg a feladványt, a nyereményed: a körben gyűjtött zsetonok + a megfejtési bónusz + a téted visszajár + az extra Tét Szorzó nyeremény.</li>
                         <li><strong>CSŐD Esetén:</strong> Ha csődöt pörgetsz, a feltett téted elvész, és a Tét Szorzó számlálód lenullázódik. A csőd pörgetése előtt gyűjtött zsetonjaid megmaradnak. Ha ezután megfejted a feladványt, a jutalmad egy fix 1000 Ft bónusz és a csőd előtt gyűjtött zsetonok.</li>
                     </ul>
@@ -2810,8 +2802,8 @@
     { category: "Fődíj Feladvány", puzzle: "APOKALIPSZIS MOST", hint: "Filmcím" },
     { category: "Fődíj Feladvány", puzzle: "BOHEMIAN RHAPSODY A QUEEN EGYÜTTES", hint: "Zenei mű / Filmcím" },
     { category: "Fődíj Feladvány", puzzle: "WOLFGANG AMADEUS MOZART", hint: "Híres személy" },
-            ];
-            
+            ];   
+
            const SPECIAL_PRIZES = [
                 { name: 'Éves előfizetés egy hírportálra', value: 25000 }, { name: 'Elektromos roller', value: 120000 },
                 { name: 'Két VIP jegy egy koncertre', value: 50000 }, { name: 'Egy rekesz kézműves sör', value: 20000 },
@@ -3074,8 +3066,6 @@
             const hostMessageDesktop = document.getElementById('host-message-desktop');
             const alphabetPanel = document.getElementById('alphabet-panel');
             const mainHudLabel = document.getElementById('main-hud-label');
-            const sundayMultiplierHud = document.getElementById('sunday-multiplier-hud');
-            const sundayMultiplierDisplay = document.getElementById('sunday-multiplier-display');
             const wonPrizeContainer = document.getElementById('won-prize-container');
             const wonPrizeName = document.getElementById('won-prize-name');
             const autoHintsContainer = document.getElementById('auto-hints-container');
@@ -3395,7 +3385,6 @@
 
                 // NEW: Add Bet Multiplier for Sundays
                 if (isSunday) {
-                    // Replace a mid-value prize with the Bet Multiplier
                     const indexToReplace = segments.findIndex(s => s.value === 600) !==-1 ? segments.findIndex(s => s.value === 600) : 2;
                     segments[indexToReplace] = { label: 'TÉT SZORZÓ', value: 'bet_multiplier', color: '#FF7043' };
                 }
@@ -3474,14 +3463,19 @@
                 
                 // Show/hide weekday vs Sunday HUDs
                 document.getElementById('hourly-hud').style.display = isSunday ? 'none' : 'flex';
-                document.getElementById('sunday-multiplier-hud').style.display = isSunday && gameState.gameInProgress ? 'flex' : 'none';
 
                 if (isSunday && gameState.gameInProgress) {
                     roundWinningsDisplay.textContent = `${gameState.roundWinnings.toLocaleString('hu-HU')} Ft`;
-                    const totalBetPrize = gameState.betMultiplier * gameState.currentBet;
-                    sundayBetDisplay.style.display = 'block';
-                    sundayBetDisplay.innerHTML = `Tét: ${gameState.betMultiplier}x ${gameState.currentBet.toLocaleString('hu-HU')} Ft = <strong>${totalBetPrize.toLocaleString('hu-HU')} Ft</strong>`;
-                    sundayBetDisplay.style.opacity = gameState.isBankruptThisRound ? '0.5' : '1';
+                    sundayBetDisplay.style.display = gameState.currentBet > 0 ? 'block' : 'none';
+                    if (gameState.currentBet > 0) {
+                        if (gameState.betMultiplier === 0) {
+                            sundayBetDisplay.innerHTML = `Tét: ${gameState.currentBet.toLocaleString('hu-HU')} Ft`;
+                        } else {
+                            const totalBetPrize = gameState.betMultiplier * gameState.currentBet;
+                            sundayBetDisplay.innerHTML = `Tét: ${gameState.betMultiplier}x ${gameState.currentBet.toLocaleString('hu-HU')} Ft = <strong>${totalBetPrize.toLocaleString('hu-HU')} Ft</strong>`;
+                        }
+                    }
+                    sundayBetDisplay.style.opacity = gameState.isBankruptThisRound ? 0.5 : 1;
                 } else {
                     roundWinningsDisplay.textContent = `${gameState.roundWinnings.toLocaleString('hu-HU')} Ft`;
                     sundayBetDisplay.style.display = 'none';
@@ -3516,11 +3510,6 @@
                 [lottoButton, lottoButtonDesktop].forEach(btn => btn.disabled = !gameState.gameInProgress || gameState.inMainPrizeSelection);
 
                 lottoBajnokIcon.style.display = isPrizeActive('lotto_bajnok') ? 'block' : 'none';
-
-                if (isSunday && gameState.gameInProgress) {
-                    sundayMultiplierDisplay.textContent = `${gameState.betMultiplier}x`;
-                    sundayMultiplierHud.style.opacity = gameState.isBankruptThisRound ? '0.5' : '1';
-                }
                 
                 updateAlphabetPanel();
                 updateMainPrizeProgress();
@@ -4141,19 +4130,22 @@
                 switch(result.value) {
                     case 'bet_multiplier':
                         if (isSunday && !gameState.isBankruptThisRound) {
-                            gameState.betMultiplier++;
+                            if (gameState.betMultiplier === 0) {
+                                gameState.betMultiplier = 1;
+                            } else {
+                                gameState.betMultiplier *= 2;
+                            }
                             updateHostMessage(`A Tét Szorzód <strong>${gameState.betMultiplier}x</strong>-re nőtt! Pörgess tovább!`, true);
-                            updateUI(); // Immediately update the HUD
+                            updateUI();
                         }
                         endTurn();
                         break;
                     case 'bankrupt':
                         if (gameState.hasBankruptProtection || isPrizeActive('one_hit_wonder') || isPrizeActive('four_hit_no_bankrupt')) {
                             updateHostMessage("CSŐD! De a védelmed megmentett! Nem vesztettél semmit.", true);
-                            gameState.hasBankruptProtection = false; // Consume one-time protection
+                            gameState.hasBankruptProtection = false; 
                         } else if(isSunday){
                              updateHostMessage(getRandomMessage('bankrupt_sunday', {bet: gameState.currentBet.toLocaleString('hu-HU')}), true);
-                             // Bet is already lost (deducted at start). Round winnings are kept.
                              gameState.betMultiplier = 0;
                              gameState.isBankruptThisRound = true;
                         } else {
@@ -4649,7 +4641,6 @@
             }
 
              async function handleEndOfHour() {
-                 // On sunday, this logic is skipped
                  if (isSunday) {
                     gameOver(`Vége a vasárnapi játéknak!`);
                     return;
