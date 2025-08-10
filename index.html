@@ -25,6 +25,7 @@
             --halver-orange: #FF8A65;
             --surprise-purple: #9575CD;
             --lotto-green: #4CAF50;
+            --bet-multiplier-orange: '#FF7043';
         }
 
         body {
@@ -471,6 +472,7 @@
             background: rgba(0,0,0,0.2); padding: 10px 15px; border-radius: 10px;
             border: 1px solid var(--accent-gold); text-align: center;
             position: relative;
+            transition: opacity 0.3s ease;
         }
 
         #lotto-prize-hud {
@@ -510,7 +512,7 @@
         #millionaire-icon { display: none; font-size: 1.5rem; animation: pulse 2s infinite; }
         body.millionaire-active #millionaire-icon { display: inline-block; }
 
-        #score-display, #hourly-winnings-display, #round-winnings-display, #lotto-prize-label {
+        #score-display, #hourly-winnings-display, #round-winnings-display, #lotto-prize-label, #sunday-multiplier-display {
             font-family: 'Montserrat', sans-serif; font-size: clamp(1.6rem, 3vw, 2rem);
             color: var(--accent-gold); font-weight: 700;
             text-shadow: 0 0 8px var(--accent-gold); line-height: 1;
@@ -526,6 +528,11 @@
         #prize-chest-label {
             color: #d4ac0d; text-shadow: 0 0 8px #d4ac0d;
         }
+        
+        #sunday-multiplier-display {
+            color: #FF7043; text-shadow: 0 0 8px #FF7043;
+        }
+
 
         #main-prize-progress {
             background-color: rgba(255, 193, 7, 0.1); border: 1px solid var(--accent-gold);
@@ -1027,6 +1034,10 @@
                                 <div class="hud-label">Ebben a körben</div>
                                 <div id="round-winnings-display">0 Ft</div>
                             </div>
+                            <div id="sunday-multiplier-hud" class="player-hud" style="display: none; border-color: #FF7043;">
+                                <div class="hud-label">Tét Szorzó</div>
+                                <div id="sunday-multiplier-display">0x</div>
+                            </div>
                              <div id="lotto-prize-hud" class="player-hud" style="display: none;">
                                 <div class="hud-label">☘️ Aktív Bónuszok</div>
                                 <div id="lotto-prize-label">Megtekintés</div>
@@ -1093,7 +1104,15 @@
             <li class="minigame"><strong>Nyerő21 Minijáték:</strong> Ha épp nem te pörgetsz, vagy csak egy kis extra izgalomra vágysz, próbáld ki a Nyerő21-et! Tegyél fel a zsetonjaidból, és húzz lapokat egy 10 lapos (2-11 értékű) pakliból. Ha a lapjaid összege eléri a 21-et, a téted ötszörösét nyered! Ha az összeg 18 és 20 között van, a téted duplája jár vissza. De vigyázz, ha túlléped a 21-et, a tét elvész! Óránként korlátozott számban játszhatsz.</li>
             <li class="prizes"><strong>Bónuszok és Nyeremények:</strong> A játék során többféle bónuszt szerezhetsz. A Lottón nyert jutalmak a <strong>Nyereményládába</strong> kerülnek, ahonnan manuálisan kell aktiválnod őket. Az aktivált bónuszok egy ideig (pl. 24 óráig vagy a hét végéig) extra előnyöket adnak. A keréken pörgethető <strong>Különdíj</strong> pedig egy azonnali választási lehetőséget kínál egy értékes tárgy és a készpénz között.</li>
             <li class="week"><strong>Heti Kassza:</strong> Minden, amit hétköznap (hétfőtől szombatig) nyersz, a Heti Kasszádba kerül. Ezt a pénzt vasárnap teszed kockára.</li>
-            <li class="sunday"><strong>Prémium Vasárnap:</strong> Vasárnap a Heti Kasszádból tett tétekkel játszsol. Minden vasárnapi feladvány előtt a Heti Kasszádból kell tétet megtenned. A cél, hogy a nap végére minél többet gyűjts és elnyerd a <strong>Hét Milliomosa</strong> címet!</li>
+            <li class="sunday"><strong>Prémium Vasárnap:</strong> Vasárnap a Heti Kasszádból tett tétekkel játszol. Minden vasárnapi feladvány előtt tétet kell megtenned.
+                <div class="sub-rule">
+                    <ul>
+                        <li><strong>Tét Szorzó:</strong> A keréken megjelenik a "Tét Szorzó" mező. Ahányszor ezt kipörgeted, annyiszor kapod meg a forduló végén a feltett tétedet extra nyereményként. Egy külön számláló jelzi a játék során, hogy hányszoros szorzónál jársz.</li>
+                        <li><strong>Sikeres Forduló:</strong> Ha csőd nélkül fejted meg a feladványt, a nyereményed: a körben gyűjtött zsetonok + a megfejtési bónusz + a téted visszajár + az extra Tét Szorzó nyeremény.</li>
+                        <li><strong>CSŐD Esetén:</strong> Ha csődöt pörgetsz, a feltett téted elvész, és a Tét Szorzó számlálód lenullázódik. A csőd pörgetése előtt gyűjtött zsetonjaid megmaradnak. Ha ezután megfejted a feladványt, a jutalmad egy fix 1000 Ft bónusz és a csőd előtt gyűjtött zsetonok.</li>
+                    </ul>
+                </div>
+            </li>
             <li class="main-prize"><strong>Fődíj Játék:</strong> Ha egy órás játékblokk végére (a 10. feladvány után) legalább 150.000 Ft-ot gyűjtöttél az adott órában, esélyt kapsz a Fődíj Játékra! Itt az óra alatt gyűjtött teljes pénzedet kockáztatva, egyetlen fődíj-feladvány megfejtésével megduplázhatod azt! A játékhoz ki kell választanod 5 mássalhangzót és 1 magánhangzót, majd 30 másodperced van a megfejtésre. Ha nem gyűlt össze a limit, de a teljes vagyonodból ki tudod pótolni a hiányzó összeget, akkor is játszhatsz.</li>
             <li class="millionaire"><strong>A Hét Milliomosa:</strong> Az a játékos, aki a vasárnapi játék végére a legmagasabb egyenleggel zár (minimum 1.000.000 Ft felett), elnyeri "A Hét Milliomosa" címet. Ez a cím a teljes következő hétre exkluzív bónuszokat és előnyöket biztosít számára a játékban.</li>
             <li class="exit"><strong>Kilépés:</strong> Ha egy órán belül kilépsz a játékból, majd visszatérsz, a második kilépésnél az adott órában szerzett összes nyereményed elvész. Gondold meg jól!</li>
@@ -2783,7 +2802,6 @@
     { category: "Fődíj Feladvány", puzzle: "BOHEMIAN RHAPSODY A QUEEN EGYÜTTES", hint: "Zenei mű / Filmcím" },
     { category: "Fődíj Feladvány", puzzle: "WOLFGANG AMADEUS MOZART", hint: "Híres személy" },
             ];
-
             
 
            const SPECIAL_PRIZES = [
@@ -2861,7 +2879,7 @@
                 main_prize_qualified: ["<strong>Gratulálok!</strong> Kvalifikáltad magad a Fődíj Játékra! Már csak egy lépésre vagy a hatalmas nyereménytől!", "Fantasztikus! Jogosult vagy a Fődíj Játékra! Itt az esély, hogy igazán nagyot szakíts!"],
                 assistance_spin: ["A rendszer súg egy kicsit... A(z) <strong>{letter}</strong> betűvel most nagyot nyerhetsz!", "A <strong>SEGÍTSÉG</strong> megérkezett! Próbálkozz a(z) <strong>{letter}</strong> betűvel! Bízz a gépben!"],
                 halver_spin: ["Jaj, ne! Ez a <strong>FELEZŐ!</strong> A körös pénzed fele elment diétázni.", "A felező lecsapott! Bosszantó, de még így is maradt mit hazavinni a körből."],
-                bankrupt_sunday: ["Ó, a végzet vasárnap! <strong>CSŐD!</strong> Nemcsak a körös nyeremény, de a feltett <strong>{bet}&nbsp;Ft-os tét is elúszott!</strong> Kemény menet."],
+                bankrupt_sunday: ["Ó, a végzet vasárnap! <strong>CSŐD!</strong> Elvesztetted a feltett <strong>{bet}&nbsp;Ft-os tétedet</strong> és a Tét Szorzód is lenullázódott! De a körös pénzed megmaradt!", "CSŐD! A tét elúszott, de a játék megy tovább! A körben eddig gyűjtött pénzed biztonságban van."],
                 lose_turn: ["<strong>KIMARADSZ!</strong> Most pihensz egy kört. Használd ki egy kis stratégiai tervezésre!", "Hoppá, egy kis pihenő! Mindjárt újra te jössz."],
                 bonus_points: ["<strong>+{value}&nbsp;FT!</strong> Csak úgy, ajándékba! Ezt zsebeld is be gyorsan!", "Azonnali <strong>{value} Ft</strong>! Gratulálok, ez szépen jött!"],
                 huge_win_consonant: ["Ez igen! Egyetlen betűvel <strong>{earnings}&nbsp;Ft</strong>! Ez a pörgetés... 'chef's kiss'!", "Hatalmas fogás! <strong>{earnings}</strong> forint egy betűvel! Ez már döfi!"],
@@ -3047,6 +3065,8 @@
             const hostMessageDesktop = document.getElementById('host-message-desktop');
             const alphabetPanel = document.getElementById('alphabet-panel');
             const mainHudLabel = document.getElementById('main-hud-label');
+            const sundayMultiplierHud = document.getElementById('sunday-multiplier-hud');
+            const sundayMultiplierDisplay = document.getElementById('sunday-multiplier-display');
             const wonPrizeContainer = document.getElementById('won-prize-container');
             const wonPrizeName = document.getElementById('won-prize-name');
             const autoHintsContainer = document.getElementById('auto-hints-container');
@@ -3235,6 +3255,9 @@
                     hasFreeSolveAttempt: false,
                     isSolveBonusDoubled: false,
                     hasFreeLottoTicket: false,
+                    // Sunday Special state
+                    betMultiplier: 0,
+                    isBankruptThisRound: false,
                 };
             }
 
@@ -3361,6 +3384,11 @@
                     segments = segments.filter(s => s.value !== 'bankrupt');
                 }
 
+                // NEW: Add Bet Multiplier for Sundays
+                if (isSunday) {
+                    segments[2] = { label: 'TÉT SZORZÓ', value: 'bet_multiplier', color: '#FF7043' };
+                }
+
                 return segments;
             }
 
@@ -3467,6 +3495,15 @@
                 [lottoButton, lottoButtonDesktop].forEach(btn => btn.disabled = !gameState.gameInProgress || gameState.inMainPrizeSelection);
 
                 lottoBajnokIcon.style.display = isPrizeActive('lotto_bajnok') ? 'block' : 'none';
+
+                // NEW: Update Sunday Multiplier HUD
+                if (isSunday && gameState.gameInProgress) {
+                    sundayMultiplierHud.style.display = 'flex';
+                    sundayMultiplierDisplay.textContent = `${gameState.betMultiplier}x`;
+                    sundayMultiplierHud.style.opacity = gameState.isBankruptThisRound ? '0.5' : '1';
+                } else {
+                    sundayMultiplierHud.style.display = 'none';
+                }
                 
                 updateAlphabetPanel();
                 updateMainPrizeProgress();
@@ -3643,15 +3680,28 @@
                         roundWinnings *= 2;
                     }
 
-                    let totalGained = roundWinnings + solveBonus;
-                    
-                    if(isSunday){
-                        gameState.playerScore += totalGained + gameState.currentBet; 
-                        updateHostMessage(getRandomMessage('solve_sunday_success', {
-                            bet: gameState.currentBet.toLocaleString('hu-HU'),
-                            totalGained: totalGained.toLocaleString('hu-HU')
-                        }), true);
+                    if(isSunday) {
+                        if (gameState.isBankruptThisRound) {
+                            const totalGained = gameState.roundWinnings + 1000;
+                            gameState.playerScore += totalGained;
+                            updateHostMessage(`CSŐD után is megfejtetted! Jutalmad a körös pénzed és egy <strong>1,000 Ft-os bónusz</strong>. Összesen <strong>${totalGained.toLocaleString('hu-HU')} Ft</strong>!`, true);
+                        } else {
+                            const betMultiplierPrize = gameState.currentBet * gameState.betMultiplier;
+                            const earningsFromRound = gameState.roundWinnings + solveBonus;
+                            
+                            gameState.playerScore += gameState.currentBet; // Get bet back
+                            gameState.playerScore += earningsFromRound;
+                            gameState.playerScore += betMultiplierPrize;
+
+                            let successMessage = `SIKERES KÖR! Visszakaptad a <strong>${gameState.currentBet.toLocaleString('hu-HU')} Ft-os</strong> tétedet! A körös nyereményed <strong>${earningsFromRound.toLocaleString('hu-HU')} Ft</strong>`;
+                            if (betMultiplierPrize > 0) {
+                                successMessage += `, plusz a <strong>${gameState.betMultiplier}x-es szorzóval ${betMultiplierPrize.toLocaleString('hu-HU')} Ft</strong> extra nyereményt zsebeltél be!`;
+                            }
+                            successMessage += ' Gratulálok!';
+                            updateHostMessage(successMessage, true);
+                        }
                     } else {
+                        const totalGained = roundWinnings + solveBonus;
                         gameState.hourlyWinnings += totalGained;
                         gameState.playerScore += totalGained;
                         updateHostMessage(getRandomMessage(isGoldenRound ? 'solve_golden_success' : 'solve_success', {totalGained: totalGained.toLocaleString('hu-HU')}));
@@ -4073,18 +4123,22 @@
                 }
 
                 switch(result.value) {
+                    case 'bet_multiplier':
+                        if (isSunday && !gameState.isBankruptThisRound) {
+                            gameState.betMultiplier++;
+                            updateHostMessage(`A Tét Szorzód <strong>${gameState.betMultiplier}x</strong>-re nőtt! Pörgess tovább!`, true);
+                        }
+                        endTurn();
+                        break;
                     case 'bankrupt':
-                        if (gameState.hasBankruptProtection) {
-                            updateHostMessage("CSŐD! De a meglepetésként kapott védelmed megmentett! Nem vesztettél semmit.", true);
-                            gameState.hasBankruptProtection = false;
-                        } else if (isPrizeActive('one_hit_wonder') || isPrizeActive('four_hit_no_bankrupt')) {
-                           updateHostMessage("CSŐD! De a Lottón nyert védelmed megmentett! Nem vesztettél semmit.", true);
+                        if (gameState.hasBankruptProtection || isPrizeActive('one_hit_wonder') || isPrizeActive('four_hit_no_bankrupt')) {
+                            updateHostMessage("CSŐD! De a védelmed megmentett! Nem vesztettél semmit.", true);
+                            gameState.hasBankruptProtection = false; // Consume one-time protection
                         } else if(isSunday){
                              updateHostMessage(getRandomMessage('bankrupt_sunday', {bet: gameState.currentBet.toLocaleString('hu-HU')}), true);
-                             gameState.playerScore -= gameState.currentBet;
-                             gameState.playerScore = Math.max(0, gameState.playerScore);
-                             saveWeeklyScore(gameState.playerScore);
-                             gameState.roundWinnings = 0;
+                             // Bet is already lost (deducted at start). Round winnings are kept.
+                             gameState.betMultiplier = 0;
+                             gameState.isBankruptThisRound = true;
                         } else {
                              updateHostMessage(getRandomMessage('bankrupt'), true);
                              gameState.roundWinnings = 0;
@@ -4500,6 +4554,7 @@
             }
             
             function startNewRound() {
+                // Common round resets
                 gameState.isCategoryBonusActive = false;
                 gameState.hasBankruptProtection = false;
                 gameState.halverAmountLostThisRound = 0;
@@ -4507,12 +4562,18 @@
                 gameState.isSolveBonusDoubled = false;
                 gameState.roundWinnings = 0;
                 gameState.noMoreConsonants = false;
-                gameState.currentBet = 0;
                 gameState.guessedLetters = [];
                 gameState.consecutiveWrongConsonants = 0;
                 gameState.vowelsPurchasedThisRound = 0;
                 autoHintsContainer.innerHTML = '';
                 autoHintsContainer.style.display = 'none';
+
+                // Sunday-specific resets
+                if (isSunday) {
+                    gameState.betMultiplier = 0;
+                    gameState.isBankruptThisRound = false;
+                    gameState.currentBet = 0;
+                }
                 
                 setupRound();
             }
@@ -4544,7 +4605,7 @@
                 if(isSunday){
                     mainPrizeProgress.style.display = 'none';
                     document.getElementById('hourly-hud').style.display = 'none';
-                    document.getElementById('round-winnings-hud').style.flexBasis = '100%';
+                    document.getElementById('round-winnings-hud').style.flexBasis = 'auto'; // Reset flex-basis
 
                     const bet = await promptForBet();
                     if (bet === null) return;
@@ -4943,9 +5004,15 @@
                 skipErrorBtn.style.display = 'none';
                 wheelCenterButton.style.display = 'flex';
                 solveButton.style.display = 'inline-flex';
-                nyero21Button.style.display = 'inline-flex';
-                transferButton.style.display = 'inline-flex';
+                nyero21Button.style.display = isSunday ? 'none' : 'inline-flex';
+                transferButton.style.display = isSunday ? 'none' : 'inline-flex';
                 lottoButton.style.display = 'inline-flex';
+                
+                solveButtonDesktop.style.display = 'inline-flex';
+                nyero21ButtonDesktop.style.display = isSunday ? 'none' : 'inline-flex';
+                transferButtonDesktop.style.display = isSunday ? 'none' : 'inline-flex';
+                lottoButtonDesktop.style.display = 'inline-flex';
+
                 setupRound();
             }
 
@@ -4970,6 +5037,10 @@
                     alert("Hibás kód!");
                 }
             });
+            
+             function openDevMenu() {
+                devModal.classList.add('visible');
+            }
             
             devModalCloseBtn.addEventListener('click', () => devModal.classList.remove('visible'));
 
