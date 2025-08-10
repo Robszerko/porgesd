@@ -522,6 +522,14 @@
             color: var(--accent-teal); text-shadow: 0 0 8px var(--accent-teal);
         }
         
+        #sunday-bet-display {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #FF7043;
+            text-shadow: 0 0 5px #FF7043;
+        }
+        
         #lotto-prize-label, #prize-chest-label {
             font-size: clamp(1rem, 2vw, 1.2rem); color: var(--lotto-green); text-shadow: 0 0 8px var(--lotto-green);
         }
@@ -1033,6 +1041,7 @@
                              <div id="round-winnings-hud" class="player-hud">
                                 <div class="hud-label">Ebben a körben</div>
                                 <div id="round-winnings-display">0 Ft</div>
+                                <div id="sunday-bet-display" style="display: none;"></div>
                             </div>
                             <div id="sunday-multiplier-hud" class="player-hud" style="display: none; border-color: #FF7043;">
                                 <div class="hud-label">Tét Szorzó</div>
@@ -2803,7 +2812,6 @@
     { category: "Fődíj Feladvány", puzzle: "WOLFGANG AMADEUS MOZART", hint: "Híres személy" },
             ];
             
-
            const SPECIAL_PRIZES = [
                 { name: 'Éves előfizetés egy hírportálra', value: 25000 }, { name: 'Elektromos roller', value: 120000 },
                 { name: 'Két VIP jegy egy koncertre', value: 50000 }, { name: 'Egy rekesz kézműves sör', value: 20000 },
@@ -3059,6 +3067,7 @@
             const scoreDisplay = document.getElementById('score-display');
             const hourlyWinningsDisplay = document.getElementById('hourly-winnings-display');
             const roundWinningsDisplay = document.getElementById('round-winnings-display');
+            const sundayBetDisplay = document.getElementById('sunday-bet-display');
             const roundDisplay = document.getElementById('round-display');
             const hourBlockDisplay = document.getElementById('hour-block-display');
             const hostMessageMobile = document.getElementById('host-message');
@@ -3386,7 +3395,9 @@
 
                 // NEW: Add Bet Multiplier for Sundays
                 if (isSunday) {
-                    segments[2] = { label: 'TÉT SZORZÓ', value: 'bet_multiplier', color: '#FF7043' };
+                    // Replace a mid-value prize with the Bet Multiplier
+                    const indexToReplace = segments.findIndex(s => s.value === 600) !==-1 ? segments.findIndex(s => s.value === 600) : 2;
+                    segments[indexToReplace] = { label: 'TÉT SZORZÓ', value: 'bet_multiplier', color: '#FF7043' };
                 }
 
                 return segments;
@@ -3460,13 +3471,23 @@
             function updateUI() {
                 if (!gameState) return;
                 scoreDisplay.textContent = `${gameState.playerScore.toLocaleString('hu-HU')} Ft`;
-                hourlyWinningsDisplay.textContent = `${gameState.hourlyWinnings.toLocaleString('hu-HU')} Ft`;
                 
-                let roundWinningsText = `${gameState.roundWinnings.toLocaleString('hu-HU')} Ft`;
-                if(isSunday && gameState.currentBet > 0){
-                    roundWinningsText = `${gameState.roundWinnings.toLocaleString('hu-HU')} / -${gameState.currentBet.toLocaleString('hu-HU')} Ft`;
+                // Show/hide weekday vs Sunday HUDs
+                document.getElementById('hourly-hud').style.display = isSunday ? 'none' : 'flex';
+                document.getElementById('sunday-multiplier-hud').style.display = isSunday && gameState.gameInProgress ? 'flex' : 'none';
+
+                if (isSunday && gameState.gameInProgress) {
+                    roundWinningsDisplay.textContent = `${gameState.roundWinnings.toLocaleString('hu-HU')} Ft`;
+                    const totalBetPrize = gameState.betMultiplier * gameState.currentBet;
+                    sundayBetDisplay.style.display = 'block';
+                    sundayBetDisplay.innerHTML = `Tét: ${gameState.betMultiplier}x ${gameState.currentBet.toLocaleString('hu-HU')} Ft = <strong>${totalBetPrize.toLocaleString('hu-HU')} Ft</strong>`;
+                    sundayBetDisplay.style.opacity = gameState.isBankruptThisRound ? '0.5' : '1';
+                } else {
+                    roundWinningsDisplay.textContent = `${gameState.roundWinnings.toLocaleString('hu-HU')} Ft`;
+                    sundayBetDisplay.style.display = 'none';
+                    hourlyWinningsDisplay.textContent = `${gameState.hourlyWinnings.toLocaleString('hu-HU')} Ft`;
                 }
-                roundWinningsDisplay.textContent = roundWinningsText;
+
 
                 if(gameState.totalRounds > 0 && gameState.gameInProgress){
                     roundInfoContainer.style.display = 'flex';
@@ -3496,13 +3517,9 @@
 
                 lottoBajnokIcon.style.display = isPrizeActive('lotto_bajnok') ? 'block' : 'none';
 
-                // NEW: Update Sunday Multiplier HUD
                 if (isSunday && gameState.gameInProgress) {
-                    sundayMultiplierHud.style.display = 'flex';
                     sundayMultiplierDisplay.textContent = `${gameState.betMultiplier}x`;
                     sundayMultiplierHud.style.opacity = gameState.isBankruptThisRound ? '0.5' : '1';
-                } else {
-                    sundayMultiplierHud.style.display = 'none';
                 }
                 
                 updateAlphabetPanel();
@@ -3688,16 +3705,15 @@
                         } else {
                             const betMultiplierPrize = gameState.currentBet * gameState.betMultiplier;
                             const earningsFromRound = gameState.roundWinnings + solveBonus;
+                            const totalGained = gameState.currentBet + earningsFromRound + betMultiplierPrize;
                             
-                            gameState.playerScore += gameState.currentBet; // Get bet back
-                            gameState.playerScore += earningsFromRound;
-                            gameState.playerScore += betMultiplierPrize;
+                            gameState.playerScore += totalGained; 
 
                             let successMessage = `SIKERES KÖR! Visszakaptad a <strong>${gameState.currentBet.toLocaleString('hu-HU')} Ft-os</strong> tétedet! A körös nyereményed <strong>${earningsFromRound.toLocaleString('hu-HU')} Ft</strong>`;
                             if (betMultiplierPrize > 0) {
                                 successMessage += `, plusz a <strong>${gameState.betMultiplier}x-es szorzóval ${betMultiplierPrize.toLocaleString('hu-HU')} Ft</strong> extra nyereményt zsebeltél be!`;
                             }
-                            successMessage += ' Gratulálok!';
+                            successMessage += ` Összesen <strong>${totalGained.toLocaleString('hu-HU')} Ft</strong> a gyarapodás!`;
                             updateHostMessage(successMessage, true);
                         }
                     } else {
@@ -4127,6 +4143,7 @@
                         if (isSunday && !gameState.isBankruptThisRound) {
                             gameState.betMultiplier++;
                             updateHostMessage(`A Tét Szorzód <strong>${gameState.betMultiplier}x</strong>-re nőtt! Pörgess tovább!`, true);
+                            updateUI(); // Immediately update the HUD
                         }
                         endTurn();
                         break;
@@ -4603,10 +4620,6 @@
                 }
 
                 if(isSunday){
-                    mainPrizeProgress.style.display = 'none';
-                    document.getElementById('hourly-hud').style.display = 'none';
-                    document.getElementById('round-winnings-hud').style.flexBasis = 'auto'; // Reset flex-basis
-
                     const bet = await promptForBet();
                     if (bet === null) return;
                     gameState.currentBet = bet;
@@ -4636,6 +4649,11 @@
             }
 
              async function handleEndOfHour() {
+                 // On sunday, this logic is skipped
+                 if (isSunday) {
+                    gameOver(`Vége a vasárnapi játéknak!`);
+                    return;
+                 }
                 updateHostMessage("Fantasztikus játék volt, mind a 10 feladványt megfejtetted!", true);
 
                 const canPlay = gameState.hourlyWinnings >= MAIN_PRIZE_THRESHOLD;
@@ -5003,14 +5021,15 @@
                 newGameButton.style.display = 'none';
                 skipErrorBtn.style.display = 'none';
                 wheelCenterButton.style.display = 'flex';
+
+                const isSundayMode = isSunday;
                 solveButton.style.display = 'inline-flex';
-                nyero21Button.style.display = isSunday ? 'none' : 'inline-flex';
-                transferButton.style.display = isSunday ? 'none' : 'inline-flex';
-                lottoButton.style.display = 'inline-flex';
-                
                 solveButtonDesktop.style.display = 'inline-flex';
-                nyero21ButtonDesktop.style.display = isSunday ? 'none' : 'inline-flex';
-                transferButtonDesktop.style.display = isSunday ? 'none' : 'inline-flex';
+                nyero21Button.style.display = isSundayMode ? 'none' : 'inline-flex';
+                nyero21ButtonDesktop.style.display = isSundayMode ? 'none' : 'inline-flex';
+                transferButton.style.display = isSundayMode ? 'none' : 'inline-flex';
+                transferButtonDesktop.style.display = isSundayMode ? 'none' : 'inline-flex';
+                lottoButton.style.display = 'inline-flex';
                 lottoButtonDesktop.style.display = 'inline-flex';
 
                 setupRound();
