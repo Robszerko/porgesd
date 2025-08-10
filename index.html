@@ -676,6 +676,9 @@
             color: var(--font-color-light); box-sizing: border-box; margin-bottom: 20px;
             text-transform: uppercase;
         }
+        @keyframes shake-horizontal { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
+        .modal-input.wrong-guess { animation: shake-horizontal 0.8s cubic-bezier(.36,.07,.19,.97) both; }
+
         .modal-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
         .modal-btn {
             padding: 12px 25px; font-family: 'Montserrat', sans-serif;
@@ -1057,7 +1060,7 @@
                                 <div id="round-winnings-display">0 Ft</div>
                                 <div id="sunday-bet-display" style="display: none;"></div>
                             </div>
-                             <div id="sunday-bet-status-hud" class="player-hud" style="display: none;">
+                            <div id="sunday-bet-status-hud" class="player-hud" style="display: none;">
                                 <div id="sunday-bet-status-label">Tét Veszélyben!</div>
                             </div>
                              <div id="lotto-prize-hud" class="player-hud" style="display: none;">
@@ -1129,14 +1132,14 @@
             <li class="sunday"><strong>Prémium Vasárnap:</strong> Vasárnap a Heti Kasszádból tett tétekkel játszol.
                 <div class="sub-rule">
                     <ul>
-                        <li><strong>Tétmentő:</strong> A feltett téted a kör elején veszélyben van. Biztosítanod kell a "TÉTMENTŐ" mező kipörgetésével. Ha enélkül fejtessz meg egy feladványt, a téted elvész!</li>
+                         <li><strong>Tétmentő:</strong> A feltett téted a kör elején veszélyben van. Biztosítanod kell a "TÉTMENTŐ" mező kipörgetésével. Ha enélkül fejtessz meg egy feladványt, a téted elvész!</li>
                         <li><strong>Duplázódó Szorzó:</strong> A "TÉT SZORZÓ" mező minden pörgetéssel duplázza a szorzót (az első pörgetés 2x, a második 4x, stb.). Ha nem pörgeted ki, de a téted biztonságban van, csak a tétedet kapod vissza (1x).</li>
                         <li><strong>Sikeres Forduló:</strong> A nyereményed: a körben gyűjtött zsetonok + megfejtési bónusz. Ha a téted biztonságban van, visszakapod a tétet + az extra Tét Szorzó nyereményt.</li>
                         <li><strong>CSŐD Esetén:</strong> A feltett téted elvész, és a Tét Szorzó lenullázódik. A csőd pörgetése előtt gyűjtött zsetonjaid megmaradnak. A megfejtésért 1000 Ft bónusz jár.</li>
                     </ul>
                 </div>
             </li>
-            <li class="main-prize"><strong>Fődíj Játék:</strong> Ha egy órás játékblokk végére (a 10. feladvány után) legalább 150.000 Ft-ot gyűjtöttél az adott órában, esélyt kapsz a Fődíj Játékra! Itt az óra alatt gyűjtött teljes pénzedet kockáztatva, egyetlen fődíj-feladvány megfejtésével megduplázhatod azt! A játékhoz ki kell választanod 5 mássalhangzót és 1 magánhangzót, majd 30 másodperced van a megfejtésre. Ha nem gyűlt össze a limit, de a teljes vagyonodból ki tudod pótolni a hiányzó összeget, akkor is játszhatsz.</li>
+            <li class="main-prize"><strong>Fődíj Játék:</strong> Ha egy órás játékblokk végére (a 10. feladvány után) legalább 150.000 Ft-ot gyűjtöttél az adott órában, esélyt kapsz a Fődíj Játékra! Itt az óra alatt gyűjtött teljes pénzedet kockáztatva, egyetlen fődíj-feladvány megfejtésével megduplázhatod azt! A játékhoz ki kell választanod 5 mássalhangzót és 1 magánhangzót, majd 50 másodperced van a megfejtésre. Ha nem gyűlt össze a limit, de a teljes vagyonodból ki tudod pótolni a hiányzó összeget, akkor is játszhatsz.</li>
             <li class="millionaire"><strong>A Hét Milliomosa:</strong> Az a játékos, aki a vasárnapi játék végére a legmagasabb egyenleggel zár (minimum 1.000.000 Ft felett), elnyeri "A Hét Milliomosa" címet. Ez a cím a teljes következő hétre exkluzív bónuszokat és előnyöket biztosít számára a játékban.</li>
             <li class="exit"><strong>Kilépés:</strong> Ha egy órán belül kilépsz a játékból, majd visszatérsz, a második kilépésnél az adott órában szerzett összes nyereményed elvész. Gondold meg jól!</li>
         </ul>
@@ -1175,7 +1178,7 @@
          <div id="main-prize-board"></div>
          <p id="main-prize-given-letters"></p>
          <p id="main-prize-final-answer" style="display: none;"></p>
-         <div id="main-prize-timer">30.0</div>
+         <div id="main-prize-timer">50.0</div>
          <p id="main-prize-instructions">Írd be a megfejtést, mielőtt lejár az idő!</p>
          <div id="main-prize-alphabet-panel-container"></div>
          <input id="main-prize-solve-input" type="text" class="modal-input" placeholder="MEGFEJTÉS">
@@ -1294,13 +1297,14 @@
             
           const allPuzzles = [
   
-    { "category": "Földrajz", "puzzle": "A DUNA-DELTA", "hints": ["A Duna Fekete-tengeri torkolatvidéke.", "A Világörökség része."] },
-    { "category": "Sorozat", "puzzle": "BREAKING BAD - TOTÁL SZÍVÁS", "hints": ["Egy kémiatanárról szól, aki drogfőzésre adja a fejét.", "Walter White átalakulása a központi téma."] },
-    { "category": "Sportág", "puzzle": "CSELGÁNCS (JUDO)", "hints": ["Japán eredetű küzdősport.", "'A lágy út' a jelentése."] },
-    { "category": "Kifejezés", "puzzle": "AKHILLEUSZ-SAROK", "hints": ["Valakinek vagy valaminek a gyenge, sebezhető pontja.", "A görög hős egyetlen sebezhető pontja a sarka volt, ahol anyja fogta, mikor a Sztüx folyóba mártotta."] },
-    { category: "Történelem", puzzle: "RENDSZERVÁLTÁS", hints: ["A szocialista rendszer vége Magyarországon.", "1989-ben zajlott le."] },
-    { category: "Irodalom", puzzle: "A PÁL UTCAI FIÚK", hints: ["Molnár Ferenc ifjúsági regénye.", "A grundért folyik a harc benne."] },
-    { category: "Irodalom", puzzle: "EGRI CSILLAGOK", hints: ["Gárdonyi Géza történelmi regénye.", "Az 1552-es egri ostromról szól."] },
+            { "category": "Földrajz", "puzzle": "A DUNA-DELTA", "hints": ["A Duna Fekete-tengeri torkolatvidéke.", "A Világörökség része."] },
+            { "category": "Sorozat", "puzzle": "BREAKING BAD - TOTÁL SZÍVÁS", "hints": ["Egy kémiatanárról szól, aki drogfőzésre adja a fejét.", "Walter White átalakulása a központi téma."] },
+            { "category": "Sportág", "puzzle": "CSELGÁNCS (JUDO)", "hints": ["Japán eredetű küzdősport.", "'A lágy út' a jelentése."] },
+            { "category": "Kifejezés", "puzzle": "AKHILLEUSZ-SAROK", "hints": ["Valakinek vagy valaminek a gyenge, sebezhető pontja.", "A görög hős egyetlen sebezhető pontja a sarka volt, ahol anyja fogta, mikor a Sztüx folyóba mártotta."] },
+            { "category": "Történelem", "puzzle": "RENDSZERVÁLTÁS", "hints": ["A szocialista rendszer vége Magyarországon.", "1989-ben zajlott le."] },
+            { "category": "Irodalom", "puzzle": "A PÁL UTCAI FIÚK", "hints": ["Molnár Ferenc ifjúsági regénye.", "A grundért folyik a harc benne."] },
+            { "category": "Fődíj Feladvány", "puzzle": "AZ EMBERI TEST", "hint": "Biológiai rendszer", "hints": ["A csontváz adja a vázát.", "Több mint 600 izom található benne."] },
+            { category: "Irodalom", puzzle: "EGRI CSILLAGOK", hints: ["Gárdonyi Géza történelmi regénye.", "Az 1552-es egri ostromról szól."] },
     { category: "Tudomány és Feltalálók", puzzle: "NEUMANN JÁNOS", hints: ["A modern számítógépek működési elveinek megalkotója.", "A játékelmélet egyik atyja."] },
     { category: "Tudomány és Feltalálók", puzzle: "SZENT-GYÖRGYI ALBERT", hints: ["Nobel-díjas magyar orvos, biokémikus.", "Izolálta a C-vitamint a paprikából."] },
     { category: "Tudomány és Feltalálók", puzzle: "TELLER EDE", hints: ["A hidrogénbomba atyjaként ismert.", "Amerikában élt és dolgozott fizikus."] },
@@ -2824,9 +2828,10 @@
     { category: "Fődíj Feladvány", puzzle: "APOKALIPSZIS MOST", hint: "Filmcím" },
     { category: "Fődíj Feladvány", puzzle: "BOHEMIAN RHAPSODY A QUEEN EGYÜTTES", hint: "Zenei mű / Filmcím" },
     { category: "Fődíj Feladvány", puzzle: "WOLFGANG AMADEUS MOZART", hint: "Híres személy" },
-            ];
+     
+          ];
             
-            const SPECIAL_PRIZES = [
+           const SPECIAL_PRIZES = [
                 { name: 'Éves előfizetés egy hírportálra', value: 25000 }, { name: 'Elektromos roller', value: 120000 },
                 { name: 'Két VIP jegy egy koncertre', value: 50000 }, { name: 'Egy rekesz kézműves sör', value: 20000 },
                 { name: 'Egy évre elegendő üdítő', value: 40000 }, { name: 'Bérlet egy nyári fesztiválra', value: 150000 },
@@ -2871,7 +2876,7 @@
             const HUGE_WIN_THRESHOLD = 4000;
             const MILLIONAIRE_THRESHOLD = 1000000;
             const MAIN_PRIZE_THRESHOLD = 150000;
-            const MAIN_PRIZE_TIME = 30;
+            const MAIN_PRIZE_TIME = 50;
             const MINIGAME_PLAYS_PER_HOUR = 10;
             const LOTTO_COST = 5000;
             const MAX_LOTTO_TICKETS_PER_DAY = 5;
@@ -2916,14 +2921,13 @@
                 turn_end: ["Újra te jössz! Mutasd, mi a következő lépés!", "Ismét tiéd a terep! Pörgess, vagy vegyél egy magánhangzót!", "Folytatódhat a menet! Tiéd a pálya!"],
                 no_more_consonants: ["Az összes mássalhangzó elfogyott! Vegyél magánhangzót, vagy fejtsd meg! A célegyenesben vagy!", "Nincs több mássalhangzó a kalapban! Már csak a magánhangzók segíthetnek, vagy a zseniális elméd!"],
                 start_golden_round: ["Vigyázat! <strong>⭐ ARANY FORDULÓ!</strong> Most minden nyeremény duplán számít! Itt az idő nagyot álmodni!", "Ez az! Egy <strong>⭐ ARANY FORDULÓ!</strong> Itt igazán megéri kockáztatni!"],
-                sunday_greeting: ["Üdv a Prémium Vasárnapban! Itt a heti kasszád a tét. Lássuk, mennyit mersz kockáztatni!", "Vasárnap van, a nagy fogadások napja! Tedd meg a tétet, és induljon a játék a fődíjért!"],
+                sunday_greeting: ["Üdv a Prémium Vasárnapban! A cél a milliomos cím! A tétedet először a <strong>Tétmentővel</strong> kell biztonságba helyezned!", "Vasárnap van, a nagy fogadások napja! Tedd meg a tétet, de ne feledd, előbb biztosítsd a 'Tétmentővel'!"],
                 quit_warning: ["Vigyázat! Ebben az órában már kiléptél egyszer. Ha most ismét kilépsz, az eddigi nyereményed elvész!", "Második esély ebben az órában! Ha most abbahagyod, a jelenlegi gyűjtésed nullázódik."],
                 free_vowel_spin: ["<strong>INGYEN MÁNHANGZÓ!</strong> Szuper! A következő magánhangzó a ház ajándéka!", "Ezt nevezem! Most ingyen vehetsz egy magánhangzót, csak úgy, lazán!"],
                 surprise_spin_money: ["<strong>MEGLEPETÉS!</strong> A kerék egy kis bónusszal ajándékoz meg: <strong>{value} Ft!</strong> Csak úgy, mert jó fej.", "Hoppá, egy kis meglepetés! Nyereményed <strong>{value} Ft!</strong> Ezt zsebeld be!"],
                 surprise_spin_vowel: ["<strong>MEGLEPETÉS!</strong> A jutalmad egy ingyen magánhangzó! Micsoda szerencse!", "A kerék ma bőkezű: tessék, egy ingyen magánhangzó!"],
             };
             
-            // SCRIPT
             let gameState;
             let hourlyPuzzleIndices;
             let currentModal = { resolve: null, reject: null };
@@ -3058,7 +3062,6 @@
                 }},
             ];
             
-            // DOM Elements
             const wheel = document.getElementById('wheel');
             const wheelCenterButton = document.getElementById('wheel-center-button');
             const wheelCenterText = document.getElementById('wheel-center-text');
@@ -3278,7 +3281,6 @@
                     hasFreeSolveAttempt: false,
                     isSolveBonusDoubled: false,
                     hasFreeLottoTicket: false,
-                    // Sunday Special state
                     betMultiplier: 0,
                     isBankruptThisRound: false,
                     betIsSafe: false,
@@ -3399,19 +3401,23 @@
                 if(round === 9) segments = [ { label: 'CSŐD', value: 'bankrupt', color: '#37474F' }, { label: '7500', value: 7500, color: '#FFEE58' }, { label: 'FELEZŐ', value: 'halver', color: 'var(--halver-orange)' }, { label: '1500', value: 1500, color: '#F06292' }, { label: 'KÜLÖNDÍJ', value: 'special_prize', color: '#B39DDB' }, { label: '2500', value: 2500, color: '#9CCC65' }, { label: 'CSŐD', value: 'bankrupt', color: '#37474F' }, { label: '4000', value: 4000, color: '#D4E157' }, { label: 'DUPLA/SEMMI', value: 'double_or_nothing', color: '#5C6BC0'}, { label: '3000', value: 3000, color: '#FFB74D' }, { label: '+10000', value: 10000, color: '#42A5F5', isBonus: true }, { label: '5000', value: 5000, color: '#E91E63' } ];
                 if(round === 10) segments = [ { label: '+10000', value: 10000, color: '#42A5F5', isBonus: true }, { label: '5000', value: 5000, color: '#FFEE58' }, { label: '4500', value: 4500, color: '#BA68C8' }, { label: '3000', value: 3000, color: '#D4E157' }, { label: 'KÜLÖNDÍJ', value: 'special_prize', color: '#B39DDB' }, { label: '4000', value: 4000, color: '#9CCC65' }, { label: 'INGYEN MÁNHANGZÓ', value: 'free_vowel', color: '#81C784' }, { label: '7500', value: 7500, color: '#FFCA28' }, { label: 'SEGÍTSÉG', value: 'assistance', color: '#64B5F6' }, { label: '2500', value: 2500, color: '#FFB74D' }, { label: '+7500', value: 7500, color: '#42A5F5', isBonus: true }, { label: 'MEGLEPETÉS', value: 'surprise', color: 'var(--surprise-purple)' } ];
                 
-                if (gameState.specialPrizeWon) {
-                    const prizeIndex = segments.findIndex(s => s.value === 'special_prize');
-                    if (prizeIndex !== -1) segments[prizeIndex] = { label: '2000', value: 2000, color: '#4DB6AC' };
+                const prizeIndex = segments.findIndex(s => s.value === 'special_prize');
+                if (prizeIndex !== -1 && gameState.specialPrizeWon) {
+                    segments[prizeIndex] = { label: '6000', value: 6000, color: '#4DB6AC' };
                 }
                 
                 if (isPrizeActive('four_hit_no_bankrupt')) {
                     segments = segments.filter(s => s.value !== 'bankrupt');
                 }
 
-                // NEW: Add Bet Saver & Bet Multiplier for Sundays
                 if (isSunday) {
                     segments[2] = { label: 'TÉT SZORZÓ', value: 'bet_multiplier', color: '#FF7043' };
-                    segments[6] = { label: 'TÉTMENTŐ', value: 'bet_saver', color: 'var(--bet-saver-green)' };
+                    const saverIndex = segments.findIndex(s => s.value === 600) !==-1 ? segments.findIndex(s => s.value === 600) : 6;
+                    if(gameState.betIsSafe) {
+                        segments[saverIndex] = { label: '3000', value: 3000, color: 'var(--bet-saver-green)' };
+                    } else {
+                        segments[saverIndex] = { label: 'TÉTMENTŐ', value: 'bet_saver', color: 'var(--bet-saver-green)' };
+                    }
                 }
 
                 return segments;
@@ -3486,7 +3492,6 @@
                 if (!gameState) return;
                 scoreDisplay.textContent = `${gameState.playerScore.toLocaleString('hu-HU')} Ft`;
                 
-                // Show/hide weekday vs Sunday HUDs
                 document.getElementById('hourly-hud').style.display = isSunday ? 'none' : 'flex';
                 sundayBetStatusHud.style.display = isSunday && gameState.gameInProgress ? 'flex' : 'none';
 
@@ -3503,7 +3508,6 @@
                     }
                     sundayBetDisplay.style.opacity = gameState.isBankruptThisRound ? 0.5 : 1;
 
-                    // Update Bet Status HUD
                     if(gameState.betIsSafe) {
                         sundayBetStatusLabel.textContent = "Tét Biztonságban!";
                         sundayBetStatusHud.classList.remove('in-danger');
@@ -3513,7 +3517,6 @@
                         sundayBetStatusHud.classList.remove('safe');
                         sundayBetStatusHud.classList.add('in-danger');
                     }
-
 
                 } else {
                     roundWinningsDisplay.textContent = `${gameState.roundWinnings.toLocaleString('hu-HU')} Ft`;
@@ -3680,7 +3683,6 @@
                         boosterBar.style.strokeDashoffset = circumference;
                         setTimeout(()=> { boosterBar.style.transition = 'none' }, 500);
                     } catch (error) {
-                        console.error("Hiba a pörgetés feldolgozása közben:", error);
                         updateHostMessage("Hoppá, egy technikai hiba történt! A 'Hiba Átugrása' gombbal folytathatod.", true);
                         skipErrorBtn.style.display = 'block';
                     }
@@ -3860,6 +3862,7 @@
                  mainPrizeCategory.textContent = mainPrizePuzzle.category;
                  mainPrizeAlphabetContainer.style.display = 'none';
 
+                 mainPrizeInstructions.innerHTML = `Meghatározás: <strong>${mainPrizePuzzle.hint || 'Nincs megadva'}</strong>`;
                  mainPrizeInstructions.style.display = 'block';
                  mainPrizeSolveInput.style.display = 'block';
                  mainPrizeSolveInput.value = '';
@@ -3874,7 +3877,8 @@
                  });
                      
                  let timeLeft = MAIN_PRIZE_TIME * 10;
-                 let hintGiven = false;
+                 let hint1Given = false;
+                 let hint2Given = false;
                  mainPrizeTimer.textContent = (timeLeft / 10).toFixed(1);
                  mainPrizeTimer.classList.remove('timer-low');
                  mainPrizeSolveInput.disabled = false;
@@ -3885,11 +3889,25 @@
                      timeLeft--;
                      mainPrizeTimer.textContent = (timeLeft / 10).toFixed(1);
                      
-                     if (!hintGiven && timeLeft <= 150) { // 15 seconds
-                        hintGiven = true;
-                        if (mainPrizePuzzle.hint) {
-                            mainPrizeInstructions.innerHTML = `Segítség: Ez egy <strong>${mainPrizePuzzle.hint}</strong>`;
+                     if (!hint1Given && timeLeft <= 300) {
+                        hint1Given = true;
+                        if (mainPrizePuzzle.hints && mainPrizePuzzle.hints[0]) {
+                            mainPrizeInstructions.innerHTML += `<br><br>Segítség: <strong>${mainPrizePuzzle.hints[0]}</strong>`;
                         }
+                     }
+
+                     if (!hint2Given && timeLeft <= 150) {
+                         hint2Given = true;
+                         if (mainPrizePuzzle.puzzle.replace(/ /g,'').length > 8) {
+                             const unrevealedLetters = [...mainPrizePuzzle.puzzle].filter(c => FULL_ALPHABET.includes(c) && !mainPrizeBoard.querySelector(`.puzzle-tile[data-letter="${c}"]`).classList.contains('revealed'));
+                             const uniqueUnrevealed = [...new Set(unrevealedLetters)];
+                             for(let i=0; i<2 && uniqueUnrevealed.length > 0; i++){
+                                 const randIndex = Math.floor(Math.random() * uniqueUnrevealed.length);
+                                 const letterToReveal = uniqueUnrevealed.splice(randIndex, 1)[0];
+                                 mainPrizeBoard.querySelectorAll(`.puzzle-tile[data-letter="${letterToReveal}"]`).forEach(t => t.classList.add('revealed'));
+                             }
+                             mainPrizeInstructions.innerHTML += `<br><br><strong>Betűsegítség aktiválva!</strong>`;
+                         }
                      }
 
                      if(timeLeft <= 100 && !mainPrizeTimer.classList.contains('timer-low')) {
@@ -3899,6 +3917,24 @@
                         endMainPrizeGame(false, true);
                      }
                  }, 100);
+            }
+            
+            function handleMainPrizeGuess() {
+                const mainPrizePuzzles = allPuzzles.filter(p => p.category === 'Fődíj Feladvány');
+                const mainPrizePuzzle = mainPrizePuzzles[gameState.puzzleHourId % mainPrizePuzzles.length];
+                const normalizeText = (text) => text.toUpperCase().replace(/[^A-ZÁÉÍÓÖŐUÚÜŰ0-9]/g, '');
+                const cleanPuzzle = normalizeText(mainPrizePuzzle.puzzle);
+                const attempt = normalizeText(mainPrizeSolveInput.value);
+                
+                if (attempt === cleanPuzzle) {
+                    endMainPrizeGame(true);
+                } else {
+                    mainPrizeSolveInput.classList.add('wrong-guess');
+                    mainPrizeSolveInput.value = '';
+                    setTimeout(() => {
+                        mainPrizeSolveInput.classList.remove('wrong-guess');
+                    }, 820);
+                }
             }
             
             function endMainPrizeGame(isWin, isTimeout = false) {
@@ -3915,7 +3951,9 @@
                        gameState.hourlyWinnings += winnings;
                     }
                     const totalDisplay = (stake + winnings).toLocaleString('hu-HU');
-                    updateHostMessage(getRandomMessage('main_prize_win', { winnings: totalDisplay }) + (isDevTest ? ' (TESZT)' : ''), true);
+                    
+                    mainPrizeTitle.textContent = "SIKERES MEGFEJTÉS!";
+                    mainPrizeInstructions.innerHTML = `Gratulálok, megdupláztad a pénzed! <br><strong>Nyereményed: ${totalDisplay} Ft</strong>`
                 } else {
                     if (!isDevTest) {
                         gameState.playerScore -= stake;
@@ -4180,6 +4218,7 @@
                         if (isSunday && !gameState.betIsSafe) {
                             gameState.betIsSafe = true;
                             updateHostMessage('TÉTMENTŐ! A téted most már biztonságban van!', true);
+                            drawWheel(gameState.currentRound);
                             updateUI();
                         }
                         endTurn();
@@ -4313,6 +4352,7 @@
                     gameState.roundWinnings += cashAward;
                     updateHostMessage(`Már az összes különdíjat bezsebelted! Gratulálunk! Jutalmad helyette <strong>${cashAward.toLocaleString('hu-HU')} Ft</strong>!`, true);
                     gameState.specialPrizeWon = true;
+                    drawWheel(gameState.currentRound);
                     endTurn();
                     return;
                 }
@@ -4341,6 +4381,7 @@
                 }
                 
                 gameState.specialPrizeWon = true;
+                drawWheel(gameState.currentRound);
                 endTurn();
             }
             
@@ -4615,7 +4656,6 @@
             }
             
             function startNewRound() {
-                // Common round resets
                 gameState.isCategoryBonusActive = false;
                 gameState.hasBankruptProtection = false;
                 gameState.halverAmountLostThisRound = 0;
@@ -4629,7 +4669,6 @@
                 autoHintsContainer.innerHTML = '';
                 autoHintsContainer.style.display = 'none';
 
-                // Sunday-specific resets
                 if (isSunday) {
                     gameState.betMultiplier = 0;
                     gameState.isBankruptThisRound = false;
@@ -5153,14 +5192,7 @@
             prizeChestCloseBtn.addEventListener('click', () => prizeChestModal.classList.remove('visible'));
             
             mainPrizeSelectConfirmBtn.addEventListener('click', runMainPrizeCountdown);
-            mainPrizeConfirmBtn.addEventListener('click', () => {
-                 const mainPrizePuzzles = allPuzzles.filter(p => p.category === 'Fődíj Feladvány');
-                 const mainPrizePuzzle = mainPrizePuzzles[gameState.puzzleHourId % mainPrizePuzzles.length];
-                 const normalizeText = (text) => text.toUpperCase().replace(/[^A-ZÁÉÍÓÖŐUÚÜŰ0-9]/g, '');
-                 const cleanPuzzle = normalizeText(mainPrizePuzzle.puzzle);
-                 const attempt = normalizeText(mainPrizeSolveInput.value);
-                 endMainPrizeGame(attempt === cleanPuzzle);
-            });
+            mainPrizeConfirmBtn.addEventListener('click', handleMainPrizeGuess);
             mainPrizeCloseBtn.addEventListener('click', forceEndMainPrize);
 
 
@@ -5188,4 +5220,4 @@
         });
     </script>
 </body>
-</html>
+</html>```
