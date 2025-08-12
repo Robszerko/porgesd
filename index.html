@@ -824,7 +824,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 10px; /* Reduced gap for mobile */
         }
         
         #main-prize-header {
@@ -837,7 +837,7 @@
         }
 
         #main-prize-logo-container {
-            width: clamp(100px, 15vw, 150px);
+            width: clamp(80px, 12vw, 120px); /* Reduced size */
             text-align: center;
         }
         
@@ -849,7 +849,7 @@
         #main-prize-logo-container p {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-size: clamp(0.9rem, 2vw, 1.3rem); /* Reduced size */
             color: var(--accent-gold);
             text-shadow: 0 0 10px var(--accent-gold);
             margin: 5px 0 0 0;
@@ -862,7 +862,8 @@
         }
         
         #main-prize-timer {
-            font-size: clamp(3.5rem, 12vw, 7rem); font-weight: 900;
+            font-size: clamp(2.8rem, 10vw, 7rem); /* Reduced min size */
+            font-weight: 900;
             font-family: 'Montserrat', sans-serif;
             color: var(--accent-gold); text-shadow: 0 0 20px var(--accent-gold);
         }
@@ -870,30 +871,37 @@
         @keyframes pulse { 0% { transform: scale(1); text-shadow: 0 0 20px var(--pointer-red);} 50% { transform: scale(1.05); text-shadow: 0 0 35px var(--pointer-red);} 100% { transform: scale(1); text-shadow: 0 0 20px var(--pointer-red);} }
         #main-prize-timer.timer-low { animation: pulse 0.7s infinite ease-in-out; }
 
-        #main-prize-title { font-size: clamp(2rem, 5vw, 3rem); margin: 0; font-family: 'Montserrat', sans-serif; color: var(--accent-gold); text-shadow: 0 0 15px var(--accent-gold); text-align: center; }
-        #main-prize-category { font-size: clamp(1.2rem, 2.5vw, 1.6rem); color: var(--font-color-light); text-shadow: none; text-align: center; margin: 0; }
+        #main-prize-title { 
+            font-size: clamp(1.5rem, 5vw, 2.5rem); /* Reduced size */
+            margin: 0; font-family: 'Montserrat', sans-serif; 
+            color: var(--accent-gold); text-shadow: 0 0 15px var(--accent-gold); text-align: center; 
+        }
+        #main-prize-category { 
+            font-size: clamp(1rem, 2.5vw, 1.5rem); /* Reduced size */
+            color: var(--font-color-light); text-shadow: none; text-align: center; margin: 0; 
+        }
         
         #main-prize-definition {
             background: linear-gradient(145deg, var(--accent-gold), #FF8F00);
             box-shadow: 0 0 20px var(--accent-gold);
             color: var(--font-color-dark);
-            padding: 12px 25px;
+            padding: 10px 20px; /* Reduced padding */
             border-radius: 50px;
             font-family: 'Montserrat', sans-serif;
-            font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+            font-size: clamp(0.9rem, 2.5vw, 1.4rem); /* Reduced size */
             font-weight: 700;
             text-align: center;
             width: auto;
             max-width: 90%;
-            margin: 10px 0;
+            margin: 5px 0;
             display: none;
         }
 
         #main-prize-board { margin: 10px 0; }
-        #main-prize-board .puzzle-tile { width: clamp(35px, 5vw, 60px); height: clamp(45px, 6.5vw, 75px); }
-        #main-prize-board .tile-back { font-size: clamp(1.8rem, 4vw, 3rem); }
-        #main-prize-given-letters { font-size: clamp(1rem, 2vw, 1.2rem); text-align: center; margin: 0;}
-        #main-prize-final-answer { color: var(--win-green); font-weight: bold; font-size: clamp(1.2rem, 2.5vw, 1.5rem); margin-top: 10px; }
+        #main-prize-board .puzzle-tile { width: clamp(30px, 6vw, 50px); height: clamp(40px, 8vw, 65px); } /* Adjusted for mobile */
+        #main-prize-board .tile-back { font-size: clamp(1.5rem, 4.5vw, 2.5rem); } /* Adjusted for mobile */
+        #main-prize-given-letters { font-size: clamp(0.9rem, 2vw, 1.1rem); text-align: center; margin: 0;}
+        #main-prize-final-answer { color: var(--win-green); font-weight: bold; font-size: clamp(1.1rem, 2.5vw, 1.4rem); margin-top: 10px; }
         #main-prize-instructions { display: none; }
         #main-prize-alphabet-panel-container { margin-top: 15px; max-width: 800px; width: 100%; }
         #main-prize-solve-input { margin: 15px auto; display: block; max-width: 600px; width: 90%; }
@@ -978,6 +986,7 @@
         }
         #lotto-ticket-content {
             padding: 20px;
+            box-sizing: border-box;
         }
         #lotto-selected-display {
             font-size: 1.1rem;
@@ -1020,6 +1029,12 @@
              background-color: #9FA8DA; font-weight: bold;
         }
         .submitted-ticket-number.match { background-color: var(--lotto-green); color: white; box-shadow: 0 0 10px var(--lotto-green); }
+        #lotto-submitted-tickets {
+            max-height: 150px;
+            overflow-y: auto;
+            padding-right: 5px; /* space for scrollbar */
+            margin-bottom: 10px;
+        }
         #active-bonuses-list, #prize-chest-list { list-style-type: none; padding: 0; max-height: 40vh; overflow-y: auto;}
         #active-bonuses-list li, #prize-chest-list li { background-color: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; margin-bottom: 10px; display: flex; flex-direction: column; align-items: center; }
         #prize-chest-list li { flex-direction: row; justify-content: space-between;}
@@ -1046,8 +1061,15 @@
             #game-area { flex-direction: column; align-items: center; gap: 25px; }
             #puzzle-section, #game-controls-section { width: 100%; max-width: 450px; }
             #rules-container h2 { font-size: 1.8rem; } #rules-container li { font-size: 0.9rem; }
-            #lotto-grid { gap: 5px; }
-            .lotto-number { width: 32px; height: 32px; }
+            #lotto-grid { 
+                gap: 4px; /* Adjusted gap */
+                margin: 10px 0;
+            } 
+            .lotto-number { 
+                width: 28px; /* Adjusted size */
+                height: 28px; 
+                font-size: 0.8rem; /* Adjusted font size */
+            }
             #wheel-center-button { width: 70px; height: 70px; font-size: 0.9rem; }
             #booster-svg circle { stroke-width: 7; }
 
@@ -1475,7 +1497,262 @@
             { "category": "Sportág", "puzzle": "CSELGÁNCS (JUDO)", "hints": ["Japán eredetű küzdősport.", "'A lágy út' a jelentése."] },
             { "category": "Kifejezés", "puzzle": "AKHILLEUSZ-SAROK", "hints": ["Valakinek vagy valaminek a gyenge, sebezhető pontja.", "A görög hős egyetlen sebezhető pontja a sarka volt, ahol anyja fogta, mikor a Sztüx folyóba mártotta."] },
             { "category": "Történelem", "puzzle": "RENDSZERVÁLTÁS", "hints": ["A szocialista rendszer vége Magyarországon.", "1989-ben zajlott le."] },
-            { "category": "Irodalom", "puzzle": "A PÁL UTCAI FIÚK", "hints": ["Molnár Ferenc ifjúsági regénye.", "A grundért folyik a harc benne."] },
+            { "category": "Magyar Író", "puzzle": "MÁRAI SÁNDOR", "hints": ["A 20. századi magyar polgári irodalom nagy alakja.", "Leghíresebb műve 'A gyertyák csonkig égnek'."] },
+    { "category": "Magyar Irodalmi Mű", "puzzle": "A GYERTYÁK CSONKIG ÉGNEK", "hints": ["Márai Sándor regénye.", "Két idős férfi, egy tábornok és egy barátja utolsó, sorsdöntő találkozásáról szól."] },
+    { "category": "Magyar Költő", "puzzle": "VÖRÖSMARTY MIHÁLY", "hints": ["A reformkor és a romantika kiemelkedő költője.", "A 'Szózat' és a 'Csongor és Tünde' szerzője."] },
+    { "category": "Magyar Irodalmi Mű", "puzzle": "CSONGOR ÉS TÜNDE", "hints": ["Vörösmarty Mihály drámai költeménye.", "A boldogság kereséséről szóló filozofikus mesejáték."] },
+    { "category": "Magyar Író", "puzzle": "SZERB ANTAL", "hints": ["Irodalomtörténész és regényíró.", "Leghíresebb művei 'A Pendragon-legenda' és az 'Utas és holdvilág'."] },
+    { "category": "Magyar Irodalmi Mű", "puzzle": "UTAS ÉS HOLDVILÁG", "hints": ["Szerb Antal regénye.", "Egy nászúton lévő férfi keresi az elveszett gyerekkorát Olaszországban."] },
+    { "category": "Magyar Írónő", "puzzle": "KAFFKA MARGIT", "hints": ["A Nyugat nemzedékének legjelentősebb írónője.", "A 'Színek és évek' című regény szerzője."] },
+    { "category": "Magyar Költő", "puzzle": "PILINSZKY JÁNOS", "hints": ["A 20. század egyik legjelentősebb katolikus költője.", "A 'Trapéz és korlát' című verseskötet szerzője."] },
+    { "category": "Magyar Író", "puzzle": "ESTERHÁZY PÉTER", "hints": ["A posztmodern magyar irodalom kiemelkedő alakja.", "A 'Harmonia Caelestis' című családtörténeti regény írója."] },
+    { "category": "Magyar Költő", "puzzle": "CSOKONAI VITÉZ MIHÁLY", "hints": ["A magyar felvilágosodás korának költője.", "A 'Dorottya, vagyis a dámák diadalma a fársángon' című komikus eposz szerzője."] },
+    { "category": "Magyar Író", "puzzle": "KRÚDY GYULA", "hints": ["A 20. század elejének nagy magyar írója, az álomszerű, nosztalgikus próza mestere.", "Híres hőse Szindbád, leghíresebb regénye 'A vörös postakocsi'."] },
+    { "category": "Magyar Író", "puzzle": "KRASZNAHORKAI LÁSZLÓ", "hints": ["Nemzetközi Booker-díjas magyar író.", "Híres a hosszú, hömpölygő mondatairól, a 'Sátántangó' szerzője."] },
+    { "category": "Világirodalmi Író", "puzzle": "GEORGE ORWELL", "hints": ["Angol író, a disztópikus regények mestere.", "Leghíresebb művei az '1984' és az 'Állatfarm'."] },
+    { "category": "Világirodalmi Mű", "puzzle": "1984 (EZERKILENCSZÁZNYOLCVANNÉGY)", "hints": ["George Orwell regénye egy totalitárius államról.", "A 'Nagy Testvér mindent lát' a könyv híres mondata."] },
+    { "category": "Világirodalmi Mű", "puzzle": "ÁLLATFARM", "hints": ["George Orwell szatirikus kisregénye.", "A sztálini Szovjetuniót allegorikusan ábrázolja egy farmon élő állatokon keresztül."] },
+    { "category": "Világirodalmi Író", "puzzle": "ALBERT CAMUS", "hints": ["Francia egzisztencialista író, Nobel-díjas.", "A 'Közöny' és 'A pestis' című regények szerzője."] },
+    { "category": "Világirodalmi Mű", "puzzle": "A PESTIS", "hints": ["Albert Camus regénye.", "Egy algériai városban kitört járványt és az emberek küzdelmét mutatja be."] },
+    { "category": "Világirodalmi Író", "puzzle": "FRANZ KAFKA", "hints": ["Prágai német nyelvű író, a 20. századi irodalom egyik legnagyobb hatású alakja.", "Híres művei 'A per' és 'Az átváltozás'."] },
+    { "category": "Világirodalmi Mű", "puzzle": "AZ ÁTVÁLTOZÁS", "hints": ["Franz Kafka novellája.", "Főhőse, Gregor Samsa egy reggel arra ébred, hogy féreggé változott."] },
+    { "category": "Világirodalmi Írónő", "puzzle": "JANE AUSTEN", "hints": ["Angol írónő a 18-19. század fordulóján.", "A 'Büszkeség és balítélet' és az 'Értelem és érzelem' szerzője."] },
+    { "category": "Világirodalmi Mű", "puzzle": "BÜSZKESÉG ÉS BALÍTÉLET", "hints": ["Jane Austen regénye.", "Elizabeth Bennet és a gőgös Mr. Darcy bonyolult kapcsolatáról szól."] },
+    { "category": "Világirodalmi Író", "puzzle": "JULES VERNE", "hints": ["A tudományos-fantasztikus irodalom egyik atyja.", "Híres művei a 'Nemo kapitány' és a '80 nap alatt a Föld körül'."] },
+    { "category": "Világirodalmi Mű", "puzzle": "80 NAP ALATT A FÖLD KÖRÜL", "hints": ["Jules Verne regénye.", "Phileas Fogg és inasa, Passepartout fogadásból eredő kalandos utazása."] },
+    { "category": "Világirodalmi Író", "puzzle": "EDGAR ALLAN POE", "hints": ["Amerikai költő és novellaíró, a horror és a detektívtörténet mestere.", "'A holló' című verse a leghíresebb."] },
+    { "category": "Világirodalmi Mű", "puzzle": "A HOLLÓ", "hints": ["Edgar Allan Poe verse.", "Egy gyászoló férfi és egy beszélő madár párbeszéde, a madár egyetlen szava: 'Soha már'."] },
+    { "category": "Világirodalmi Író", "puzzle": "ERNEST HEMINGWAY", "hints": ["Nobel-díjas amerikai író, a 'elveszett nemzedék' tagja.", "'Az öreg halász és a tenger' és 'Akiért a harang szól' szerzője."] },
+    { "category": "Világirodalmi Mű", "puzzle": "AKIÉRT A HARANG SZÓL", "hints": ["Ernest Hemingway regénye.", "A spanyol polgárháború idején játszódik, egy amerikai önkéntes a főhőse."] },
+    { "category": "Drámaíró", "puzzle": "SZOPHOKLÉSZ", "hints": ["Ókori görög drámaíró, Aiszkhülosz és Euripidész mellett a legnagyobbak egyike.", "Leghíresebb műve az 'Antigoné' és az 'Oidipusz király'."] },
+    { "category": "Világirodalmi Mű", "puzzle": "OIDIPUSZ KIRÁLY", "hints": ["Szophoklész tragédiája.", "A thébai királyról szól, aki tudtán kívül megöli az apját és feleségül veszi az anyját."] },
+    { "category": "Világirodalmi Író", "puzzle": "CHARLES DICKENS", "hints": ["Angol író a viktoriánus korban, a társadalmi regény mestere.", "A 'Twist Olivér' és a 'Karácsonyi ének' szerzője."] },
+    { "category": "Világirodalmi Mű", "puzzle": "TWIST OLIVÉR", "hints": ["Charles Dickens regénye.", "Egy árva fiú kalandjai a 19. századi London alvilágában."] },
+    { "category": "Drámaíró", "puzzle": "MOLIÈRE", "hints": ["Francia drámaíró a 17. században, a komédia nagymestere.", "Híres művei a 'Tartuffe' és 'A fösvény'."] },
+    { "category": "Világirodalmi Mű", "puzzle": "A FÖSVÉNY", "hints": ["Molière komédiája.", "Harpagon, a zsugori főhős pénz iránti szenvedélyéről szól."] },
+    { "category": "Sci-Fi Író", "puzzle": "ISAAC ASIMOV", "hints": ["A sci-fi irodalom 'nagy hármasának' egyike.", "Az 'Alapítvány' sorozat és a robotika három törvényének megalkotója."] },
+    { "category": "Sci-Fi Író", "puzzle": "FRANK HERBERT", "hints": ["A 'Dűne' című sci-fi regénysorozat szerzője.", "A történet egy sivatagos bolygón játszódik, ahol egy értékes fűszer a hatalom kulcsa."] },
+    { "category": "Sci-Fi Regény", "puzzle": "DŰNE", "hints": ["Frank Herbert regénye.", "A Paul Atreides és családjának története az Arrakis nevű sivatagbolygón."] },
+    { "category": "Világirodalmi Író", "puzzle": "MARK TWAIN", "hints": ["Amerikai író, humorista, a Mississippi folyó krónikása.", "A 'Tom Sawyer kalandjai' és a 'Huckleberry Finn kalandjai' szerzője."] },
+    { "category": "Világirodalmi Író", "puzzle": "UMBERTO ECO", "hints": ["Olasz író és szemiotikaprofesszor.", "Leghíresebb regénye 'A rózsa neve'."] },
+    { "category": "Világirodalmi Mű", "puzzle": "A RÓZSA NEVE", "hints": ["Umberto Eco regénye.", "Egy középkori kolostorban játszódó bűnügyi történet, főhőse Baskerville-i Vilmos."] },
+    { "category": "Világirodalmi Író", "puzzle": "VOLTAIRE", "hints": ["A francia felvilágosodás egyik legnagyobb alakja, író, filozófus.", "Leghíresebb műve a 'Candide vagy az optimizmus'."] },
+    { "category": "Világirodalmi Mű", "puzzle": "CANDIDE VAGY AZ OPTIMIZMUS", "hints": ["Voltaire szatirikus regénye.", "Főhőse naivan hiszi, hogy 'a létező világok legjobbikában' él, de sorozatos csapások érik."] },
+    { "category": "Irodalmi Karakter", "puzzle": "JEAN VALJEAN", "hints": ["Victor Hugo 'A nyomorultak' című regényének főhőse.", "Egy vekni kenyér ellopása miatt évekig raboskodik, de később jó útra tér."] },
+    { "category": "Irodalmi Műfaj", "puzzle": "EPOSZ", "hints": ["Hősköltemény, verses nagyepikai műfaj.", "Rendkívüli képességű hősök és istenek szerepelnek benne, mint az 'Iliász'-ban."] },
+    { "category": "Versforma", "puzzle": "SZONETT", "hints": ["14 sorból álló, kötött versforma.", "Petrarca és Shakespeare a leghíresebb mesterei."] },
+    { "category": "Irodalmi Műfaj", "puzzle": "BALLADA", "hints": ["Drámai feszültségű, párbeszédes, tragikus végű verses kisepikai műfaj.", "Arany János a magyar irodalom legnagyobb mestere."] },
+    { "category": "Irodalmi Eszköz", "puzzle": "METAFORA", "hints": ["Szókép, amely két fogalom közös tulajdonságán alapuló azonosítást jelent.", "Például: 'A szeme két sötét gyémánt'."] },
+    { "category": "Irodalmi Műfaj", "puzzle": "DISZTÓPIA", "hints": ["Negatív utópia, egy jövőbeli, elnyomó és rosszul működő társadalmat ábrázoló mű.", "Az '1984' és a 'Szép új világ' a legismertebb példái."] },
+    { "category": "Irodalmi Folyóirat", "puzzle": "A NYUGAT", "hints": ["A 20. század elejének legfontosabb magyar irodalmi folyóirata.", "Ady, Babits, Kosztolányi és Móricz is a szerzői közé tartozott."] },
+    { "category": "Irodalmi Karakter", "puzzle": "HUCKLEBERRY FINN", "hints": ["Mark Twain regényének főhőse.", "Egy szökött rabszolgával, Jimmel tutajon utazik le a Mississippi folyón."] },
+    { "category": "Világirodalmi Író", "puzzle": "HERMANN HESSE", "hints": ["Nobel-díjas német-svájci író.", "Híres művei 'A pusztai farkas' és a 'Sziddhárta'."] },
+    { "category": "Világirodalmi Mű", "puzzle": "A PUSZTAI FARKAS", "hints": ["Hermann Hesse regénye.", "Egy magányos értelmiségi, Harry Haller belső vívódásairól és kettős természetéről szól."] },
+    { "category": "Világirodalmi Író", "puzzle": "THOMAS MANN", "hints": ["Nobel-díjas német író, a 20. századi irodalom egyik legnagyobb alakja.", "Híres művei a 'Varázshegy' és 'A Buddenbrook-ház'."] },
+    { "category": "Világirodalmi Mű", "puzzle": "VARÁZSHEGY", "hints": ["Thomas Mann monumentális regénye.", "Egy svájci tüdőszanatóriumban játszódik az első világháború előtt."] },
+    { "category": "Fantasy Író", "puzzle": "C. S. LEWIS", "hints": ["A 'Narnia Krónikái' című hétrészes fantasysorozat szerzője.", "J. R. R. Tolkien közeli barátja volt."] },
+    { "category": "Fantasy Regény", "puzzle": "NARNIA KRÓNIKÁI", "hints": ["C. S. Lewis regénysorozata.", "A történet egy varázslatos világban játszódik, ahová egy ruhásszekrényen keresztül lehet eljutni."] },
+    { "category": "Világirodalmi Írónő", "puzzle": "VIRGINIA WOOLF", "hints": ["Angol írónő, a modernista irodalom fontos alakja.", "Híres művei a 'Mrs. Dalloway' és az 'Orlando'."] },
+    { "category": "Világirodalmi Író", "puzzle": "F. SCOTT FITZGERALD", "hints": ["Amerikai író, a 'dzsesszkorszak' krónikása.", "Leghíresebb regénye 'A nagy Gatsby'."] },
+    { "category": "Drámaíró", "puzzle": "CSEHOV", "hints": ["Orosz dráma- és novellaíró.", "Híres drámái a 'Sirály', a 'Ványa bácsi' és a 'Három nővér'."] },
+    { "category": "Meseíró", "puzzle": "GRIMM TESTVÉREK", "hints": ["Német nyelvész és mesegyűjtő testvérpár.", "Nevükhöz fűződik a 'Jancsi és Juliska', a 'Hófehérke' és a 'Piroska és a farkas' összegyűjtése."] },
+    { "category": "Meseíró", "puzzle": "HANS CHRISTIAN ANDERSEN", "hints": ["Dán meseíró.", "Híres meséi 'A kis hableány', 'A rendíthetetlen ólomkatona' és 'A rút kiskacsa'."] },
+    { "category": "Világirodalmi Mű", "puzzle": "MOBY DICK", "hints": ["Herman Melville regénye.", "Ahab kapitány megszállott vadászatáról szól egy hatalmas fehér bálna után."] },
+    { "category": "Irodalmi Műfaj", "puzzle": "REGÉNY", "hints": ["Nagy terjedelmű, prózai elbeszélő műfaj.", "Általában több szereplője van és összetett cselekménnyel rendelkezik."] },
+    { "category": "Magyar Író", "puzzle": "MÁRAI SÁNDOR", "hints": ["A 20. századi magyar polgári irodalom nagy alakja.", "Leghíresebb műve 'A gyertyák csonkig égnek'."] },
+    { "category": "Magyar Irodalmi Mű", "puzzle": "UTAS ÉS HOLDVILÁG", "hints": ["Szerb Antal regénye.", "Egy nászúton lévő férfi keresi az elveszett gyerekkorát Olaszországban."] },
+    { "category": "Magyar Irodalmi Mű", "puzzle": "A PUSZTÁK NÉPE", "hints": ["Illyés Gyula szociográfiai műve.", "A cselédsors kíméletlen őszinteségű bemutatása a 20. század elején."] },
+    { "category": "Magyar Író", "puzzle": "CSUKÁS ISTVÁN", "hints": ["Kossuth-díjas író, a magyar gyermekirodalom legendája.", "Olyan figurákat alkotott meg, mint Pom Pom, Mirr-Murr és a Nagy ho-ho-horgász."] },
+    { "category": "Magyar Irodalmi Mű", "puzzle": "A NÉGYSZÖGLETŰ KEREK ERDŐ", "hints": ["Lázár Ervin meseregénye.", "Szereplői többek között Mikkamakka, Vacskamati és Ló Szerafin."] },
+    { "category": "Magyar Írónő", "puzzle": "JANIKOVSZKY ÉVA", "hints": ["Kossuth-díjas írónő, a gyerekek és felnőttek világának humoros ábrázolója.", "Műveit leggyakrabban Réber László illusztrálta ('Ha én felnőtt volnék')."] },
+    { "category": "Magyar Költő", "puzzle": "CSOKONAI VITÉZ MIHÁLY", "hints": ["A magyar felvilágosodás korának költője.", "A 'Dorottya, vagyis a dámák diadalma a fársángon' című komikus eposz szerzője."] },
+    { "category": "Magyar Költő", "puzzle": "VÖRÖSMARTY MIHÁLY", "hints": ["A reformkor és a romantika kiemelkedő költője.", "A 'Szózat' és a 'Csongor és Tünde' szerzője."] },
+    { "category": "Magyar Drámaíró", "puzzle": "KATONA JÓZSEF", "hints": ["A magyar drámairodalom kiemelkedő alakja.", "Legismertebb műve a 'Bánk bán', a nemzeti drámánk."] },
+    { "category": "Magyar Író", "puzzle": "KRÚDY GYULA", "hints": ["A 20. század elejének nagy magyar írója, az álomszerű, nosztalgikus próza mestere.", "Híres hőse Szindbád, leghíresebb regénye 'A vörös postakocsi'."] },
+    { "category": "Magyar Író", "puzzle": "NÉMETH LÁSZLÓ", "hints": ["Kossuth-díjas író, a 20. század nagy esszéírója és drámaírója.", "Híres regényei az 'Iszony' és az 'Égető Eszter'."] },
+    { "category": "Magyar Író", "puzzle": "ESTERHÁZY PÉTER", "hints": ["A posztmodern magyar irodalom nemzetközileg is elismert alakja.", "Fő műve a 'Harmonia Caelestis' című, a családja történetét feldolgozó regény."] },
+    { "category": "Világirodalmi Író", "puzzle": "VLAGYIMIR NABOKOV", "hints": ["Orosz-amerikai író, a nyelvi játékok és a komplex történetek mestere.", "Leghíresebb és legvitatottabb regénye a 'Lolita'."] },
+    { "category": "Világirodalmi Mű", "puzzle": "LOLITA", "hints": ["Vlagyimir Nabokov regénye.", "Egy középkorú férfi, Humbert Humbert megszállottságáról és tiltott szerelméről szól egy kamaszlány iránt."] },
+    { "category": "Világirodalmi Író", "puzzle": "JOHN STEINBECK", "hints": ["Nobel-díjas amerikai író, a nagy gazdasági világválság krónikása.", "Híres művei az 'Érik a gyümölcs' és az 'Egerek és emberek'."] },
+    { "category": "Világirodalmi Mű", "puzzle": "ÉRIK A GYÜMÖLCS", "hints": ["John Steinbeck Pulitzer-díjas regénye.", "A Joad család vándorlását követi nyomon, akik a porviharok miatt elhagyják oklahomai otthonukat."] },
+    { "category": "Világirodalmi Író", "puzzle": "GABRIEL GARCÍA MÁRQUEZ", "hints": ["Nobel-díjas kolumbiai író.", "A mágikus realizmus legismertebb képviselője, a 'Száz év magány' szerzője."] },
+    { "category": "Világirodalmi Író", "puzzle": "GOGOL", "hints": ["Az orosz irodalom nagy hatású, 19. századi alakja.", "Művei 'A köpönyeg', 'Az orr' és a 'A revizor'."] },
+    { "category": "Világirodalmi Mű", "puzzle": "A REVIZOR", "hints": ["Gogol szatirikus komédiája.", "Egy orosz kisváros korrupt vezetői egy átutazót néznek magas rangú állami ellenőrnek."] },
+    { "category": "Világirodalmi Író", "puzzle": "PUSKIN", "hints": ["Az orosz irodalom megújítója, a modern orosz irodalmi nyelv megteremtője.", "Leghíresebb műve az 'Anyegin' című verses regény."] },
+    { "category": "Világirodalmi Mű", "puzzle": "ANYEGIN", "hints": ["Puskin verses regénye.", "A 'felesleges ember' típusának klasszikus példája, a főhős elszalasztja a boldogságot."] },
+    { "category": "Világirodalmi Író", "puzzle": "OSCAR WILDE", "hints": ["Ír drámaíró, költő és esztéta, a szellemes aforizmák mestere.", "Híres művei a 'Dorian Gray arcképe' és a 'Bunbury' című komédia."] },
+    { "category": "Világirodalmi Írónő", "puzzle": "AGATHA CHRISTIE", "hints": ["A 'krimi királynője', a világ legtöbb könyvét eladott írónője.", "Ő teremtette meg Hercule Poirot és Miss Marple alakját."] },
+    { "category": "Irodalmi Karakter", "puzzle": "HERCULE POIROT", "hints": ["Agatha Christie belga magándetektívje.", "Híres a pedantériájáról, a tojásdad fejéről, a bajuszáról és a 'szürke agysejtjeiről'."] },
+    { "category": "Világirodalmi Író", "puzzle": "JAMES JOYCE", "hints": ["A 20. századi modernista irodalom egyik legfontosabb ír alakja.", "Leghíresebb, de rendkívül nehéz olvasmányú regénye az 'Ulysses'."] },
+    { "category": "Világirodalmi Mű", "puzzle": "ULYSSES", "hints": ["James Joyce monumentális regénye.", "A cselekmény egyetlen nap, 1904. június 16-a alatt játszódik Dublinban."] },
+    { "category": "Világirodalmi Mű", "puzzle": "MONTE CRISTO GRÓFJA", "hints": ["Alexandre Dumas klasszikus kalandregénye.", "A bosszú tökéletes megtervezésének és végrehajtásának története, főhőse Edmond Dantès."] },
+    { "category": "Világirodalmi Mű", "puzzle": "ANNA FRANK NAPLÓJA", "hints": ["Egy zsidó lány naplója a második világháború alatt.", "Amszterdami rejtőzködésük történetét írja le, a holokauszt egyik legfontosabb dokumentuma."] },
+    { "category": "Világirodalmi Író", "puzzle": "J. R. R. TOLKIEN", "hints": ["Angol író, a modern fantasy irodalom atyja.", "Ő teremtette meg Középfölde világát, a hobbitokat, tündéket és orkokat."] },
+    { "category": "Gyermekirodalom", "puzzle": "ALICE CSODAORSZÁGBAN", "hints": ["Lewis Carroll meseregénye.", "Egy kislány kalandjai egy nyúlüregbe esve, ahol furcsa, nonszensz lényekkel találkozik."] },
+    { "category": "Gyermekirodalom", "puzzle": "PETER PAN", "hints": ["J.M. Barrie karaktere, a fiú, aki sosem nő fel.", "Sohaországban él, Csingiling a tündér barátja, és Hook kapitány az esküdt ellensége."] },
+    { "category": "Gyermekirodalom", "puzzle": "A DZSUNGEL KÖNYVE", "hints": ["Rudyard Kipling novellagyűjteménye.", "Főhőse Maugli, az emberkölyök, akit az indiai dzsungelben farkasok nevelnek fel."] },
+    { "category": "Dráma", "puzzle": "ANTIGONÉ", "hints": ["Szophoklész ókori görög tragédiája.", "A főhősnő a király parancsa ellenére, az isteni törvényeket követve eltemeti testvérét."] },
+    { "category": "Dráma", "puzzle": "TARTUFFE", "hints": ["Molière vígjátéka.", "Egy álszent, vallásos képmutató leleplezéséről szól, aki egy polgár családjába férkőzik be."] },
+    { "category": "Dráma", "puzzle": "GODOT-RA VÁRVA", "hints": ["Samuel Beckett abszurd drámája.", "Két főszereplője, Vladimir és Estragon egy országúton vár valakire, aki sosem érkezik meg."] },
+    { "category": "Irodalmi Korstílus", "puzzle": "ROMANTIKA", "hints": ["A 18-19. század fordulójának irányzata.", "Jellemzője az érzelmek kultusza, a természet iránti rajongás és a múlt idealizálása."] },
+    { "category": "Irodalmi Korstílus", "puzzle": "REALIZMUS", "hints": ["A 19. század közepének irányzata.", "A valóság minél pontosabb, tárgyilagosabb, illúziómentes ábrázolására törekedett."] },
+    { "category": "Irodalmi Irányzat", "puzzle": "EGZISZTENCIALIZMUS", "hints": ["A 20. század közepének filozófiai és irodalmi irányzata.", "A lét, az egyéni szabadság, a választás és a felelősség kérdéseivel foglalkozott (Sartre, Camus)."] },
+    { "category": "Irodalmi Karakter", "puzzle": "SANCHO PANZA", "hints": ["Don Quijote fegyverhordozója és hű társa.", "A józan paraszti ész és a földhözragadtság megtestesítője."] },
+    { "category": "Irodalmi Karakter", "puzzle": "SCARLETT O'HARA", "hints": ["Margaret Mitchell 'Elfújta a szél' című regényének főhősnője.", "Egy akaraterős, déli szépség, aki az amerikai polgárháború viharában próbál boldogulni."] },
+    { "category": "Világirodalmi Mű", "puzzle": "ELFÚJTA A SZÉL", "hints": ["Margaret Mitchell regénye az amerikai polgárháborúról.", "Egy déli ültetvényes lány, Scarlett O'Hara szemszögéből mutatja be a korszakot."] },
+    { "category": "Mesegyűjtemény", "puzzle": "AZ EZEREGYÉJSZAKA MESÉI", "hints": ["Klasszikus arab mesegyűjtemény.", "A kerettörténet szerint Seherezádé meséli a történeteket a szultánnak, hogy elkerülje a halált."] },
+    { "category": "Világirodalmi Költő", "puzzle": "ALLEN GINSBERG", "hints": ["Az amerikai beatnemzedék legismertebb költője.", "Leghíresebb műve az 'Üvöltés' ('Howl') című, lázadó hangvételű vers."] },
+    { "category": "Világirodalmi Író", "puzzle": "BORISZ PASZTERNAK", "hints": ["Nobel-díjas orosz író, költő.", "Leghíresebb regénye a 'Zsivago doktor', amelyet a Szovjetunióban betiltottak."] },
+    { "category": "Világirodalmi Mű", "puzzle": "ZSIVAGO DOKTOR", "hints": ["Borisz Paszternak regénye.", "Egy orvos-költő sorsát követi nyomon az orosz forradalom és polgárháború viharában."] },
+    { "category": "Világirodalmi Író", "puzzle": "JORGE LUIS BORGES", "hints": ["Argentin író, a fantasztikus irodalom mestere.", "Híres a labirintusokról, tükrökről és könyvtárakról szóló novelláiról ('Fikciók')."] },
+    { "category": "Világirodalmi Mű", "puzzle": "A TAMÁS BÁTYA KUNYHÓJA", "hints": ["Harriet Beecher Stowe 19. századi regénye.", "Nagy hatással volt a rabszolgaság elleni küzdelemre az Amerikai Egyesült Államokban."] },
+    { "category": "Irodalmi Karakter", "puzzle": "FRANKENSTEIN SZÖRNYE", "hints": ["Mary Shelley regényének teremtménye.", "Gyakran összekeverik a teremtőjével, egy érző, de a társadalom által kitaszított lény."] },
+    { "category": "Irodalmi Karakter", "puzzle": "AZ ÓZD-I VARÁZSLÓ", "hints": ["L. Frank Baum meseregényének titokzatos uralkodója.", "A Smaragdvárosban él, és mindenki a segítségét kéri."] },
+    { "category": "Irodalmi Karakter", "puzzle": "AZ ÜLŐ BIKA", "hints": ["Történelmi személy, de James Fenimore Cooper regényei tették világszerte ismertté.", "A 'Nagy Indiánkönyv' egyik híres indián főnöke."] },
+    { "category": "Magyar Író", "puzzle": "TÓTH ÁRPÁD", "hints": ["A Nyugat költője, a melankólia és a rezignáció hangjának mestere.", "Híres verse a 'Körúti hajnal'."] },
+    { "category": "Magyar Író", "puzzle": "KÁLVIN JÁNOS", "hints": ["A reformáció nagy hatású teológusa, de 'Az institúció' című műve irodalmi értéket is képvisel.", "A református egyház tanításainak megalapozója."] },
+    { "category": "Magyar Író", "puzzle": "PÁZMÁNY PÉTER", "hints": ["Az ellenreformáció és a magyar barokk próza legnagyobb alakja.", "Prédikációi és vitairatai a magyar irodalmi nyelv fejlődésének fontos állomásai."] },
+    { "category": "Irodalmi Mű", "puzzle": "Szigeti veszedelem", "hints": ["Zrínyi Miklós, a költő és hadvezér eposza.", "Dédapjának, a szigetvári hősnek állít emléket."] },
+    { "category": "Irodalmi Mű", "puzzle": "KOLDUSOPERA", "hints": ["Bertolt Brecht drámája, Kurt Weill zenéjével.", "A londoni alvilágban játszódik, leghíresebb dala a 'Bicska Maxi ballada'."] },
+    { "category": "Irodalmi Mű", "puzzle": "PILLANGÓ", "hints": ["Henri Charrière önéletrajzi regénye.", "Egy életfogytiglanra ítélt fegyenc szökésének és a Francia Guyanai büntetőtelepen átélt megpróbáltatásainak története."] },
+    { "category": "Irodalmi Mű", "puzzle": "A HUSZONKETTES CSAPDÁJA", "hints": ["Joseph Heller szatirikus háborús regénye.", "A cím egy olyan abszurd szabályra utal, amelyből nincs kiút."] },
+    { "category": "Irodalmi Mű", "puzzle": "A NEVETŐ EMBER", "hints": ["Victor Hugo regénye.", "Egy férfiról szól, akinek gyerekkorában egy örökös vigyort vágtak az arcára."] },
+    { "category": "Irodalmi Mű", "puzzle": "SZIDDHÁRTA", "hints": ["Hermann Hesse regénye.", "Egy fiatal indiai brahmin spirituális utazását meséli el a megvilágosodás felé."] },
+    { "category": "Irodalmi Karakter", "puzzle": "GATSBY", "hints": ["F. Scott Fitzgerald regényének rejtélyes, gazdag főhőse.", "Hatalmas partikat rendez, hogy visszaszerezze elveszett szerelmét, Daisyt."] },
+    { "category": "Irodalmi Karakter", "puzzle": "FORREST GUMP", "hints": ["Winston Groom regényének naiv, de jószívű főhőse.", "Élete során Amerika 20. századi történelmének legfontosabb eseményeibe keveredik."] },
+    { "category": "Irodalmi Karakter", "puzzle": "HOLDEN CAULFIELD", "hints": ["J. D. Salinger 'A zabhegyező' című regényének lázadó, tinédzser főhőse.", "A felnőtt világ képmutatása és álszentsége elől menekül."] },
+    { "category": "Irodalmi Karakter", "puzzle": "ANNA KARENINA", "hints": ["Lev Tolsztoj azonos című regényének tragikus sorsú hősnője.", "Férjes asszonyként esik szerelembe, ami a társadalmi kitaszításához és halálához vezet."] },
+    { "category": "Irodalmi Karakter", "puzzle": "DR. ZSIVÁGÓ", "hints": ["Borisz Paszternak regényének orvos-költő főhőse.", "Szerelme és élete az orosz forradalom zűrzavarában játszódik."] },
+    { "category": "Irodalmi Műfaj", "puzzle": "PÉLDÁZAT (PARABOLA)", "hints": ["Rövid, tanító célzatú, allegorikus elbeszélés.", "A Bibliában Jézus gyakran használta ezt a műfajt a tanításaihoz."] },
+    { "category": "Irodalmi Műfaj", "puzzle": "SZATÍRA", "hints": ["A valóság torzított, gúnyos ábrázolására törekvő műfaj.", "Célja a társadalmi vagy emberi hibák nevetségessé tétele."] },
+    { "category": "Krimi Klasszikus", "puzzle": "GYILKOSSÁG AZ ORIENT EXPRESSZEN", "hints": ["Agatha Christie regénye.", "Hercule Poirot egy vonaton rekedve nyomoz egy rejtélyes gyilkosság ügyében."] },
+    { "category": "Krimi Klasszikus", "puzzle": "TÍZ KICSI NÉGER", "hints": ["Agatha Christie egyik leghíresebb műve.", "Tíz idegen egy elzárt szigeten reked, ahol egy mondóka alapján, egyesével kezdi őket valaki levadászni."] },
+    { "category": "Sci-fi Vígjáték", "puzzle": "GALAXIS ÚTIKALAUZ STOPPOSOKNAK", "hints": ["Douglas Adams kultikus regénye.", "A fő üzenete: 'Ne ess pánikba!', és a törölköző fontosságát hangsúlyozza."] },
+    { "category": "Sci-fi Klasszikus", "puzzle": "FAHRENHEIT 451", "hints": ["Ray Bradbury disztópikus regénye.", "Egy jövőbeli társadalomban játszódik, ahol a tűzoltók feladata a könyvek elégetése."] },
+    { "category": "Sci-fi Klasszikus", "puzzle": "2001: ŰRODÜSSZEIA", "hints": ["Arthur C. Clarke regénye, amely a Stanley Kubrick-filmmel együtt készült.", "Egy rejtélyes fekete monolitról és a HAL 9000 nevű mesterséges intelligenciáról szól."] },
+    { "category": "Fantasy Klasszikus", "puzzle": "A HOBBIT", "hints": ["J.R.R. Tolkien ifjúsági regénye.", "Zsákos Bilbó kalandja egy sárkány kincsének megszerzéséért."] },
+    { "category": "Ifjúsági Fantasy", "puzzle": "AZ ÉHEZŐK VIADALA", "hints": ["Suzanne Collins bestseller trilógiájának első része.", "Egy disztópikus jövőben játszódik, ahol a tinédzsereknek egy televíziós valóságshow-ban kell életre-halálra küzdeniük."] },
+    { "category": "Fantasy Regény", "puzzle": "AZ UTOLSÓ KÍVÁNSÁG", "hints": ["Andrzej Sapkowski lengyel író regénye.", "Ez a könyv mutatja be először Ríviai Geralt, a Vaják kalandjait."] },
+    { "category": "Fantasy Regény", "puzzle": "HARRY POTTER ÉS A TITKOK KAMRÁJA", "hints": ["J.K. Rowling sorozatának második kötete.", "A Roxfort falai között egy rejtélyes szörnyeteg támad a diákokra."] },
+    { "category": "Fantasy Regény", "puzzle": "HARRY POTTER ÉS AZ AZKABANI FOGOLY", "hints": ["A Harry Potter-sorozat harmadik része.", "Ebben a kötetben tűnik fel Sirius Black, a címszereplő és a dementorok."] },
+    { "category": "Magyar Kalandregény", "puzzle": "A PISZKOS FRED, A KAPITÁNY", "hints": ["Rejtő Jenő (P. Howard) regénye.", "Fülig Jimmy és a címszereplő kalandjai egy hajón, tele humorral és verekedéssel."] },
+    { "category": "Magyar Kalandregény", "puzzle": "AZ ELÁTKOZOTT PART", "hints": ["Rejtő Jenő (P. Howard) klasszikusa.", "Egy gyilkossággal vádolt férfi az idegenlégióban keres menedéket."] },
+    { "category": "Magyar Kalandregény", "puzzle": "A TIZENNÉGY KARÁTOS AUTÓ", "hints": ["Rejtő Jenő egyik legnépszerűbb regénye.", "Gorcső Iván kalandjai egy ellopott luxusautó körül forognak."] },
+    { "category": "Magyar Ifjúsági Regény", "puzzle": "ABIGÉL", "hints": ["Szabó Magda regénye.", "Vitay Georgina egy matulás lányintézetben talál menedéket a II. világháború alatt."] },
+    { "category": "Magyar Regény", "puzzle": "AZ AJTÓ", "hints": ["Szabó Magda nemzetközileg is elismert regénye.", "Egy írónő és a házvezetőnője, Szeredás Emerenc különös, bonyolult kapcsolatáról szól."] },
+    { "category": "Magyar Gyermekregény", "puzzle": "KINCSKERESŐ KISKÖDMÖN", "hints": ["Móra Ferenc klasszikus meseregénye.", "Egy szegény kisfiúról szól, aki a beszélő ködmönje segítségével próbál segíteni a családján."] },
+    { "category": "Magyar Klasszikus", "puzzle": "ROKONOK", "hints": ["Móricz Zsigmond regénye.", "A korrupcióról és a nepotizmusról (urambátyám-rendszer) fest kíméletlen képet."] },
+    { "category": "Magyar Klasszikus", "puzzle": "A PENDRAGON-LEGENDA", "hints": ["Szerb Antal bűnügyi és misztikus elemeket vegyítő regénye.", "Egy magyar irodalomtudós egy angol kastélyban keveredik egy rózsakeresztes rejtélybe."] },
+    { "category": "Ifjúsági Kalandregény", "puzzle": "WINNETOU", "hints": ["Karl May regénye.", "Egy apacs indián törzsfőnök és fehér bőrű barátja, Old Shatterhand kalandjairól szól a Vadnyugaton."] },
+    { "category": "Gyermek Krimi", "puzzle": "EMIL ÉS A DETEKTÍVEK", "hints": ["Erich Kästner klasszikus ifjúsági regénye.", "Egy kisfiú Berlinbe utazik, de a vonaton ellopják a pénzét, ezért a helyi gyerekekkel összefogva próbálja elkapni a tolvajt."] },
+    { "category": "Gyermekregény", "puzzle": "HARISNYÁS PIPPI", "hints": ["Astrid Lindgren könyve egy szeplős, vörös hajú, emberfeletti erejű kislányról.", "Egyedül él egy villában egy lóval és egy majommal."] },
+    { "category": "Gyermekregény", "puzzle": "CHARLIE ÉS A CSOKIGYÁR", "hints": ["Roald Dahl meseregénye.", "Egy szegény fiú aranyszelvényt talál, és bejuthat Willy Wonka rejtélyes édességgyárába."] },
+    { "category": "Fantasy Regény", "puzzle": "A VÉGTELEN TÖRTÉNET", "hints": ["Michael Ende regénye.", "Egy kisfiú egy antikváriumban talál egy varázskönyvet, amely beszippantja őt Fantázia világába."] },
+    { "category": "Gótikus Regény", "puzzle": "A MANDERLEY-HÁZ ASSZONYA", "hints": ["Daphne du Maurier regénye.", "Egy fiatal, naiv nő feleségül megy egy gazdag özvegyhez, de az új otthonában az előző feleség, Rebecca emlékének nyomasztó árnyékában él."] },
+    { "category": "Világirodalmi Klasszikus", "puzzle": "BÚCSÚ A FEGYVEREKTŐL", "hints": ["Ernest Hemingway regénye.", "Egy amerikai mentősofőr és egy angol ápolónő szerelme az első világháború olasz frontján."] },
+    { "category": "Beat Generációs Regény", "puzzle": "ÚTON", "hints": ["Jack Kerouac kultikus regénye.", "A szabadság és a nonkonformista életforma himnusza, amely az amerikai utazásokról és a barátságról szól."] },
+    { "category": "Történelmi Thriller", "puzzle": "A PARFÜM", "hints": ["Patrick Süskind regénye.", "Egy 18. századi, különleges szaglással megáldott, de emberi illat nélküli gyilkos története, aki a tökéletes illat megalkotására törekszik."] },
+    { "category": "Kalandregény", "puzzle": "PI ÉLETE", "hints": ["Yann Martel Booker-díjas regénye.", "Egy indiai fiú egy hajótörés után 227 napig hánykolódik a Csendes-óceánon egy mentőcsónakban egy bengáli tigrissel."] },
+    { "category": "Történelmi Regény", "puzzle": "A KÖNYVTOLVAJ", "hints": ["Markus Zusak regénye.", "Egy kislány története a náci Németországban, a Halál a narrátor."] },
+    { "category": "Ismeretterjesztő Könyv", "puzzle": "SAPIENS: AZ EMBERISÉG RÖVID TÖRTÉNETE", "hints": ["Yuval Noah Harari világsikerű könyve.", "Az emberi faj történetét tekinti át a kőkorszaktól napjainkig."] },
+    { "category": "Tudományos Könyv", "puzzle": "AZ IDŐ RÖVID TÖRTÉNETE", "hints": ["Stephen Hawking könyve.", "A laikusok számára is érthetően magyarázza el a modern kozmológia nagy kérdéseit, az ősrobbanástól a fekete lyukakig."] },
+    { "category": "Modern Klasszikus", "puzzle": "AZ ALKIMISTA", "hints": ["Paulo Coelho világszerte népszerű regénye.", "Egy andalúz pásztorfiú, Santiago utazását meséli el, aki az egyiptomi piramisokhoz indul kincset keresni."] },
+    { "category": "Pszicho-Thriller", "puzzle": "HOLTODIGLAN", "hints": ["Gillian Flynn regénye.", "Egy feleség rejtélyes eltűnéséről szól az ötödik házassági évfordulójukon, a férj a fő gyanúsított."] },
+    { "category": "Világirodalmi Klasszikus", "puzzle": "A SKARLÁT BETŰ", "hints": ["Nathaniel Hawthorne regénye.", "A 17. századi puritán Amerikában játszódik, egy házasságtöréssel vádolt nő történetét meséli el."] },
+    { "category": "Sci-fi Thriller", "puzzle": "JURASSIC PARK", "hints": ["Michael Crichton regénye.", "Egy milliárdos egy szigeten klónozott dinoszauruszokból hoz létre élményparkot, de a dolgok rosszra fordulnak."] },
+    { "category": "Disztópikus Regény", "puzzle": "A SZOLGÁLÓLÁNY MESÉJE", "hints": ["Margaret Atwood regénye.", "Egy jövőbeli, totalitárius teokráciában játszódik, ahol a termékeny nőket rabszolgaként, szülésre használják."] },
+    { "category": "Magyar Klasszikus", "puzzle": "ÁBEL A RENTEGETBEN", "hints": ["Tamási Áron regénytrilógiájának első része.", "Egy talpraesett székely fiú kalandjai az erdélyi Hargitán, ahol erdőpásztorként dolgozik."] },
+    { "category": "Sci-fi Klasszikus", "puzzle": "A VILÁGOK HARCA", "hints": ["H. G. Wells regénye.", "A marslakók hatalmas, háromlábú harci gépekkel támadják meg a Földet."] },
+    { "category": "Sci-fi Klasszikus", "puzzle": "AZ IDŐGÉP", "hints": ["H. G. Wells regénye.", "Egy tudós a távoli jövőbe utazik, ahol az emberiség két fajra, a felszínen élő eloikra és a föld alatt élő morlockokra szakadt."] },
+    { "category": "Kalandregény", "puzzle": "UTAZÁS A FÖLD KÖZÉPPONTJA FELÉ", "hints": ["Jules Verne regénye.", "Egy tudós és unokaöccse egy izlandi vulkánon keresztül próbál eljutni a bolygó belsejébe."] },
+    { "category": "Történelmi Kalandregény", "puzzle": "HÚSZ ÉV MÚLVA", "hints": ["Alexandre Dumas regénye.", "Ez 'A három testőr' folytatása."] },
+    { "category": "Gyermekregény", "puzzle": "KISASSZONYOK", "hints": ["Louisa May Alcott regénye.", "Négy lánytestvér, a March nővérek felnőtté válásának története az amerikai polgárháború idején."] },
+    { "category": "Gyermekregény", "puzzle": "A TITKOS KERT", "hints": ["Frances Hodgson Burnett klasszikus regénye.", "Egy Indiából Angliába került árva kislány felfedez egy elhagyatott, varázslatos kertet a nagybátyja birtokán."] },
+    { "category": "Sci-fi Klasszikus", "puzzle": "VIRÁGOT ALGERNONNAK", "hints": ["Daniel Keyes regénye.", "Egy értelmi fogyatékos férfi egy kísérleti műtét után zsenivé válik, de a hatás csak átmeneti."] },
+    { "category": "Krimi Klasszikus", "puzzle": "AZ ACKROYD-GYILKOSSÁG", "hints": ["Agatha Christie egyik leghíresebb és legvitatottabb regénye.", "Hercule Poirot nyomoz, a regény végén egy forradalmi és meglepő csavar található."] },
+    { "category": "Kémregény", "puzzle": "VADÁSZAT A VÖRÖS OKTÓBERRE", "hints": ["Tom Clancy bestseller regénye.", "Egy szovjet tengeralattjáró-kapitány a legmodernebb hajójával át akar szökni az Amerikai Egyesült Államokba."] },
+    { "category": "Poszt-apokaliptikus Regény", "puzzle": "AZ ÚT", "hints": ["Cormac McCarthy Pulitzer-díjas regénye.", "Egy apa és fia vándorlása egy kihalt, lepusztult világban, ahol a túlélés a tét."] },
+    { "category": "Magyar Klasszikus", "puzzle": "A KIS GÖMBÖC", "hints": ["Magyar népmese, amely a telhetetlenségről szól.", "Egy kis lény mindent felfal, ami az útjába kerül, és egyre csak nagyobb lesz."] },
+    { "category": "Világirodalmi Klasszikus", "puzzle": "AZ ÁLLATOK KIRÁLYA", "hints": ["Jean de La Fontaine klasszikus tanmeséje.", "Az oroszlán által vezetett állatok a pestis okát keresik maguk között."] },
+    { "category": "Magyar Ifjúsági Irodalom", "puzzle": "TÉLI BEREK", "hints": ["Fekete István regénye, a Tüskevár folytatása.", "Tutajos és Bütyök a téli szünetben térnek vissza a Kis-Balatonra, hogy a zord természetben is helytálljanak."] },
+    { "category": "Magyar Gyermekirodalom", "puzzle": "GŐGÖS GÚNÁR GEDEON", "hints": ["Gazdag Erzsi verses meséje.", "Egy beképzelt gúnárról szól, aki végül megtanulja a leckét a barátságról."] },
+    { "category": "Fantasy Író", "puzzle": "TERRY PRATCHETT", "hints": ["Angol író, a 'Korongvilág' című humoros fantasy sorozat szerzője.", "Műveit a szatirikus hangvétel és a társadalomkritika jellemzi."] },
+    { "category": "Fantasy Regény", "puzzle": "A VILÁG SZÍNE", "hints": ["Terry Pratchett Korongvilág-sorozatának első kötete.", "Egy naiv turistát és egy gyáva varázslót követhetünk nyomon a lapos, elefántok hátán nyugvó világon."] },
+    { "category": "Horror Klasszikus", "puzzle": "AZ", "hints": ["Stephen King monumentális horrorregénye.", "Egy csapat gyerek egy alakváltó, bohóc formáját öltő szörnyeteggel száll szembe egy kisvárosban."] },
+    { "category": "Horror Klasszikus", "puzzle": "DRACULA", "hints": ["Bram Stoker regénye.", "Egy erdélyi vámpírgróf története, aki Angliába költözik, hogy új áldozatokat szerezzen."] },
+    { "category": "Horror Klasszikus", "puzzle": "FRANKENSTEIN", "hints": ["Mary Shelley regénye.", "Egy tudósról szól, aki mesterséges embert teremt, de elborzad a saját alkotásától."] },
+    { "category": "Modern Magyar Regény", "puzzle": "ISKOLA A HATÁRON", "hints": ["Ottlik Géza regénye.", "Egy katonaiskola növendékeinek könyörtelen világát és barátságait mutatja be."] },
+    { "category": "Világirodalmi Mű", "puzzle": "A VÁR", "hints": ["Franz Kafka befejezetlen regénye.", "Egy K. nevű földmérő próbál bejutni egy rejtélyes kastélyba, de a bürokrácia útvesztőjében reked."] },
+    { "category": "Világirodalmi Mű", "puzzle": "EMMA", "hints": ["Jane Austen regénye.", "Egy jómódú, öntelt fiatal nőről szól, aki előszeretettel avatkozik bele mások szerelmi életébe, de a sajátját nem látja tisztán."] },
+    { "category": "Világirodalmi Mű", "puzzle": "A HÍD TERABITHIA FÖLDJÉRE", "hints": ["Katherine Paterson ifjúsági regénye.", "Két magányos gyerek egy titkos, varázslatos világot teremt magának egy erdőben."] },
+    { "category": "Irodalmi Műfaj", "puzzle": "NAPLÓ", "hints": ["Időrendben vezetett, személyes feljegyzések sorozata.", "Anna Frank műve a leghíresebb példája a műfajnak."] },
+    { "category": "Irodalmi Műfaj", "puzzle": "ÖNÉLETRAJZ", "hints": ["Az író saját életének történetét meséli el.", "A szerző és a főszereplő ugyanaz a személy."] },
+    { "category": "Irodalmi Eszköz", "puzzle": "ALLITERÁCIÓ", "hints": ["Költői eszköz, amikor egymás után következő szavak ugyanazzal a hanggal kezdődnek.", "Például: 'Csendes csermely csobogása'."] },
+    { "category": "Kalandregény", "puzzle": "A HÁROM TESTŐR", "hints": ["Alexandre Dumas regénye Athosról, Porthosról és Aramisról.", "Jelmondatuk: 'Egy mindenkiért, mindenki egyért!'"] },
+    { "category": "Világirodalmi Klasszikus", "puzzle": "DAVID COPPERFIELD", "hints": ["Charles Dickens önéletrajzi ihletésű regénye.", "Egy fiú felnőtté válásának története a 19. századi Angliában."] },
+    { "category": "Világirodalmi Klasszikus", "puzzle": "MOBY DICK", "hints": ["Herman Melville regénye egy megszállott kapitányról.", "Ahab kapitány egy hatalmas fehér bálnára vadászik."] },
+    { "category": "Krimi", "puzzle": "A SAKÁL NAPJA", "hints": ["Frederick Forsyth klasszikus politikai thrillere.", "Egy bérgyilkosról szól, akit Charles de Gaulle francia elnök meggyilkolásával bíznak meg."] },
+    { "category": "Krimi", "puzzle": "A TETOVÁLT LÁNY", "hints": ["Stieg Larsson svéd krimiregénye.", "Főszereplője egy hacker lány, Lisbeth Salander és egy újságíró, Mikael Blomkvist."] },
+    { "category": "Horror Klasszikus", "puzzle": "ÁLLATTEMETŐ", "hints": ["Stephen King egyik leghíresebb és legfélelmetesebb regénye.", "Egy család egy indián temetkezési hely mellé költözik, ahol a holtak visszatérnek."] },
+    { "category": "Horror Klasszikus", "puzzle": "A RAGYOGÁS", "hints": ["Stephen King regénye egy elzárt, hegyi szállodáról.", "Egy író és családja telel itt, de a hely gonosz erői lassan az őrületbe kergetik a férfit."] },
+    { "category": "Fantasy", "puzzle": "AMERIKAI ISTENEK", "hints": ["Neil Gaiman regénye.", "A régi, bevándorlók által hozott mitológiai istenek és az új, modern (média, technológia) istenek háborújáról szól."] },
+    { "category": "Fantasy", "puzzle": "AZ ARANY IRÁNYTŰ", "hints": ["Philip Pullman 'Az Úr Sötét Anyagai' trilógiájának első része.", "Egy párhuzamos világban játszódik, ahol az emberek lelkének egy része állat alakú 'daimonként' létezik."] },
+    { "category": "Ifjúsági Regény", "puzzle": "EGY ROPPANT FURA SRÁC NAPLÓJA", "hints": ["Jeff Kinney humoros, rajzokkal teli könyvsorozatának első része.", "Greg Heffley felső tagozatos mindennapjairól és küzdelmeiről szól."] },
+    { "category": "Ifjúsági Regény", "puzzle": "VADON", "hints": ["Cheryl Strayed önéletrajzi regénye.", "Egy nő gyalogos túrájáról szól a Pacific Crest Trail-en, hogy feldolgozza a gyászát és önmagára találjon."] },
+    { "category": "Magyar Klasszikus", "puzzle": "LÉGY JÓ MINDHALÁLIG", "hints": ["Móricz Zsigmond regénye.", "Nyilas Misi, egy szegény diák története a debreceni kollégiumban."] },
+    { "category": "Magyar Klasszikus", "puzzle": "TOLDI", "hints": ["Arany János elbeszélő költeménye.", "Egy legendásan erős fiúról szól, aki elhagyja otthonát, hogy vitéz lehessen."] },
+    { "category": "Magyar Klasszikus", "puzzle": "A KIS KAKAS GYÉMÁNT FÉLKRAJCÁRJA", "hints": ["Magyar népmese.", "A szegény asszony kakasa elnyel egy kincset, amit a török szultán elvesz tőle, de a kakas visszaszerzi."] },
+    { "category": "Magyar Regény", "puzzle": "A LÁTHATATLAN EMBER", "hints": ["Gárdonyi Géza regénye.", "A hun Attila korában játszódik, főhőse egy görög származású ifjú, Zéta."] },
+    { "category": "Magyar Regény", "puzzle": "FÜST MILÁN", "hints": ["A magyar irodalom egyik legnagyobb hatású írója.", "Leghíresebb regénye 'A feleségem története'."] },
+    { "category": "Magyar Gyermekkönyv", "puzzle": "TÜCSÖK ÉS A HANGYA", "hints": ["La Fontaine klasszikus tanmeséje, de a magyar irodalomban is ismert.", "A lusta, hegedülő ízeltlábú és a szorgalmas rovar története a felkészülés fontosságáról."] },
+    { "category": "Világirodalmi Klasszikus", "puzzle": "A VÖRÖS ÉS A FEKETE", "hints": ["Stendhal regénye.", "Egy tehetséges, de alacsony származású fiatalember, Julien Sorel felemelkedési és bukástörténete a 19. századi Franciaországban."] },
+    { "category": "Világirodalmi Klasszikus", "puzzle": "A VÖRÖS PIMPERNEL", "hints": ["Orczy Emma bárónő regénye.", "Egy rejtélyes angol nemesről szól, aki arisztokratákat ment ki a francia forradalom terrorja alól."] },
+    { "category": "Világirodalmi Klasszikus", "puzzle": "GULLIVER UTAZÁSAI", "hints": ["Jonathan Swift szatirikus regénye.", "Egy hajóorvos kalandjai a törpék (Lilliput) és az óriások (Brobdingnag) földjén."] },
+    { "category": "Világirodalmi Klasszikus", "puzzle": "A KINCSES SZIGET", "hints": ["Robert Louis Stevenson kalandregénye.", "Kalózokról, elrejtett kincsekről és egy Jim Hawkins nevű fiúról szól."] },
+    { "category": "Világirodalmi Klasszikus", "puzzle": "ROBINSON CRUSOE", "hints": ["Daniel Defoe regénye.", "Egy hajótöröttről szól, aki évtizedeket tölt egy lakatlan szigeten."] },
+    { "category": "Világirodalmi Mű", "puzzle": "A HÁBORÚ MŰVÉSZETE", "hints": ["Szun-ce ókori kínai hadvezér műve.", "Katonai stratégiai és taktikai értekezés, amelyet ma az üzleti életben is alkalmaznak."] },
+    { "category": "Világirodalmi Mű", "puzzle": "KAMASUTRA", "hints": ["Ókori indiai szanszkrit szöveg.", "A szerelem művészetéről és az emberi kapcsolatokról szóló tanítások gyűjteménye."] },
+    { "category": "Sci-fi Klasszikus", "puzzle": "ALAPÍTVÁNY", "hints": ["Isaac Asimov monumentális sci-fi regénysorozatának első része.", "Egy Hari Seldon nevű tudósról szól, aki a pszichohistória segítségével megjósolja a Galaktikus Birodalom bukását."] },
+    { "category": "Sci-fi Klasszikus", "puzzle": "ÁLMODNAK-E AZ ANDROIDOK ELEKTROMOS BÁRÁNYOKRÓL?", "hints": ["Philip K. Dick regénye.", "Ebből a könyvből készült a 'Szárnyas fejvadász' című film."] },
+    { "category": "Történelmi Regény", "puzzle": "A FÁRAÓ", "hints": ["Bolesław Prus lengyel író regénye.", "Az ókori Egyiptomban játszódik, egy fiatal uralkodó és a papi kaszt hatalmi harcáról szól."] },
+    { "category": "Történelmi Regény", "puzzle": "QUO VADIS", "hints": ["Henryk Sienkiewicz Nobel-díjas lengyel író regénye.", "A korai keresztények üldözéséről szól Néró császár Rómájában."] },
+    { "category": "Történelmi Regény", "puzzle": "A KATEDRÁLIS", "hints": ["Ken Follett regénye.", "Egy középkori angol katedrális építésének több évtizedes történetét meséli el."] },
+    { "category": "Romantikus Regény", "puzzle": "ÜVÖLTŐ SZELEK", "hints": ["Emily Brontë egyetlen regénye.", "Catherine Earnshaw és Heathcliff szenvedélyes, de pusztító szerelmének sötét története."] },
+    { "category": "Ifjúsági Regény", "puzzle": "A HULLÁM", "hints": ["Morton Rhue regénye (valós kísérlet alapján).", "Egy középiskolai tanár kísérletet végez, hogy bemutassa a diákjainak, hogyan alakulhat ki egy diktatúra."] },
+    { "category": "Gyermekkönyv", "puzzle": "A KÉT LOTTİ", "hints": ["Erich Kästner regénye.", "Két egymásra megszólalásig hasonlító lányról szól, akik egy táborban jönnek rá, hogy elválasztott ikertestvérek."] },
+    { "category": "Képeskönyv", "puzzle": "AHOL A VADAK VÁRNAK", "hints": ["Maurice Sendak klasszikus képeskönyve.", "Egy Max nevű kisfiúról szól, akit a szobájába zárnak, ami egy dzsungellé változik."] },
+    { "category": "Történelmi Regény", "puzzle": "ÉDENNYUGAT", "hints": ["John Steinbeck regénye.", "Két család, a Trask-ek és a Hamiltonok története a Káin és Ábel-történet modern feldolgozásában."] },
+    { "category": "Történelmi Regény", "puzzle": "SHOGUN", "hints": ["James Clavell regénye.", "Egy angol hajós kalandjai a 17. századi, feudális Japánban."] },
+    { "category": "Történelmi Regény", "puzzle": "A HÁBORÚ ÉS BÉKE", "hints": ["Lev Tolsztoj monumentális regénye.", "A napóleoni háborúk idején játszódik Oroszországban, több arisztokrata család sorsát követi nyomon."] },
+    { "category": "Kalandregény", "puzzle": "A FEHÉR AGYAR", "hints": ["Jack London regénye.", "Egy farkaskutya életét követi nyomon a vadontól a civilizációig a kanadai aranyláz idején."] },
+    { "category": "Kalandregény", "puzzle": "A VADON SZAVA", "hints": ["Jack London regénye.", "Egy elrabolt házikutya, Buck története, aki a vadonban végül egy farkasfalka vezérévé válik."] },
+    { "category": "Filozófiai Regény", "puzzle": "ÍGY SZÓLT ZARATHUSZTRA", "hints": ["Friedrich Nietzsche filozófiai műve.", "A 'felsőbbrendű ember' (Übermensch) koncepcióját és a 'hatalom akarását' fejti ki."] },
+    { "category": "Önéletrajzi Írás", "puzzle": "EGY KÖLYÖK NAPI MOZIZÁSA", "hints": ["Nick Hornby regénye.", "Egy futballrajongó férfi életét meséli el az Arsenal csapatának meccsein keresztül."] },
+    { "category": "Modern Klasszikus", "puzzle": "MEDDIG ÉL EGY FA?", "hints": ["Richard Powers Pulitzer-díjas regénye.", "Több, egymásba fonódó történet az emberek és a fák különleges kapcsolatáról."] },
+    { "category": "Gyerekkönyv", "puzzle": "A NAGYON ÉHES HERNÓ", "hints": ["Eric Carle klasszikus képeskönyve.", "Egy kis hernyó átrágja magát a hét napjain, mielőtt gyönyörű pillangóvá válik."] },
+    { "category": "Történelmi Regény", "puzzle": "A FARKASOK ÓRÁJA", "hints": ["Robert McCammon regénye.", "A második világháború alatt egy brit kém egy szuperfegyver tervrajzait próbálja megszerezni a náciktól."] },
+    { "category": "Thriller", "puzzle": "A DA VINCI-KÓD", "hints": ["Dan Brown bestseller regénye.", "Robert Langdon, egy szimbólumkutató egy rejtélyes gyilkosság után a Szent Grál titkát próbálja megfejteni."] },
+    { "category": "Thriller", "puzzle": "A CSEND, A VAKSÁG", "hints": ["Josh Malerman regénye.", "Egy poszt-apokaliptikus világban játszódik, ahol egy titokzatos erő őrületbe kergeti és öngyilkosságba hajszolja azokat, akik meglátják."] },
+    { "category": "Történelmi Fikció", "puzzle": "A LÁNY GYÖNGY FÜLBEVALÓVAL", "hints": ["Tracy Chevalier regénye.", "Jan Vermeer híres festményének fiktív keletkezéstörténetét meséli el a festő és a szolgálólány szemszögéből."] },
+    { "category": "Ifjúsági Regény", "puzzle": "AZ ÚTVESZTŐ", "hints": ["James Dashner disztópikus regénysorozatának első része.", "Egy csapat fiú egy rejtélyes, falakkal körülvett tisztáson ébred, ahonnan az egyetlen kiút egy labirintuson keresztül vezet."] },
+    { "category": "Modern Klasszikus", "puzzle": "NE ENGEDJ EL", "hints": ["Kazuo Ishiguro Nobel-díjas író regénye.", "Egy elzárt angol bentlakásos iskolában nevelkedő gyerekek története, akik lassan rájönnek, hogy a sorsuk a szervdonáció."] },
+    { "category": "Horror", "puzzle": "INTERJÚ A VÁMPÍRRAL", "hints": ["Anne Rice 'Vámpírkrónikák' című sorozatának első kötete.", "Egy Louis nevű vámpír meséli el életének történetét egy újságírónak."] },
+    { "category": "Sci-fi", "puzzle": "A MENTŐEXPEDÍCIÓ", "hints": ["Andy Weir regénye.", "Egy Mark Watney nevű űrhajóst a Marson felejtenek a társai, és a leleményességével kell túlélnie, amíg megérkezik a segítség."] },
+    { "category": "Klasszikus", "puzzle": "NE BÁNTSÁTOK A FEKETERIGÓT!", "hints": ["Harper Lee Pulitzer-díjas regénye.", "A faji előítéletekről és az igazságtalanságról szól a 30-as évek déli Amerikájában, egy kislány szemszögéből."] },
+    { "category": "Történelmi Regény", "puzzle": "A HÁBORÚ FOGSÁGÁBAN", "hints": ["Laura Hillenbrand könyve Louis Zamperini olimpikonról.", "Egy amerikai futó története, aki a második világháborúban hajótörést szenved, majd japán fogságba esik."] },
+    { "category": "Tudományos Könyv", "puzzle": "KÓSMOSZ", "hints": ["Carl Sagan legendás könyve és tévésorozata.", "A csillagászatot és az univerzum rejtelmeit teszi közérthetővé a nagyközönség számára."] },
+    { "category": "Kalandregény", "puzzle": "AZ ARANYKUTATÓ", "hints": ["Jack London regénye.", "A klondike-i aranyláz idején játszódó történetek a túlélésről, a kapzsiságról és az emberi természetről."] },
+    { "category": "Világirodalmi Klasszikus", "puzzle": "ORLANDO", "hints": ["Virginia Woolf regénye.", "Egy nemesről szól, aki több évszázadot él át, és közben férfiból nővé változik."] },
+    { "category": "Világirodalmi Mű", "puzzle": "A SZERELEM A KOLERA IDEJÉN", "hints": ["Gabriel García Márquez regénye.", "Florentino Ariza több mint 50 évig vár a szerelmére, Fermina Dazára."] },
+    { "category": "Klasszikus Mese", "puzzle": "A CSÁSZÁR ÚJ RUHÁJA", "hints": ["Hans Christian Andersen meséje.", "Két szélhámos elhiteti a hiú császárral, hogy egy láthatatlan ruhát szőnek neki, amit csak az okosak látnak."] },
+    { "category": "Klasszikus Mese", "puzzle": "A TÉKOZLÓ FIÚ", "hints": ["Bibliai példázat.", "Egy fiú eltékozolja az örökségét, de apja megbocsátással fogadja, amikor hazatér."] },
+    { "category": "Gyermekkönyv", "puzzle": "AZ OROSZLÁN, A BOSZORKÁNY ÉS A RUHÁSSZEKRÉNY", "hints": ["C. S. Lewis 'Narnia krónikái' sorozatának legismertebb része.", "Négy testvér egy szekrényen keresztül jut el egy varázslatos világba."] },
+    { "category": "Ifjúsági Regény", "puzzle": "VÁMPÍRNAPLÓK", "hints": ["L. J. Smith könyvsorozata.", "Egy középiskolás lány, Elena Gilbert szerelmi háromszöge két vámpír testvérrel, Stefan és Damon Salvatore-ral."] },
+    { "category": "Világirodalmi Mű", "puzzle": "AZ EMBER TRAGÉDIÁJA", "hints": ["Madách Imre drámai költeménye.", "Ádám és Éva Lucifer vezetésével végigutazik a történelmen, hogy az emberi lét értelmét keressék."] },
+    { "category": "Magyar Klasszikus", "puzzle": "ÚRI MURI", "hints": ["Móricz Zsigmond regénye.", "A dzsentri pusztulásának és a feudális világ felbomlásának ábrázolása egy tragikus mulatozás tükrében."] },
+    { "category": "Magyar Klasszikus", "puzzle": "SÁRARANY", "hints": ["Móricz Zsigmond regénye.", "Egy tehetséges, de szegény parasztfiú felemelkedési kísérletéről és tragédiájáról szól."] },
+    { "category": "Kalandregény", "puzzle": "AZ UTOLSÓ MOHIKÁN", "hints": ["James Fenimore Cooper regénye.", "A francia és indián háború idején játszódik, főhőse egy fehér vadász, Sólyomszem és indián barátai."] },
+    { "category": "Irodalom", "puzzle": "A PÁL UTCAI FIÚK", "hints": ["Molnár Ferenc ifjúsági regénye.", "A grundért folyik a harc benne."] },
             { "category": "Fődíj Feladvány", "puzzle": "AZ EMBERI TEST", "hint": "Biológiai rendszer", "hints": ["A csontváz adja a vázát.", "Több mint 600 izom található benne."] },
             { category: "Irodalom", puzzle: "EGRI CSILLAGOK", hints: ["Gárdonyi Géza történelmi regénye.", "Az 1552-es egri ostromról szól."] },
             { category: "Tudomány és Feltalálók", puzzle: "NEUMANN JÁNOS", hints: ["A modern számítógépek működési elveinek megalkotója.", "A játékelmélet egyik atyja."] },
@@ -2955,7 +3232,6 @@
             { "category": "Sportág", "puzzle": "CSELGÁNCS (JUDO)", "hints": ["Japán eredetű küzdősport.", "'A lágy út' a jelentése."] },
             { "category": "Kifejezés", "puzzle": "AKHILLEUSZ-SAROK", "hints": ["Valakinek vagy valaminek a gyenge, sebezhető pontja.", "A görög hős egyetlen sebezhető pontja a sarka volt, ahol anyja fogta, mikor a Sztüx folyóba mártotta."] },
             { "category": "Történelem", "puzzle": "RENDSZERVÁLTÁS", "hints": ["A szocialista rendszer vége Magyarországon.", "1989-ben zajlott le."] },
-          
     { category: "Fődíj Feladvány", puzzle: "ADDIG JÁR A KORSÓ A KÚTRA MÍG EL NEM TÖRIK", hint: "Közmondás" },
     { category: "Fődíj Feladvány", puzzle: "NEM MIND ARANY AMI FÉNYLIK", hint: "Közmondás" },
     { category: "Fődíj Feladvány", puzzle: "JOBB FÉLNI MINT MEGIJEDNI", hint: "Közmondás" },
@@ -3006,8 +3282,130 @@
     { category: "Fődíj Feladvány", puzzle: "APOKALIPSZIS MOST", hint: "Filmcím" },
     { category: "Fődíj Feladvány", puzzle: "BOHEMIAN RHAPSODY A QUEEN EGYÜTTES", hint: "Zenei mű / Filmcím" },
     { category: "Fődíj Feladvány", puzzle: "WOLFGANG AMADEUS MOZART", hint: "Híres személy" },
-     
-          ];    
+    { "category": "Fődíj Feladvány", "puzzle": "ADDIG JÁR A KORSÓ A KÚTRA MÍG EL NEM TÖRIK", "hint": "Közmondás" },
+    { "category": "Fődíj Feladvány", "puzzle": "NEM MIND ARANY AMI FÉNYLIK", "hint": "Közmondás" },
+    { "category": "Fődíj Feladvány", "puzzle": "JOBB FÉLNI MINT MEGIJEDNI", "hint": "Közmondás" },
+    { "category": "Fődíj Feladvány", "puzzle": "AKI MÁSNAK VERMET ÁS MAGA ESIK BELE", "hint": "Közmondás" },
+    { "category": "Fődíj Feladvány", "puzzle": "KICSI A BORS DE ERŐS", "hint": "Szólás" },
+    { "category": "Fődíj Feladvány", "puzzle": "AJÁNDÉK LÓNAK NE NÉZD A FOGÁT", "hint": "Közmondás" },
+    { "category": "Fődíj Feladvány", "puzzle": "SOK LÚD DISZNÓT GYŐZ", "hint": "Közmondás" },
+    { "category": "Fődíj Feladvány", "puzzle": "BAGOLY MONDJA VERÉBNEK HOGY NAGYFEJŰ", "hint": "Szólás" },
+    { "category": "Fődíj Feladvány", "puzzle": "RELATIVITÁSELMÉLET", "hint": "Tudományos elmélet" },
+    { "category": "Fődíj Feladvány", "puzzle": "DEZOXIRIBONUKLEINSAV", "hint": "Biológiai szakkifejezés" },
+    { "category": "Fődíj Feladvány", "puzzle": "FOTOSZINTÉZIS", "hint": "Biológiai folyamat" },
+    { "category": "Fődíj Feladvány", "puzzle": "NAGY HADRONÜTKÖZTETŐ", "hint": "Tudományos létesítmény" },
+    { "category": "Fődíj Feladvány", "puzzle": "GRAVITÁCIÓS HULLÁMOK", "hint": "Fizikai jelenség" },
+    { "category": "Fődíj Feladvány", "puzzle": "MESTERSÉGES INTELLIGENCIA", "hint": "Technológiai fogalom" },
+    { "category": "Fődíj Feladvány", "puzzle": "KVANTUMSZÁMÍTÓGÉP", "hint": "Technológiai eszköz" },
+    { "category": "Fődíj Feladvány", "puzzle": "PERIÓDUSOS RENDSZER", "hint": "Kémiai fogalom" },
+    { "category": "Fődíj Feladvány", "puzzle": "HÁBORÚ ÉS BÉKE", "hint": "Irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "A NYOMORULTAK", "hint": "Irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "BŰN ÉS BŰNHŐDÉS", "hint": "Irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "SZÁZ ÉV MAGÁNY", "hint": "Irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "AZ ISTENI SZÍNJÁTÉK", "hint": "Irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "DON QUIJOTE DE LA MANCHA", "hint": "Irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "MOBY DICK A FEHÉR BÁLNA", "hint": "Irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "A LEGYEK URA", "hint": "Irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "AMAZONASI ESŐERDŐ", "hint": "Földrajzi hely" },
+    { "category": "Fődíj Feladvány", "puzzle": "MARIANNA-ÁROK", "hint": "Földrajzi hely" },
+    { "category": "Fődíj Feladvány", "puzzle": "NAGY-KORALLZÁTONY", "hint": "Földrajzi hely" },
+    { "category": "Fődíj Feladvány", "puzzle": "SZAHARA SIVATAG", "hint": "Földrajzi hely" },
+    { "category": "Fődíj Feladvány", "puzzle": "GALÁPAGOS-SZIGETEK", "hint": "Földrajzi hely" },
+    { "category": "Fődíj Feladvány", "puzzle": "AURORA BOREALIS", "hint": "Természeti jelenség" },
+    { "category": "Fődíj Feladvány", "puzzle": "VIKTÓRIA-VÍZESÉS", "hint": "Földrajzi hely" },
+    { "category": "Fődíj Feladvány", "puzzle": "CSENDES-ÓCEÁNI TŰZGYŰRŰ", "hint": "Földrajzi jelenség" },
+    { "category": "Fődíj Feladvány", "puzzle": "A NORMANDIAI PARTRSZÁLLÁS", "hint": "Történelmi esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A BERLINI FAL LEOMBLÁSA", "hint": "Történelmi esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A NAGY FRANCIA FORRADALOM", "hint": "Történelmi esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A RÓMAI BIRODALOM BUKÁSA", "hint": "Történelmi esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A REFORMÁCIÓ KEZDETE", "hint": "Történelmi esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A TIZENHÁROM GYARMAT FÜGGETLENSÉGE", "hint": "Történelmi esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A SZIKSZTUSZI KÁPOLNA MENNYEZETE", "hint": "Műalkotás" },
+    { "category": "Fődíj Feladvány", "puzzle": "LEONARDO DA VINCI MONA LISA", "hint": "Műalkotás" },
+    { "category": "Fődíj Feladvány", "puzzle": "PÁRIZSI NOTRE-DAME SZÉKESEGYHÁZ", "hint": "Épület" },
+    { "category": "Fődíj Feladvány", "puzzle": "AZ UTOLSÓ VACSORA", "hint": "Műalkotás" },
+    { "category": "Fődíj Feladvány", "puzzle": "A GUERNICA FESTMÉNY PABLO PICASSO", "hint": "Műalkotás" },
+    { "category": "Fődíj Feladvány", "puzzle": "A VELENCEI KARNEVÁL", "hint": "Kulturális esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "JAPÁN CSERESZNYEVIRÁGZÁS", "hint": "Természeti jelenség" },
+    { "category": "Fődíj Feladvány", "puzzle": "A CSILLAGOK HÁBORÚJA BALJÓS ÁRNYAK", "hint": "Filmcím" },
+    { "category": "Fődíj Feladvány", "puzzle": "A GYŰRŰK URA A KIRÁLY VISSZATÉR", "hint": "Filmcím" },
+    { "category": "Fődíj Feladvány", "puzzle": "APOKALIPSZIS MOST", "hint": "Filmcím" },
+    { "category": "Fődíj Feladvány", "puzzle": "BOHEMIAN RHAPSODY A QUEEN EGYÜTTES", "hint": "Zenei mű / Filmcím" },
+    { "category": "Fődíj Feladvány", "puzzle": "WOLFGANG AMADEUS MOZART", "hint": "Híres személy" },
+    { "category": "Fődíj Feladvány", "puzzle": "ADDIG JÁR A KORSÓ A KÚTRA MÍG EL NEM TÖRIK", "hint": "Közmondás" },
+    { "category": "Fődíj Feladvány", "puzzle": "AKI A KICSIT NEM BECSÜLI A NAGYOT NEM ÉRDEMLI", "hint": "Közmondás" },
+    { "category": "Fődíj Feladvány", "puzzle": "A HAZUG EMBERT HAMARABB UTOLÉRIK MINT A SÁNTA KUTYÁT", "hint": "Közmondás" },
+    { "category": "Fődíj Feladvány", "puzzle": "A KOCKA EL VAN VETVE", "hint": "Történelmi mondás" },
+    { "category": "Fődíj Feladvány", "puzzle": "A NAGY GAZDASÁGI VILÁGVÁLSÁG", "hint": "Történelmi esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A SPANYOL INKVIZÍCIÓ", "hint": "Történelmi intézmény" },
+    { "category": "Fődíj Feladvány", "puzzle": "AZ EMBER TRAGÉDIÁJA", "hint": "Magyar irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "AZ ARANYBULLA KIADÁSA", "hint": "Magyar történelmi esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A LABDARÚGÓ-VILÁGBAJNOKSÁG", "hint": "Sportesemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A MAGYAR HIMNUSZ", "hint": "Nemzeti szimbólum" },
+    { "category": "Fődíj Feladvány", "puzzle": "A NAGY PIRAMISOK GÍZÁBAN", "hint": "Építménycsoport" },
+    { "category": "Fődíj Feladvány", "puzzle": "RUBIK-KOCKA", "hint": "Magyar találmány" },
+    { "category": "Fődíj Feladvány", "puzzle": "A SZÜKSÉG TÖRVÉNYT BONT", "hint": "Közmondás" },
+    { "category": "Fődíj Feladvány", "puzzle": "KI KORÁN KEL ARANYAT LEL", "hint": "Közmondás" },
+    { "category": "Fődíj Feladvány", "puzzle": "NEM ESİK MESSZE AZ ALMA A FÁJÁTÓL", "hint": "Közmondás" },
+    { "category": "Fődíj Feladvány", "puzzle": "KÖTI AZ EBET A KARÓHOZ", "hint": "Szólásmondás" },
+    { "category": "Fődíj Feladvány", "puzzle": "ESŐ UTÁN KÖPÖNYEG", "hint": "Szólásmondás" },
+    { "category": "Fődíj Feladvány", "puzzle": "JÚDÁSCSÓK", "hint": "Kifejezés" },
+    { "category": "Fődíj Feladvány", "puzzle": "SZIZIFUSZI MUNKA", "hint": "Kifejezés" },
+    { "category": "Fődíj Feladvány", "puzzle": "A NAGY BUMM ELMÉLET (ŐSROBBANÁS)", "hint": "Tudományos elmélet" },
+    { "category": "Fődíj Feladvány", "puzzle": "A LEMEZTEKTONIKA ELMÉLETE", "hint": "Tudományos elmélet" },
+    { "category": "Fődíj Feladvány", "puzzle": "SEMMELWEIS IGNÁC FELFEDEZÉSE", "hint": "Orvostudományi áttörés" },
+    { "category": "Fődíj Feladvány", "puzzle": "A RÖNTGENSUGÁRZÁS FELFEDEZÉSE", "hint": "Tudományos felfedezés" },
+    { "category": "Fődíj Feladvány", "puzzle": "A GŐZGÉP FELTALÁLÁSA", "hint": "Technikai forradalom" },
+    { "category": "Fődíj Feladvány", "puzzle": "A TELEFON FELTALÁLÁSA", "hint": "Technikai mérföldkő" },
+    { "category": "Fődíj Feladvány", "puzzle": "AZ AMERIKAI POLGÁRHÁBORÚ", "hint": "Történelmi esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A MÁSODIK VILÁGHÁBORÚ", "hint": "Történelmi esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A VIKING KOR", "hint": "Történelmi korszak" },
+    { "category": "Fődíj Feladvány", "puzzle": "A KÖZÉPKOR", "hint": "Történelmi korszak" },
+    { "category": "Fődíj Feladvány", puzzle: "A RENESZÁNSZ KORA", "hint": "Történelmi és művészeti korszak" },
+    { "category": "Fődíj Feladvány", "puzzle": "A SZÁZÉVES HÁBORÚ", "hint": "Történelmi konfliktus" },
+    { "category": "Fődíj Feladvány", "puzzle": "A HARRY POTTER ÉS A BÖLCSEK KÖVE", "hint": "Irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "AZ ÉHEZŐK VIADALA", "hint": "Irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "A NAGY GATSBY", "hint": "Irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "NE BÁNTSÁTOK A FEKETERIGÓT", "hint": "Irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "A KÉT LOTTİ", "hint": "Irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "BÁNK BÁN", "hint": "Magyar irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "A KŐSZÍVŰ EMBER FIAI", "hint": "Magyar irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "JÁNOS VITÉZ", "hint": "Magyar irodalmi mű" },
+    { "category": "Fődíj Feladvány", "puzzle": "MICHELANGELO PIETÀJA", "hint": "Műalkotás" },
+    { "category": "Fődíj Feladvány", "puzzle": "RODIN A GONDOLKODÓ SZOBRA", "hint": "Műalkotás" },
+    { "category": "Fődíj Feladvány", "puzzle": "REMBRANDT ÉJJELI ŐRJÁRATA", "hint": "Műalkotás" },
+    { "category": "Fődíj Feladvány", "puzzle": "A SYDNEY-I OPERAHÁZ", "hint": "Építmény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A TÁDZSMAHAL", "hint": "Építmény" },
+    { "category": "Fődíj Feladvány", "puzzle": "STONEHENGE", "hint": "Őskori építmény" },
+    { "category": "Fődíj Feladvány", "puzzle": "MACHU PICCHU ROMVÁROSA", "hint": "Régészeti helyszín" },
+    { "category": "Fődíj Feladvány", "puzzle": "HÚSVÉT-SZIGETI MOAI SZOBROK", "hint": "Régészeti lelet" },
+    { "category": "Fődíj Feladvány", "puzzle": "A NÍLUS FOLYÓ", "hint": "Földrajzi hely" },
+    { "category": "Fődíj Feladvány", "puzzle": "AZ 1848-49-ES FORRADALOM ÉS SZABADSÁGHARC", "hint": "Magyar történelmi esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A DÓZSA-FÉLE PARASZTHÁBORÚ", "hint": "Magyar történelmi esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A TATÁRJÁRÁS", "hint": "Magyar történelmi esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A NÁNDORFEHÉRVÁRI DIADAL", "hint": "Magyar történelmi esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A GENFI EGYEZMÉNYEK", "hint": "Nemzetközi dokumentum" },
+    { "category": "Fődíj Feladvány", "puzzle": "A KYOTOI JEGYZŐKÖNYV", "hint": "Nemzetközi egyezmény" },
+    { "category": "Fődíj Feladvány", "puzzle": "KOPERNIKUSZ", "hint": "Híres személy" },
+    { "category": "Fődíj Feladvány", "puzzle": "GALILEO GALILEI", "hint": "Híres személy" },
+    { "category": "Fődíj Feladvány", "puzzle": "ISAAC NEWTON", "hint": "Híres személy" },
+    { "category": "Fődíj Feladvány", "puzzle": "MARIE CURIE", "hint": "Híres személy" },
+    { "category": "Fődíj Feladvány", "puzzle": "NAPÓLEON BONAPARTE", "hint": "Híres személy" },
+    { "category": "Fődíj Feladvány", "puzzle": "FORREST GUMP", "hint": "Filmcím" },
+    { "category": "Fődíj Feladvány", "puzzle": "JURASSIC PARK", "hint": "Filmcím" },
+    { "category": "Fődíj Feladvány", "puzzle": "A REMÉNY RABJAI", "hint": "Filmcím" },
+    { "category": "Fődíj Feladvány", "puzzle": "A SÖTÉT LOVAG", "hint": "Filmcím" },
+    { "category": "Fődíj Feladvány", "puzzle": "VISSZA A JÖVŐBE", "hint": "Filmcím" },
+    { "category": "Fődíj Feladvány", "puzzle": "INDUL A BAKTERHÁZ", "hint": "Magyar filmcím" },
+    { "category": "Fődíj Feladvány", "puzzle": "A PINK FLOYD EGYÜTTES", "hint": "Híres zenekar" },
+    { "category": "Fődíj Feladvány", "puzzle": "A ROLLING STONES EGYÜTTES", "hint": "Híres zenekar" },
+    { "category": "Fődíj Feladvány", "puzzle": "A TOUR DE FRANCE", "hint": "Sportesemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A SUPER BOWL", "hint": "Sportesemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A SZÓZAT", "hint": "Nemzeti költemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A RIOI KARNEVÁL", "hint": "Kulturális esemény" },
+    { "category": "Fődíj Feladvány", "puzzle": "A HOLOKAUSZT", "hint": "Történelmi tragédia" },
+    { "category": "Fődíj Feladvány", "puzzle": "A HAGIA SOPHIA", "hint": "Építmény" },
+             ];    
            const SPECIAL_PRIZES = [
                 { name: 'Éves előfizetés egy hírportálra', value: 25000 }, { name: 'Elektromos roller', value: 120000 },
                 { name: 'Két VIP jegy egy koncertre', value: 50000 }, { name: 'Egy rekesz kézműves sör', value: 20000 },
@@ -3019,6 +3417,64 @@
                 { name: 'Nagyképernyős 4K TV', value: 350000 },
                 { name: 'Luxus karóra', value: 450000 },
                 { name: 'Hőlégballonos utazás', value: 380000 },
+                { name: 'Vitorlás hétvége a Balatonon 2 főre', value: 160000 },
+    { name: 'Vezetéstechnikai tréning', value: 80000 },
+    { name: 'Siklóernyős tandemugrás', value: 45000 },
+    { name: 'Gourmet vacsora egy Michelin-csillagos étteremben', value: 100000 },
+    { name: 'Páros masszázsbérlet egy évre', value: 60000 },
+    { name: 'Borkóstoló program Egerben szállással', value: 90000 },
+    { name: 'Főzőkurzus egy híres séffel', value: 75000 },
+    { name: 'Két Forma-1 Nagydíj jegy a Hungaroringre', value: 220000 },
+    { name: 'Élményfestés kupon barátokkal', value: 30000 },
+    { name: 'Szabadulószoba utalvány egy évig', value: 50000 },
+    { name: 'Állatkerti éves bérlet az egész családnak', value: 40000 },
+    { name: 'VIP mozijegyek egy évre', value: 100000 },
+    { name: 'Hőlégballonos utazás a napfelkeltében', value: 380000 },
+    { name: 'Belépő a Sziget Fesztiválra', value: 150000 },
+    { name: 'Romantikus hétvége Párizsban', value: 400000 },
+    { name: 'Éves színházbérlet két főre', value: 85000 },
+    { name: 'Prémium zajszűrős fejhallgató', value: 110000 },
+    { name: 'Robotporszívó és felmosó', value: 140000 },
+    { name: 'Okosóra a legújabb modellből', value: 160000 },
+    { name: 'VR Szemüveg szett', value: 220000 },
+    { name: 'Professzionális automata kávéfőző', value: 200000 },
+    { name: 'Nagy teljesítményű turmixgép', value: 60000 },
+    { name: 'Hordozható projektor', value: 130000 },
+    { name: 'Akciókamera szett', value: 150000 },
+    { name: 'E-book olvasó háttérvilágítással', value: 55000 },
+    { name: 'Okos otthon világítás szett', value: 95000 },
+    { name: 'Minőségi soundbar a TV-hez', value: 120000 },
+    { name: 'Gamer szék', value: 130000 },
+    { name: 'Tablet', value: 180000 },
+    { name: 'Borhűtő', value: 170000 },
+    { name: 'Éves Netflix Premium előfizetés', value: 50000 },
+    { name: 'Éves Spotify Family csomag', value: 40000 },
+    { name: 'Éves konditerem bérlet', value: 120000 },
+    { name: 'Barkácsáruház utalvány', value: 100000 },
+    { name: 'Bútoráruház utalvány', value: 200000 },
+    { name: 'Könyvutalvány egy évre', value: 70000 },
+    { name: 'Műszaki áruház vásárlási utalvány', value: 250000 },
+    { name: 'Ruházati üzlet vásárlási utalvány', value: 150000 },
+    { name: 'Éves kávé-előfizetés (szemes kávé)', value: 65000 },
+    { name: 'Minőségi hegyi kerékpár', value: 250000 },
+    { name: 'Elektromos gitár kezdő szett', value: 90000 },
+    { name: 'Professzionális póker szett', value: 25000 },
+    { name: 'Teleszkóp csillagászathoz', value: 110000 },
+    { name: 'Komplett horgászfelszerelés', value: 140000 },
+    { name: 'Lego Technic sportautó készlet', value: 90000 },
+    { name: 'Digitális zongora', value: 280000 },
+    { name: 'Festőállvány és professzionális festékkészlet', value: 50000 },
+    { name: 'Dizájner napszemüveg', value: 90000 },
+    { name: 'Márkás sportcipő', value: 60000 },
+    { name: 'Prémium bőrönd szett', value: 100000 },
+    { name: 'Dizájner fotel', value: 300000 },
+    { name: 'Légtisztító berendezés', value: 80000 },
+    { name: 'Személyi edző bérlet', value: 150000 },
+    { name: 'Egy évre elegendő pizza', value: 200000 },
+    { name: 'Prémium gin & tonic csomag', value: 35000 },
+    { name: 'Magyar kézműves sajtválogatás és borcsomag', value: 40000 },
+    { name: 'Luxus csokoládéválogatás a világból', value: 30000 },
+    { name: 'Egy évre elegendő fagylalt utalvány', value: 50000 },
             ];
             
             const wheelSegmentsR1 = [
@@ -5496,4 +5952,5 @@
         });
     </script>
 </body>
-</html>```
+</html>
+```
