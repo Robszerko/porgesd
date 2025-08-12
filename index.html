@@ -226,9 +226,15 @@
             flex-shrink: 0;
         }
         
+        @keyframes continuous-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         #puzzle-logo-container svg {
             width: 100%;
             height: auto;
+            animation: continuous-spin 15s linear infinite;
         }
         
         #puzzle-logo-container p {
@@ -254,7 +260,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-top: 20px; /* Pushes content down to clear absolute logo */
+            margin-top: 30px; /* Pushes content down to clear absolute logo */
             transform: translateX(15px);
         }
 
@@ -1073,7 +1079,7 @@
             #game-interaction-wrapper { order: 2; }
             #puzzle-section { flex-direction: column; flex: 4; }
             
-            #puzzle-category-wrapper { order: 1; margin-top: 55px; }
+            #puzzle-category-wrapper { order: 1; margin-top: 65px; } /* Increased margin */
             #puzzle-board { order: 2; }
             #auto-hints-container { order: 3; }
             #alphabet-panel { order: 4; }
@@ -3001,7 +3007,7 @@
     { category: "Fődíj Feladvány", puzzle: "BOHEMIAN RHAPSODY A QUEEN EGYÜTTES", hint: "Zenei mű / Filmcím" },
     { category: "Fődíj Feladvány", puzzle: "WOLFGANG AMADEUS MOZART", hint: "Híres személy" },
      
-          ];          
+          ];    
            const SPECIAL_PRIZES = [
                 { name: 'Éves előfizetés egy hírportálra', value: 25000 }, { name: 'Elektromos roller', value: 120000 },
                 { name: 'Két VIP jegy egy koncertre', value: 50000 }, { name: 'Egy rekesz kézműves sör', value: 20000 },
@@ -3063,40 +3069,42 @@
             
             const HOST_MESSAGES = {
                 power_up: ["Mutasd a flow-t! Minél erősebb a pörgetés, annál nagyobb a nyeremény!", "Adj bele mindent! Pörgess úgy, mintha nem lenne holnap!", "Na lássuk, mekkora vibe van a csuklódban! Küldd meg!", "Ideje megmutatni, ki a főnök! Adj neki kakaót!", "Engedd szabadjára az energiát! Pörgessünk nagyot!"],
-                start_game: ["Helló, helló! Üdv a stúdióban, ahol a betűk pénzt érnek! Kezdődjön a móka!", "Szevasztok, arcok! Készen álltok a pörgetésre? Lássuk, mit rejt az első feladvány!", "Csőváz, nagy játékos! Induljon a zsetonvadászat! Az első feladvány már vár!", "Bekerültél a körforgásba! Itt az idő, hogy megpörgesd a szerencsédet. Lássuk a táblát!", "Sziasztok, Pörgetők! A stúdió fényei rátok szegeződnek. Kezdjük is!"],
+                start_game: ["Helló, helló! Üdv a stúdióban, ahol a betűk pénzt érnek! Kezdődjön a móka!", "Szevasztok, arcok! Készen álltok a pörgetésre? Lássuk, mit rejt az első feladvány!", "Csőváz, nagy játékos! Induljon a zsetonvadászat! Az első feladvány már vár!", "Bekerültél a körforgásba! Itt az idő, hogy megpörgesd a szerencsédet. Lássuk a táblát!", "Sziasztok, Pörgetők! A stúdió fényei rátok szegeződnek. Kezdjük is!", "Sziasztok, szerencsevadászok! A kerék felpörgetve, a betűk bekészítve. Vágjunk is bele!", "Üdv a stúdióban, ahol a mássalhangzók aranyat érnek! Ki lesz ma a leggazdagabb?", "Készen áll a mechanizmus, hogy zsetonokat ontson magából! Egy pörgetésre indul!"],
                 start_round: ["Új kör, új esélyek! A feladvány friss és ropogós, mint egy meleg pékáru.", "És már jön is a következő menet! A nehézségi szint emelkedik, de a nyeremény is!", "Felkészülni, vigyázz... új feladvány! Lássuk, ez kifog-e rajtad!", "A tábla tiszta, a zsetonok várnak. Jöhet a következő kör!", "Nem állunk meg! Itt a friss feladvány, telis-tele rejtett forintokkal!"],
-                spinning: ["A kerék forog, a szerencse közleg! Hol áll meg vajon?", "Pörög-forog, mint egy macska a lézerpötty után! Lássuk, mit fogsz!", "A kerék most 'loading...'. Reméljük, valami nagyot tölt be!", "Izgalom a köbön! A kerék pörög, a pulzus emelkedik!", "A keréknek lelke van, és most épp a te sorsodról dönt! Hajrá!"],
-                spin_result: ["<strong>{value} Ft</strong> a tét! Ennyiből már kijön egy jófajta pizza. Melyik betűt kéred?", "Ez egy <strong>{value} Ft</strong>-os kérdés! Na, melyik mássalhangzó lapul a táblán?", "Remek pörgetés: <strong>{value} Ft</strong>! Ez már egy szép kis zsebpénz. Jöhet a betű!", "A kerék <strong>{value} Ft</strong>-ot dobott! Most te jössz, mutasd, mit tudsz!", "Szép fogás! <strong>{value} Ft</strong> egyetlen betűért? Jól hangzik! Melyik lesz az?"],
-                correct_consonant: ["Ott van, nem is egy! Ez a betű annyira telitalálat, hogy flexelhetnél vele!", "Bejött! Többször is! Úgy potyognak a zsetonok, mint esőben a cseppek!", "Ez az! A tábla imádja ezt a betűt! És a pénztárcád is imádni fogja.", "Bingo! Ez a betű úgy kellett ide, mint sivatagba egy pohár víz. Gratulálok!", "Tökéletes! Ez a betű annyira a helyén van, mint a hab a tortán. Zsebeld be a lóvét!"],
-                bankrupt: ["Jaj, ne! <strong>CSŐD!</strong> A körös zsetonok elszálltak, mint a gyenge wifi-jel.", "Bumm! A fekete lyuk elnyelte a körös nyereményed. Sebaj, a következő körben visszavághatsz!", "A pénz elpárolgott... de a tudás a tiéd marad! Fel a fejjel!", "CSŐD! Ez most fájt, mint legóba lépni. De a játék megy tovább!", "A körös pénznek annyi. De ne add fel, a nagy fogás még hátravan!"],
-                solve_success: ["<strong>MEGFEJTÉS!</strong> Király vagy! Agysebész lehetsz, vagy csak simán zseni? Összesen <strong>{totalGained} Ft</strong> a jutalmad!", "Megvan! Olyan simán lehoztad, mint egy profi! Nyereményed: <strong>{totalGained} Ft</strong>! Pacsi!", "Kész! Ezzel a megfejtéssel beírtad magad a nagykönyvbe! <strong>{totalGained} Ft</strong> a jutalom!", "Siker! A stúdió felrobbant! <strong>{totalGained} Ft</strong> üti a markod! Ez az, gratulálok!", "Megfejtve! Ezért a teljesítményért óriási pacsi jár! A pénz már a tiéd!"],
+                spinning: ["A kerék forog, a szerencse közleg! Hol áll meg vajon?", "Pörög-forog, mint egy macska a lézerpötty után! Lássuk, mit fogsz!", "A kerék most 'loading...'. Reméljük, valami nagyot tölt be!", "Izgalom a köbön! A kerék pörög, a pulzus emelkedik!", "A keréknek lelke van, és most épp a te sorsodról dönt! Hajrá!", "Forog a kerék, mint a lemezjátszó! Reméljük, sláger lesz a vége!", "A gravitáció és a véletlen nagyúr most dönti el a sorsod. Szurkolunk!", "A kerék most keresi a tökéletes pozíciót. Reméljük, egy zsíros összegnél találja meg."],
+                spin_result: ["<strong>{value} Ft</strong> a tét! Ennyiből már kijön egy jófajta pizza. Melyik betűt kéred?", "Ez egy <strong>{value} Ft</strong>-os kérdés! Na, melyik mássalhangzó lapul a táblán?", "Remek pörgetés: <strong>{value} Ft</strong>! Ez már egy szép kis zsebpénz. Jöhet a betű!", "A kerék <strong>{value} Ft</strong>-ot dobott! Most te jössz, mutasd, mit tudsz!", "Szép fogás! <strong>{value} Ft</strong> egyetlen betűért? Jól hangzik! Melyik lesz az?", "A kerék döntött: <strong>{value} Ft</strong>! Ezért az összegért melyik betűt viszed?", "<strong>{value} Ft</strong>! Ebből már majdnem kijön egy... nos, egy drágább kávé. Melyik betű lesz az?", "Ez egy <strong>{value} Ft</strong>-os pörgetés! Most jön a neheze: a betűválasztás."],
+                correct_consonant: ["Ott van, nem is egy! Ez a betű annyira telitalálat, hogy flexelhetnél vele!", "Bejött! Többször is! Úgy potyognak a zsetonok, mint esőben a cseppek!", "Ez az! A tábla imádja ezt a betűt! És a pénztárcád is imádni fogja.", "Bingo! Ez a betű úgy kellett ide, mint sivatagba egy pohár víz. Gratulálok!", "Tökéletes! Ez a betű annyira a helyén van, mint a hab a tortán. Zsebeld be a lóvét!", "Ez az! Bent van, mint a huzat! A kassza csilingel!", "Telitalálat! A tábla felfedte a titkát, te pedig a zsetonokat! Remek munka!", "Mint kés a vajban! Ez a betű tökéletesen illett a képbe. Jön a jutalom!"],
+                bankrupt: ["Jaj, ne! <strong>CSŐD!</strong> A körös zsetonok elszálltak, mint a gyenge wifi-jel.", "Bumm! A fekete lyuk elnyelte a körös nyereményed. Sebaj, a következő körben visszavághatsz!", "A pénz elpárolgott... de a tudás a tiéd marad! Fel a fejjel!", "CSŐD! Ez most fájt, mint legóba lépni. De a játék megy tovább!", "A körös pénznek annyi. De ne add fel, a nagy fogás még hátravan!", "Ó, jaj! A CSŐD mező olyan, mint a hétfő reggel. Senki sem szereti. A körös pénz ugrott.", "A bankár most elégedetten dörzsöli a tenyerét. Ne hagyd magad, a következő kör a tiéd!", "Ez most egy pénzügyi fekete leves volt. De a főétel még hátravan!"],
+                solve_success: ["<strong>MEGFEJTÉS!</strong> Király vagy! Agysebész lehetsz, vagy csak simán zseni? Összesen <strong>{totalGained} Ft</strong> a jutalmad!", "Megvan! Olyan simán lehoztad, mint egy profi! Nyereményed: <strong>{totalGained} Ft</strong>! Pacsi!", "Kész! Ezzel a megfejtéssel beírtad magad a nagykönyvbe! <strong>{totalGained} Ft</strong> a jutalom!", "Siker! A stúdió felrobbant! <strong>{totalGained} Ft</strong> üti a markod! Ez az, gratulálok!", "Megfejtve! Ezért a teljesítményért óriási pacsi jár! A pénz már a tiéd!", "MEGFEJTÉS! Ezt még a mesterséges intelligencia is megirigyelné! Zsebre vágod a jutalmad: <strong>{totalGained} Ft</strong>!", "Hihetetlen! Agytorna kipipálva, a pénz a számlán! Összesen <strong>{totalGained} Ft</strong> a tiéd!", "És megvan! Levezetted, mint egy profi. A megfejtésért és a körös pénzért <strong>{totalGained} Ft</strong> jár!"],
                 solve_fail: ["Hoppá, ez mellément! Ez a tipp annyira volt jó, mint a papucs a hóban.", "Sajnos nem. De a próbálkozás is számít! Csak most épp zsetonba kerül...", "Nem talált! Ez most nem jött össze. Sebaj, 'hakuna matata'!", "Ez a megfejtés sajnos nem az igazi. A büntetés levonva, de a játék folytatódik!"],
-                double_or_nothing_prompt: ["<strong>DUPLA VAGY SEMMI!</strong> Bevállalós vagy? A tét a körös pénzed: <strong>{points} Ft</strong>. Mondj egy mássalhangzót!", "Itt a 'mindent vagy semmit' pillanat! Kockáztatsz <strong>{points} Ft</strong>-ot? Jöhet a betű!"],
+                double_or_nothing_prompt: ["<strong>DUPLA VAGY SEMMI!</strong> Bevállalós vagy? A tét a körös pénzed: <strong>{points} Ft</strong>. Mondj egy mássalhangzót!", "Itt a 'mindent vagy semmit' pillanat! Kockáztatsz <strong>{points} Ft</strong>-ot? Jöhet a betű!", "Na, itt a lehetőség a duplázásra! Mersz nagyot álmodni a <strong>{points} Ft</strong>-ért?", "A bátraké a szerencse... vagy a csőd. A tét a körös pénzed: <strong>{points} Ft</strong>. Jöhet a betű?"],
                 double_win: ["<strong>DUPLA!</strong> Bejött a rizikó! A bátraké a szerencse, és most a zseton is!", "Sikerült! Megdupláztad a pénzed! Ez az, amiért megéri játszani!"],
                 double_lose: ["<strong>SEMMI!</strong> A szerencse most elment kávézni. A körös pénz bánta.", "Aki mer, az néha veszít. Ez most egy ilyen pillanat volt. Fel a fejjel!"],
                 main_prize_qualified: ["<strong>Gratulálok!</strong> Kvalifikáltad magad a Fődíj Játékra! Már csak egy lépésre vagy a hatalmas nyereménytől!", "Fantasztikus! Jogosult vagy a Fődíj Játékra! Itt az esély, hogy igazán nagyot szakíts!"],
                 assistance_spin: ["A rendszer súg egy kicsit... A(z) <strong>{letter}</strong> betűvel most nagyot nyerhetsz!", "A <strong>SEGÍTSÉG</strong> megérkezett! Próbálkozz a(z) <strong>{letter}</strong> betűvel! Bízz a gépben!"],
-                halver_spin: ["Jaj, ne! Ez a <strong>FELEZŐ!</strong> A körös pénzed fele elment diétázni.", "A felező lecsapott! Bosszantó, de még így is maradt mit hazavinni a körből."],
+                halver_spin: ["Jaj, ne! Ez a <strong>FELEZŐ!</strong> A körös pénzed fele elment diétázni.", "A felező lecsapott! Bosszantó, de még így is maradt mit hazavinni a körből.", "A Felező lecsapott, mint egy éhes cápa. A körös pénzed fele bánta.", "Hoppá, egy kis diéta a körös nyereménynek. De a fele még mindig a tiéd!"],
                 bankrupt_sunday: ["Ó, a végzet vasárnap! <strong>CSŐD!</strong> Elvesztetted a feltett <strong>{bet}&nbsp;Ft-os tétedet</strong> és a Tét Szorzód is lenullázódott! De a körös pénzed megmaradt!", "CSŐD! A tét elúszott, de a játék megy tovább! A körben eddig gyűjtött pénzed biztonságban van."],
                 lose_turn: ["<strong>KIMARADSZ!</strong> Most pihensz egy kört. Használd ki egy kis stratégiai tervezésre!", "Hoppá, egy kis pihenő! Mindjárt újra te jössz."],
                 bonus_points: ["<strong>+{value}&nbsp;FT!</strong> Csak úgy, ajándékba! Ezt zsebeld is be gyorsan!", "Azonnali <strong>{value} Ft</strong>! Gratulálok, ez szépen jött!"],
-                huge_win_consonant: ["Ez igen! Egyetlen betűvel <strong>{earnings}&nbsp;Ft</strong>! Ez a pörgetés... 'chef's kiss'!", "Hatalmas fogás! <strong>{earnings}</strong> forint egy betűvel! Ez már döfi!"],
+                huge_win_consonant: ["Ez igen! Egyetlen betűvel <strong>{earnings}&nbsp;Ft</strong>! Ez a pörgetés... 'chef's kiss'!", "Hatalmas fogás! <strong>{earnings}</strong> forint egy betűvel! Ez már döfi!", "ATYAÉG! Ez a pörgetés beírta magát a történelemkönyvekbe! <strong>{earnings} Ft</strong> egy körben!", "Jackpot! Ez a betű aranyat ért! <strong>{earnings} Ft</strong> a tiéd, gratulálok!"],
                 correct_vowel: ["Igen, van benne <strong>{count}</strong> darab! A tábla a barátod.", "Jól sejted, a táblán ott virít <strong>{count}</strong> ilyen betű!"],
-                wrong_letter: ["Sajnálom, de ez a betű most szabadságon van.", "Ez a betű ma nem dolgozik a stúdióban. Próbálj egy másikat!", "A betűfal nemet intett. Sebaj, a következő tuti bejön!"],
+                wrong_letter: ["Sajnálom, de ez a betű most szabadságon van.", "Ez a betű ma nem dolgozik a stúdióban. Próbálj egy másikat!", "A betűfal nemet intett. Sebaj, a következő tuti bejön!", "Ez a betű most épp máshol tartózkodik. Talán egy másik feladványban.", "A betűkészletünkben ez most nincs raktáron. Próbálj egy másikat!", "Nem, ez most nem jött be. A tábla makacsul hallgat."],
                 solve_golden_success: ["<strong>ARANY MEGFEJTÉS!</strong> Dupla pénz, dupla öröm! A körös nyeremény és a bónusz is duplázódik! Hatalmas gratuláció, <strong>{totalGained}&nbsp;Ft</strong> a tiéd!", "Ez az! Megfejtetted az Arany Feladványt! A jutalom nem marad el, a kasszád most kétszer hangosabban csörög: <strong>{totalGained}&nbsp;Ft</strong>!"],
                 solve_sunday_success: ["<strong>SIKERES KÖR!</strong> A <strong>{bet}&nbsp;Ft-os tét visszajár</strong>, a körös nyeremény és a bónusz pedig hozzáadódik a Heti Kasszához! Összesen <strong>{totalGained}&nbsp;Ft</strong> a gyarapodás!"],
                 game_over: ["Az erre az órára szánt játék véget ért. Pihenj egyet, és gyere vissza később! Végső egyenleged: <strong>{score}&nbsp;Ft</strong>.", "Vége a dalnak mára! A végeredmény: <strong>{score}</strong> forint. Szép munka volt, pacsi!"],
                 main_prize_win: ["ELKÉPESZTŐ! MEGVAN! A Fődíj a tiéd! A nyereményed megduplázva: <strong>{winnings}&nbsp;Ft!</strong> Te vagy a bajnok!", "A stúdió felrobbant! Megcsináltad! <strong>{winnings}&nbsp;Ft</strong> a jutalom! Óriási vagy!"],
                 main_prize_lose: ["Jaj, ne! Sajnos nem ez volt a helyes megfejtés. A Fődíj elúszott. De szép menet volt idáig!", "Ó, milyen kár! Ez most nem jött össze. De ne csüggedj, a következő órában újra bizonyíthatsz!"],
                 main_prize_lose_timeout: ["Lejárt az idő! Ó, milyen kár! Az idő a legnagyobb ellenfél. A Fődíj sajnos nem lett meg.", "Az óra legyőzött! A Fődíj elúszott, de a tapasztalat a tiéd marad!"],
-                turn_end: ["Újra te jössz! Mutasd, mi a következő lépés!", "Ismét tiéd a terep! Pörgess, vagy vegyél egy magánhangzót!", "Folytatódhat a menet! Tiéd a pálya!"],
-                no_more_consonants: ["Az összes mássalhangzó elfogyott! Vegyél magánhangzót, vagy fejtsd meg! A célegyenesben vagy!", "Nincs több mássalhangzó a kalapban! Már csak a magánhangzók segíthetnek, vagy a zseniális elméd!"],
+                turn_end: ["Újra te jössz! Mutasd, mi a következő lépés!", "Ismét tiéd a terep! Pörgess, vagy vegyél egy magánhangzót!", "Folytatódhat a menet! Tiéd a pálya!", "Tiéd a pálya! Mutasd meg, mi a következő lépésed!", "A figyelem ismét rád szegeződik. Pörgetsz vagy vásárolsz?", "Folytassuk a játékot! Te következel."],
+                no_more_consonants: ["Az összes mássalhangzó elfogyott! Vegyél magánhangzót, vagy fejtsd meg! A célegyenesben vagy!", "Nincs több mássalhangzó a kalapban! Már csak a magánhangzók segíthetnek, vagy a zseniális elméd!", "Elfogyott a mássalhangzó! Innentől már csak a logikádra és a magánhangzókra számíthatsz!", "Az utolsó mássalhangzó is a helyére került. Itt az idő a megfejtésre!"],
                 start_golden_round: ["Vigyázat! <strong>⭐ ARANY FORDULÓ!</strong> Most minden nyeremény duplán számít! Itt az idő nagyot álmodni!", "Ez az! Egy <strong>⭐ ARANY FORDULÓ!</strong> Itt igazán megéri kockáztatni!"],
                 sunday_greeting: ["Üdv a Prémium Vasárnapban! A cél a milliomos cím! A tétedet először a <strong>Tétmentővel</strong> kell biztonságba helyezned!", "Vasárnap van, a nagy fogadások napja! Tedd meg a tétet, de ne feledd, előbb biztosítsd a 'Tétmentővel'!"],
                 quit_warning: ["Vigyázat! Ebben az órában már kiléptél egyszer. Ha most ismét kilépsz, az eddigi nyereményed elvész!", "Második esély ebben az órában! Ha most abbahagyod, a jelenlegi gyűjtésed nullázódik."],
                 free_vowel_spin: ["<strong>INGYEN MÁNHANGZÓ!</strong> Szuper! A következő magánhangzó a ház ajándéka!", "Ezt nevezem! Most ingyen vehetsz egy magánhangzót, csak úgy, lazán!"],
                 surprise_spin_money: ["<strong>MEGLEPETÉS!</strong> A kerék egy kis bónusszal ajándékoz meg: <strong>{value} Ft!</strong> Csak úgy, mert jó fej.", "Hoppá, egy kis meglepetés! Nyereményed <strong>{value} Ft!</strong> Ezt zsebeld be!"],
                 surprise_spin_vowel: ["<strong>MEGLEPETÉS!</strong> A jutalmad egy ingyen magánhangzó! Micsoda szerencse!", "A kerék ma bőkezű: tessék, egy ingyen magánhangzó!"],
+                special_prize: ["KÜLÖNDÍJ! A kerék ma különösen nagylelkű. Lássuk, mit rejteget!", "Ez az! A Különdíj mezővel egy extra ajándékot pörgettél ki!"],
+                surprise_spin: ["MEGLEPETÉS! Ki tudja, mit hoz? Lehet jó, lehet rossz, de biztosan izgalmas!", "A meglepetés mező mindig egy kis extra fűszert ad a játékhoz. Lássuk!"]
             };
             
             let gameState;
@@ -5488,4 +5496,4 @@
         });
     </script>
 </body>
-</html>
+</html>```
