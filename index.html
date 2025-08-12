@@ -96,6 +96,12 @@
             height: auto;
             filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
         }
+        
+        #title-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
         #game-title {
             font-family: 'Montserrat', sans-serif;
@@ -103,6 +109,31 @@
             font-size: clamp(2.5rem, 6vw, 4.5rem);
             color: var(--font-color-light);
             text-shadow: 2px 2px 0px var(--bg-dark-blue), 4px 4px 8px rgba(0,0,0,0.5);
+        }
+        
+        #millionaire-banner {
+            display: none; /* Hidden by default */
+            align-items: center;
+            gap: 15px;
+            margin-top: -10px;
+        }
+
+        body.millionaire-active #millionaire-banner {
+            display: flex; /* Shown when body has class */
+        }
+        
+        #millionaire-banner-icon {
+            font-size: clamp(2rem, 5vw, 3rem);
+            animation: pulse 2s infinite;
+            filter: drop-shadow(0 0 10px var(--accent-gold));
+        }
+        
+        #millionaire-banner-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: var(--accent-gold);
+            text-shadow: 0 0 8px var(--accent-gold);
         }
 
         #sunday-title {
@@ -162,6 +193,55 @@
             align-items: center;
             gap: 10px;
             min-width: 0;
+            position: relative;
+        }
+        
+        #puzzle-top-bar {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            padding: 0 10px;
+            box-sizing: border-box;
+            min-height: 60px;
+        }
+
+        #puzzle-logo-container {
+            width: 50px;
+            text-align: center;
+            opacity: 0.8;
+            flex-shrink: 0;
+        }
+        
+        #puzzle-logo-container svg {
+            width: 100%;
+            height: auto;
+        }
+        
+        #puzzle-logo-container p {
+            margin: -5px 0 0 0;
+            font-size: 0.6rem;
+            font-weight: bold;
+            color: var(--font-color-light);
+            text-shadow: 1px 1px 2px black;
+        }
+        
+        #round-info-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--tile-border-color);
+            border-radius: 50px;
+            padding: 8px 25px;
+            text-align: center;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+            width: auto;
+            flex-grow: 1;
+            max-width: fit-content;
+            margin: 0 auto;
+            transform: translateY(-35px);
         }
 
         #puzzle-category-wrapper {
@@ -206,21 +286,6 @@
             box-shadow: 0 0 10px var(--win-green);
         }
 
-        #round-info-container {
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--tile-border-color);
-            border-radius: 8px;
-            padding: 8px 15px;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 5px 20px;
-        }
         #round-display, #hour-block-display {
             font-size: 1rem;
             font-weight: 700;
@@ -527,8 +592,8 @@
             font-size: clamp(0.9rem, 1.5vw, 1rem); color: var(--font-color-light);
             font-weight: 700; margin-bottom: 5px; display: flex; align-items: center; gap: 8px;
         }
-        #millionaire-icon { display: none; font-size: 1.5rem; animation: pulse 2s infinite; }
-        body.millionaire-active #millionaire-icon { display: inline-block; }
+        
+        #millionaire-icon { display: none; }
 
         #score-display, #hourly-winnings-display, #round-winnings-display, #lotto-prize-label {
             font-family: 'Montserrat', sans-serif; font-size: clamp(1.6rem, 3vw, 2rem);
@@ -709,93 +774,133 @@
             font-weight: bold;
             z-index: 10;
         }
-
-
+        
         #main-prize-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 2000;
-            display: none; flex-direction: column; justify-content: center;
-            align-items: center; color: white; padding: 20px; box-sizing: border-box;
+            z-index: 2000;
+            display: none; 
+            flex-direction: column; justify-content: center;
+            align-items: center;
+            padding: 10px; box-sizing: border-box;
+            background: linear-gradient(180deg, #000000 0%, #1a0b38 100%);
             backdrop-filter: blur(10px);
         }
-        #main-prize-modal h2, #main-prize-modal h3 {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--accent-gold); text-shadow: 0 0 15px var(--accent-gold); margin-bottom: 10px;
-            position:relative; display: block; text-align: center;
-        }
-        #main-prize-title { font-size: clamp(2rem, 8vw, 4rem); }
-        #main-prize-category { font-size: clamp(1.2rem, 4vw, 2rem); }
-        #main-prize-board { margin-top: 20px; }
-        #main-prize-board .puzzle-tile { width: clamp(40px, 6vw, 60px); height: clamp(50px, 8vw, 75px); }
-        #main-prize-board .tile-back { font-size: clamp(2rem, 5vw, 3rem); }
-        #main-prize-given-letters, #main-prize-final-answer { margin-top: 20px; font-size: 1.2rem; position:relative; display: block; text-align: center;}
-        #main-prize-final-answer { color: var(--win-green); font-weight: bold; }
-        #main-prize-timer {
-            font-size: clamp(3rem, 12vw, 6rem); font-weight: 700;
-            color: var(--accent-gold); margin: 10px 0; text-shadow: 0 0 10px var(--accent-gold);
-            position:relative; display: block;
-        }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        #main-prize-timer.timer-low { color: var(--pointer-red); animation: pulse 0.5s infinite; text-shadow: 0 0 10px var(--pointer-red); }
-
-        #main-prize-instructions {
-            position: relative; display: block; min-height: 1.2em;
-            margin-top: 15px;
-            transition: color 0.3s ease;
-        }
-        #main-prize-alphabet-panel-container, #main-prize-solve-input, #main-prize-confirm-btn {
-            position: relative; display: block;
-        }
-        #main-prize-solve-input { margin: 15px auto; display: block; }
-        #main-prize-alphabet-panel-container { margin-top: 20px; }
         
-        #nyero21-modal, #lotto-modal, #active-bonuses-modal, #prize-chest-modal { z-index: 1500; }
-        #nyero21-modal .modal-content, #lotto-modal .modal-content, #active-bonuses-modal .modal-content, #prize-chest-modal .modal-content {
-            max-width: 800px;
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            overflow: visible;
+        #main-prize-modal::before {
+             content: '';
+             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+             background-image:
+                radial-gradient(ellipse at 80% 20%, rgba(255, 215, 0, 0.20) 0%, transparent 40%),
+                radial-gradient(ellipse at 20% 80%, rgba(103, 58, 183, 0.3) 0%, transparent 50%);
+             z-index: 1;
         }
-        #nyero21-content-wrapper, #lotto-content-wrapper, #bonuses-content-wrapper, #chest-content-wrapper {
-            position: relative;
-            padding: 30px;
-            border-radius: 15px;
+
+        #main-prize-content {
+            position: relative; z-index: 2;
+            width: 100%;
+            max-width: 1200px;
+            max-height: 95vh;
+            overflow-y: auto;
+            padding: clamp(1rem, 2vw, 1.5rem);
+            background: rgba(10, 0, 30, 0.5);
+            border-radius: 20px;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 30px rgba(255, 193, 7, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        #main-prize-header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        #main-prize-logo-container {
+            width: clamp(100px, 15vw, 150px);
+            text-align: center;
+        }
+        
+        #main-prize-logo-container svg {
+            width: 100%;
+            height: auto;
+        }
+        
+        #main-prize-logo-container p {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            color: var(--accent-gold);
+            text-shadow: 0 0 10px var(--accent-gold);
+            margin: 5px 0 0 0;
+        }
+
+        #main-prize-timer-wrapper {
+             display: flex;
+             justify-content: center;
+             align-items: center;
+        }
+        
+        #main-prize-timer {
+            font-size: clamp(3.5rem, 12vw, 7rem); font-weight: 900;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--accent-gold); text-shadow: 0 0 20px var(--accent-gold);
+        }
+
+        @keyframes pulse { 0% { transform: scale(1); text-shadow: 0 0 20px var(--pointer-red);} 50% { transform: scale(1.05); text-shadow: 0 0 35px var(--pointer-red);} 100% { transform: scale(1); text-shadow: 0 0 20px var(--pointer-red);} }
+        #main-prize-timer.timer-low { animation: pulse 0.7s infinite ease-in-out; }
+
+        #main-prize-title { font-size: clamp(2rem, 5vw, 3rem); margin: 0; font-family: 'Montserrat', sans-serif; color: var(--accent-gold); text-shadow: 0 0 15px var(--accent-gold); text-align: center; }
+        #main-prize-category { font-size: clamp(1.2rem, 2.5vw, 1.6rem); color: var(--font-color-light); text-shadow: none; text-align: center; margin: 0; }
+        
+        #main-prize-definition {
+            background: linear-gradient(145deg, var(--accent-gold), #FF8F00);
+            box-shadow: 0 0 20px var(--accent-gold);
+            color: var(--font-color-dark);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+            font-weight: 700;
+            text-align: center;
+            width: auto;
+            max-width: 90%;
+            margin: 10px 0;
+            display: none;
+        }
+
+        #main-prize-board { margin: 10px 0; }
+        #main-prize-board .puzzle-tile { width: clamp(35px, 5vw, 60px); height: clamp(45px, 6.5vw, 75px); }
+        #main-prize-board .tile-back { font-size: clamp(1.8rem, 4vw, 3rem); }
+        #main-prize-given-letters { font-size: clamp(1rem, 2vw, 1.2rem); text-align: center; margin: 0;}
+        #main-prize-final-answer { color: var(--win-green); font-weight: bold; font-size: clamp(1.2rem, 2.5vw, 1.5rem); margin-top: 10px; }
+        #main-prize-instructions { display: none; }
+        #main-prize-alphabet-panel-container { margin-top: 15px; max-width: 800px; width: 100%; }
+        #main-prize-solve-input { margin: 15px auto; display: block; max-width: 600px; width: 90%; }
+        
+        #nyero21-modal .modal-content {
+            max-width: 800px; background: transparent; border: none; box-shadow: none; overflow: visible;
+        }
+        #nyero21-content-wrapper {
+            position: relative; padding: 30px; border-radius: 15px;
             background: #1A237E linear-gradient(180deg, rgba(63,81,181,0.5) 0%, rgba(26,35,126,0) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 5px 25px rgba(0,0,0,0.7);
+            border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 5px 25px rgba(0,0,0,0.7);
         }
         #nyero21-table-svg {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 105%;
-            height: 105%;
-            z-index: -1;
-        }
-        #nyero21-joker {
-            width: 150px;
-            position: absolute;
-            right: 0px;
-            bottom: 0px;
-            opacity: 0.4;
-            transform: rotate(-15deg);
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 105%; height: 105%; z-index: -1;
         }
         #nyero21-game-area { display: none; }
         #nyero21-info-bar {
-            background-color: rgba(0,0,0,0.3);
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-            text-align: left;
-            line-height: 1.6;
+            background-color: rgba(0,0,0,0.3); padding: 10px 15px; border-radius: 8px; margin-bottom: 15px;
+            font-size: 0.9rem; text-align: left; line-height: 1.6;
         }
-        #nyero21-info-bar strong {
-            color: var(--accent-gold);
-            font-weight: 700;
-        }
+        #nyero21-info-bar strong { color: var(--accent-gold); font-weight: 700; }
         #nyero21-card-deck {
             display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
             margin-bottom: 20px; perspective: 800px;
@@ -817,7 +922,12 @@
             background-color: var(--font-color-light); transform: rotateY(180deg);
             display: flex; justify-content: center; align-items: center; font-size: 2.5rem;
             font-family: 'Montserrat', sans-serif; font-weight: 900; color: var(--font-color-dark);
+            overflow: hidden; padding: 5px; box-sizing: border-box;
         }
+        .nyero21-card-front.joker-logo-card svg { 
+            width: 100%; height: 100%; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+        }
+
         #nyero21-player-hand { margin: 15px 0; }
         #nyero21-player-score {
             font-size: 4rem; color: var(--accent-gold); font-family: 'Montserrat';
@@ -827,7 +937,23 @@
         #nyero21-result-message.win { color: var(--win-green); }
         #nyero21-result-message.lose { color: var(--lose-red); }
 
-        /* LOTTO STYLES */
+        #nyero21-modal, #lotto-modal, #active-bonuses-modal, #prize-chest-modal { z-index: 1500; }
+        #lotto-modal .modal-content, #active-bonuses-modal .modal-content, #prize-chest-modal .modal-content {
+            max-width: 800px;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            overflow: visible;
+        }
+        #lotto-content-wrapper, #bonuses-content-wrapper, #chest-content-wrapper {
+            position: relative;
+            padding: 30px;
+            border-radius: 15px;
+            background: #1A237E linear-gradient(180deg, rgba(63,81,181,0.5) 0%, rgba(26,35,126,0) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.7);
+        }
+        
         #lotto-modal .modal-content { max-width: 600px; }
         #lotto-betting-area { position: relative; }
         #lotto-ticket-svg {
@@ -910,6 +1036,11 @@
             #wheel-center-button { width: 70px; height: 70px; font-size: 0.9rem; }
             #booster-svg circle { stroke-width: 7; }
 
+            #puzzle-top-bar { align-items: center; justify-content: flex-start;}
+            #round-info-container { order: 1; }
+            #puzzle-logo-container { order: 2; }
+
+
             #game-controls-section {
                 display: flex;
                 flex-direction: column;
@@ -927,6 +1058,9 @@
             .player-hud { width: 90%; max-width: 350px; }
             #main-prize-progress { order: 1; margin-bottom: 10px; }
             #won-prize-container { order: 3; }
+            
+            .nyero21-card { width: 60px; height: 85px; }
+            #nyero21-modal .modal-buttons .modal-btn { padding: 10px 15px; font-size: 0.9rem; }
         }
 
         @media (min-width: 901px) {
@@ -934,16 +1068,17 @@
             #player-info-wrapper { order: 1; }
             #game-interaction-wrapper { order: 2; }
             #puzzle-section { flex-direction: column; flex: 4; }
-
-            #round-info-container { order: 1; margin: 0 auto 15px auto; width: auto; max-width: none; padding: 10px 30px; background-color: rgba(0,0,0,0.3); border-radius: 50px; border-width: 2px; }
-            #puzzle-category-wrapper { order: 2; margin-bottom: 15px; }
-            #puzzle-board { order: 3; margin-top: 0; margin-bottom: 0; }
-            #auto-hints-container { order: 4; }
-            #alphabet-panel { order: 5; margin: 25px auto 0 auto; width: 100%; max-width: 800px; }
-            #desktop-action-buttons { order: 6; }
-            #host-message-desktop { order: 7; }
-            #free-vowel-indicator { order: 8; margin: 15px auto 0 auto; }
-            #copyright-notice { order: 9; margin-top: 15px; }
+            
+            #puzzle-top-bar { order: 1; justify-content: flex-start; margin-bottom: 15px; }
+            #round-info-container { order: 2; }
+            #puzzle-category-wrapper { order: 3; margin-bottom: 15px; }
+            #puzzle-board { order: 4; margin-top: 0; margin-bottom: 0; }
+            #auto-hints-container { order: 5; }
+            #alphabet-panel { order: 6; margin: 25px auto 0 auto; width: 100%; max-width: 800px; }
+            #desktop-action-buttons { order: 7; }
+            #host-message-desktop { order: 8; }
+            #free-vowel-indicator { order: 9; margin: 15px auto 0 auto; }
+            #copyright-notice { order: 10; margin-top: 15px; }
 
             #puzzle-category { font-size: clamp(1.2rem, 1.8vw, 1.7rem); }
             .puzzle-tile { width: clamp(45px, 5vw, 60px); height: clamp(60px, 6.5vw, 75px); }
@@ -1015,22 +1150,31 @@
                 <circle cx="50" cy="50" r="5" fill="#FFC107" />
             </svg>
         </div>
-        <h1 id="game-title">Pörgesd Fel!</h1>
-        <h2 id="sunday-title">Prémium Vasárnap</h2>
+        <div id="title-container">
+            <h1 id="game-title">Pörgesd Fel!</h1>
+            <div id="millionaire-banner">
+                <span id="millionaire-banner-icon">👑</span>
+                <span id="millionaire-banner-text">A Hét Milliomosa</span>
+            </div>
+            <h2 id="sunday-title">Prémium Vasárnap</h2>
+        </div>
     </header>
     <div id="tv-container">
         <div id="screen">
             <div id="game-area">
                 <section id="puzzle-section">
+                    <div id="puzzle-top-bar">
+                        <div id="puzzle-logo-container"></div>
+                    </div>
+                    <div id="round-info-container">
+                        <div id="round-display"></div>
+                        <div id="hour-block-display"></div>
+                    </div>
                     <div id="puzzle-category-wrapper">
                         <div id="lotto-bajnok-icon">🍀</div>
                         <div id="puzzle-category"></div>
                     </div>
                     <div id="free-vowel-indicator">Ingyen Magánhangzód Van!</div>
-                    <div id="round-info-container">
-                        <div id="round-display"></div>
-                        <div id="hour-block-display"></div>
-                    </div>
                     <div id="copyright-notice">© Copyright by: Robi - Pörgesd Fel! Edition</div>
                     <div id="puzzle-board"></div>
                     <div id="auto-hints-container"></div>
@@ -1048,7 +1192,7 @@
                         <div id="main-prize-progress"></div>
                         <div id="all-huds-container">
                             <div id="main-hud" class="player-hud">
-                                <div class="hud-label"><span id="millionaire-icon">👑</span><span id="main-hud-label">Összes Zseton</span></div>
+                                <div class="hud-label"><span id="main-hud-label">Összes Zseton</span></div>
                                 <div id="score-display">0 Ft</div>
                             </div>
                             <div id="hourly-hud" class="player-hud">
@@ -1126,10 +1270,10 @@
             <li class="gameplay"><strong>Játékmenet:</strong> Minden órában 10, egyre nehezedő feladvány vár. Pörgess a keréken, ami meghatározza a következő mássalhangzó-tipped értékét. Ha a betű szerepel a táblán, annyiszor kapod meg a pörgetett összeget, ahányszor a betű előfordul. A körben gyűjtött zsetonjaidból vásárolhatsz magánhangzót (az áruk egyre nő), vagy megkísérelheted a megfejtést, amiért extra bónusz zseton jár.</li>
             <li class="lotto"><strong>Napi Lottó:</strong> Minden nap este 7-ig vásárolhatsz lottószelvényt a megnyert zsetonjaidból. Adj meg <strong>5 számot a 45-ből!</strong> A sorsolás minden este 7-kor történik. A nyeremények a találatok számától függnek, és a Nyereményládádba kerülnek, ahonnan aktiválhatod őket. A nyeremények lehetnek több napig vagy akár a hét végéig tartó bónuszok, mint például CSŐD-védelem, dupla pénz, vagy a főnyeremény, a LottóBajnok cím!</li>
             <li class="dynamic-wheel"><strong>Dinamikus Kerék:</strong> A kerék tartalma minden fordulóban változhat! Ahogy haladsz előre, egyre nagyobb nyeremények, de új mezők is megjelennek. Ilyenek például a <strong>CSŐD</strong> (elveszti a körös pénzed), <strong>Felező</strong> (felezi a körös pénzed), <strong>Dupla vagy Semmi</strong> (kockáztathatod a körös pénzed egy betűtippel), <strong>Különdíj</strong> (értékes tárgynyeremény vagy annak pénzbeli megfelelője), és a <strong>Meglepetés</strong> (egy véletlenszerű pozitív vagy negatív esemény).</li>
-            <li class="minigame"><strong>Nyerő21 Minijáték:</strong> Ha épp nem te pörgetsz, vagy csak egy kis extra izgalomra vágysz, próbáld ki a Nyerő21-et! Tegyél fel a zsetonjaidból, és húzz lapokat egy 10 lapos (2-11 értékű) pakliból. Ha a lapjaid összege eléri a 21-et, a téted ötszörösét nyered! Ha az összeg 18 és 20 között van, a téted duplája jár vissza. De vigyázz, ha túlléped a 21-et, a tét elvész! Óránként korlátozott számban játszhatsz.</li>
+            <li class="minigame"><strong>Nyerő21 Minijáték:</strong> Ha épp nem te pörgetsz, vagy csak egy kis extra izgalomra vágysz, próbáld ki a Nyerő21-et! Tegyél fel a zsetonjaidból, és húzz lapokat egy 16 lapos pakliból. Ha a lapjaid összege eléri a 21-et, a téted ötszörösét nyered! Ha a Joker lapot húzod (a Pörgesd Fel! logó), a téted háromszorosát nyered! Ha az összeg 18 és 20 között van, a téted duplája jár vissza. De vigyázz, ha túlléped a 21-et, a tét elvész! Óránként korlátozott számban játszhatsz.</li>
             <li class="prizes"><strong>Bónuszok és Nyeremények:</strong> A játék során többféle bónuszt szerezhetsz. A Lottón nyert jutalmak a <strong>Nyereményládába</strong> kerülnek, ahonnan manuálisan kell aktiválnod őket. Az aktivált bónuszok egy ideig (pl. 24 óráig vagy a hét végéig) extra előnyöket adnak. A keréken pörgethető <strong>Különdíj</strong> pedig egy azonnali választási lehetőséget kínál egy értékes tárgy és a készpénz között.</li>
             <li class="week"><strong>Heti Kassza:</strong> Minden, amit hétköznap (hétfőtől szombatig) nyersz, a Heti Kasszádba kerül. Ezt a pénzt vasárnap teszed kockára.</li>
-            <li class="sunday"><strong>Prémium Vasárnap:</strong> Vasárnap a Heti Kasszádból tett tétekkel játszol.
+            <li class="sunday"><strong>Prémium Vasárnap:</strong> Vasárnap a Heti Kasszádból tett tétekkel jázol.
                 <div class="sub-rule">
                     <ul>
                          <li><strong>Tétmentő:</strong> A feltett téted a kör elején veszélyben van. Biztosítanod kell a "TÉTMENTŐ" mező kipörgetésével. Ha enélkül fejtessz meg egy feladványt, a téted elvész!</li>
@@ -1139,7 +1283,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="main-prize"><strong>Fődíj Játék:</strong> Ha egy órás játékblokk végére (a 10. feladvány után) legalább 150.000 Ft-ot gyűjtöttél az adott órában, esélyt kapsz a Fődíj Játékra! Itt az óra alatt gyűjtött teljes pénzedet kockáztatva, egyetlen fődíj-feladvány megfejtésével megduplázhatod azt! A játékhoz ki kell választanod 5 mássalhangzót és 1 magánhangzót, majd 50 másodperced van a megfejtésre. Ha nem gyűlt össze a limit, de a teljes vagyonodból ki tudod pótolni a hiányzó összeget, akkor is játszhatsz.</li>
+            <li class="main-prize"><strong>Fődíj Játék:</strong> Ha egy órás játékblokk végére (a 10. feladvány után) legalább 150.000 Ft-ot gyűjtöttél az adott órában, esélyt kapsz a Fődíj Játékra! Itt az óra alatt gyűjtött teljes pénzedet kockáztatva, egyetlen fődíj-feladvány megfejtésével megduplázhatod azt! A játékhoz ki kell választanod 5 mássalhangzót és 1 magánhangzót. A gép felfedi ezeket, majd elindul egy 50 másodperces visszaszámláló. A játék további betűkkel segít: 40 másodpercnél 2 magánhangzót, 25 másodpercnél 2 mássalhangzót fed fel automatikusan. Ha nem gyűlt össze a limit, de a teljes vagyonodból ki tudod pótolni a hiányzó összeget, akkor is játszhatsz.</li>
             <li class="millionaire"><strong>A Hét Milliomosa:</strong> Az a játékos, aki a vasárnapi játék végére a legmagasabb egyenleggel zár (minimum 1.000.000 Ft felett), elnyeri "A Hét Milliomosa" címet. Ez a cím a teljes következő hétre exkluzív bónuszokat és előnyöket biztosít számára a játékban.</li>
             <li class="exit"><strong>Kilépés:</strong> Ha egy órán belül kilépsz a játékból, majd visszatérsz, a második kilépésnél az adott órában szerzett összes nyereményed elvész. Gondold meg jól!</li>
         </ul>
@@ -1172,21 +1316,43 @@
     </div>
     
     <div id="main-prize-modal">
-         <span class="dev-mode-indicator" style="display: none;">TESZT MÓD</span>
-         <h2 id="main-prize-title">Fődíj Játék</h2>
-         <h3 id="main-prize-category">Fődíj Kategória</h3>
-         <div id="main-prize-board"></div>
-         <p id="main-prize-given-letters"></p>
-         <p id="main-prize-final-answer" style="display: none;"></p>
-         <div id="main-prize-timer">50.0</div>
-         <p id="main-prize-instructions">Írd be a megfejtést, mielőtt lejár az idő!</p>
-         <div id="main-prize-alphabet-panel-container"></div>
-         <input id="main-prize-solve-input" type="text" class="modal-input" placeholder="MEGFEJTÉS">
-         <div class="modal-buttons">
-            <button id="main-prize-select-confirm-btn" class="modal-btn confirm">Betűk lezárása</button>
-            <button id="main-prize-confirm-btn" class="modal-btn confirm">Megfejtem!</button>
-            <button id="main-prize-close-btn" class="modal-btn cancel" style="display: none;">Bezárás</button>
-         </div>
+        <div id="main-prize-content">
+            <span class="dev-mode-indicator" style="display: none;">TESZT MÓD</span>
+            <h2 id="main-prize-title">Fődíj Játék</h2>
+            <h3 id="main-prize-category">Válassz 5 mássalhangzót és 1 magánhangzót</h3>
+            <div id="main-prize-header" style="display: none;">
+                <div id="main-prize-logo-container">
+                    <svg viewBox="0 0 100 100">
+                         <circle cx="50" cy="50" r="42" fill="url(#rimGradient)" opacity="0.6" />
+                         <circle cx="50" cy="50" r="40" fill="#37474F" />
+                         <g filter="url(#logoGlow)">
+                            <use href="#blade" transform="scale(0.95) translate(2.5, 2.5)"/>
+                            <use href="#blade" transform="rotate(72, 50, 50) scale(0.95) translate(2.5, 2.5)" />
+                            <use href="#blade" transform="rotate(144, 50, 50) scale(0.95) translate(2.5, 2.5)" />
+                            <use href="#blade" transform="rotate(216, 50, 50) scale(0.95) translate(2.5, 2.5)" />
+                            <use href="#blade" transform="rotate(288, 50, 50) scale(0.95) translate(2.5, 2.5)" />
+                        </g>
+                        <circle cx="50" cy="50" r="5" fill="#FFC107" />
+                    </svg>
+                    <p>Pörgesd Fel!</p>
+                </div>
+                <div id="main-prize-timer-wrapper">
+                    <div id="main-prize-timer">50.0</div>
+                </div>
+            </div>
+            <div id="main-prize-definition"></div>
+            <div id="main-prize-board"></div>
+            <p id="main-prize-given-letters"></p>
+            <p id="main-prize-final-answer" style="display: none;"></p>
+            <p id="main-prize-instructions"></p>
+            <div id="main-prize-alphabet-panel-container"></div>
+            <input id="main-prize-solve-input" type="text" class="modal-input" placeholder="MEGFEJTÉS">
+            <div class="modal-buttons">
+                <button id="main-prize-select-confirm-btn" class="modal-btn confirm">Betűk lezárása</button>
+                <button id="main-prize-confirm-btn" class="modal-btn confirm">Megfejtem!</button>
+                <button id="main-prize-close-btn" class="modal-btn cancel" style="display: none;">Bezárás</button>
+            </div>
+        </div>
     </div>
 
     <div id="nyero21-modal" class="modal-overlay">
@@ -1203,10 +1369,9 @@
                     <ellipse cx="100" cy="60" rx="100" ry="60" fill="url(#tableGrad)"/>
                     <path d="M 10 60 Q 100 -10 190 60" stroke="#a97e41" stroke-width="5" fill="none" />
                 </svg>
-                <img id="nyero21-joker" src="https://assets.codepen.io/1506195/joker-card.svg" alt="Joker">
                 <h3 style="color:white;">Nyerő21</h3>
                 <div id="nyero21-staking-area">
-                    <p>Tedd meg a tétet a Nyerő21 játékhoz! A cél 21-et elérni, de nem túllépni. A 21-es lapért a tét 5x-öse, 18-20-ig a tét duplája jár vissza.</p>
+                    <p>Tedd meg a tétet a Nyerő21 játékhoz! A cél 21-et elérni, de nem túllépni. A 21-es lapért a tét 5x-öse, 18-20-ig a tét duplája jár vissza. A JOKER 3x-os pénzt ér!</p>
                     <p>Jelenlegi egyenleg: <strong id="nyero21-player-balance">0 Ft</strong></p>
                     <p id="nyero21-plays-left"></p>
                     <input id="nyero21-stake-input" type="number" class="modal-input" placeholder="Tét összege">
@@ -1239,6 +1404,7 @@
              <div id="lotto-content-wrapper">
                  <span class="dev-mode-indicator" style="display: none;">TESZT MÓD</span>
                  <h3 id="lotto-title">Napi Lottó</h3>
+                 <p id="lotto-submission-feedback" style="display:none; color: var(--win-green); font-weight: bold; font-size: 1.1rem;"></p>
                  <div id="lotto-info-area">
                     <p id="lotto-status-text"></p>
                     <div id="lotto-drawing-container">
@@ -2778,6 +2944,11 @@
     { "category": "Sorozat", "puzzle": "BREAKING BAD - TOTÁL SZÍVÁS", "hints": ["Sorozat egy kémiatanárról, aki rákos lesz és drogfőzésre adja a fejét, hogy a családját biztosítsa.", "A főszereplő, Walter White átalakulása a központi téma."] },
     { "category": "Sportág", "puzzle": "CSELGÁNCS (JUDO)", "hints": ["Japán eredetű küzdősport, 'a lágy út' a jelentése.", "A cél az ellenfél dobása, leszorítása vagy feladásra kényszerítése."] },
     { "category": "Kifejezés", "puzzle": "AKHILLEUSZ-SAROK", "hints": ["Valakinek vagy valaminek a gyenge, sebezhető pontja.", "A görög hős egyetlen sebezhető pontja a sarka volt, ahol anyja fogta, mikor a Sztüx folyóba mártotta."] },
+    { "category": "Sorozat", "puzzle": "BREAKING BAD - TOTÁL SZÍVÁS", "hints": ["Egy kémiatanárról szól, aki drogfőzésre adja a fejét.", "Walter White átalakulása a központi téma."] },
+            { "category": "Sportág", "puzzle": "CSELGÁNCS (JUDO)", "hints": ["Japán eredetű küzdősport.", "'A lágy út' a jelentése."] },
+            { "category": "Kifejezés", "puzzle": "AKHILLEUSZ-SAROK", "hints": ["Valakinek vagy valaminek a gyenge, sebezhető pontja.", "A görög hős egyetlen sebezhető pontja a sarka volt, ahol anyja fogta, mikor a Sztüx folyóba mártotta."] },
+            { "category": "Történelem", "puzzle": "RENDSZERVÁLTÁS", "hints": ["A szocialista rendszer vége Magyarországon.", "1989-ben zajlott le."] },
+          
     { category: "Fődíj Feladvány", puzzle: "ADDIG JÁR A KORSÓ A KÚTRA MÍG EL NEM TÖRIK", hint: "Közmondás" },
     { category: "Fődíj Feladvány", puzzle: "NEM MIND ARANY AMI FÉNYLIK", hint: "Közmondás" },
     { category: "Fődíj Feladvány", puzzle: "JOBB FÉLNI MINT MEGIJEDNI", hint: "Közmondás" },
@@ -3077,6 +3248,7 @@
             const lottoButtonDesktop = document.getElementById('lotto-button-desktop');
             const transferButtonDesktop = document.getElementById('transfer-button-desktop');
             const puzzleBoard = document.getElementById('puzzle-board');
+            const puzzleLogoContainer = document.getElementById('puzzle-logo-container');
             const puzzleCategory = document.getElementById('puzzle-category');
             const lottoBajnokIcon = document.getElementById('lotto-bajnok-icon');
             const freeVowelIndicator = document.getElementById('free-vowel-indicator');
@@ -3108,8 +3280,10 @@
             const devModalCloseBtn = document.getElementById('dev-modal-close-btn');
             const logoContainer = document.getElementById('logo-container');
             const mainPrizeModal = document.getElementById('main-prize-modal');
+            const mainPrizeHeader = document.getElementById('main-prize-header');
             const mainPrizeTitle = document.getElementById('main-prize-title');
             const mainPrizeCategory = document.getElementById('main-prize-category');
+            const mainPrizeDefinition = document.getElementById('main-prize-definition');
             const mainPrizeBoard = document.getElementById('main-prize-board');
             const mainPrizeGivenLetters = document.getElementById('main-prize-given-letters');
             const mainPrizeFinalAnswer = document.getElementById('main-prize-final-answer');
@@ -3139,6 +3313,7 @@
             const nyero21CloseBtn = document.getElementById('nyero21-close-btn');
             const lottoModal = document.getElementById('lotto-modal');
             const lottoTitle = document.getElementById('lotto-title');
+            const lottoSubmissionFeedback = document.getElementById('lotto-submission-feedback');
             const lottoInfoArea = document.getElementById('lotto-info-area');
             const lottoStatusText = document.getElementById('lotto-status-text');
             const lottoCostText = document.getElementById('lotto-cost-text');
@@ -3163,6 +3338,29 @@
             const prizeChestModal = document.getElementById('prize-chest-modal');
             const prizeChestList = document.getElementById('prize-chest-list');
             const prizeChestCloseBtn = document.getElementById('prize-chest-close-btn');
+            const pordgesdFelJokerLogo = `
+                <svg viewBox="0 0 100 100">
+                    <defs>
+                        <linearGradient id="jokerBladeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                             <stop offset="0%" stop-color="#FFC107" />
+                             <stop offset="100%" stop-color="#F44336" />
+                        </linearGradient>
+                         <filter id="jokerLogoGlow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+                            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.8 0" result="glow"/>
+                            <feComposite in="glow" in2="SourceGraphic" operator="over"/>
+                        </filter>
+                    </defs>
+                    <circle cx="50" cy="50" r="40" fill="#37474F" />
+                    <g filter="url(#jokerLogoGlow)">
+                        <path d="M 50 48 C 65 45, 75 30, 80 15 C 70 30, 60 43, 50 46 Z" fill="url(#jokerBladeGradient)"/>
+                        <use href="#blade" transform="rotate(72, 50, 50)" />
+                        <use href="#blade" transform="rotate(144, 50, 50)" />
+                        <use href="#blade" transform="rotate(216, 50, 50)" />
+                        <use href="#blade" transform="rotate(288, 50, 50)" />
+                    </g>
+                    <circle cx="50" cy="50" r="5" fill="#FFC107" />
+                </svg>`;
 
             const boosterRadius = 45;
             const circumference = 2 * Math.PI * boosterRadius;
@@ -3372,7 +3570,7 @@
                         const isSelected = gameState.guessedLetters.includes(letter);
                         const consonantsFull = !isVowel && gameState.mainPrizeConsonants.length >= 5;
                         const vowelsFull = isVowel && gameState.mainPrizeVowels.length >= 1;
-                        isDisabled = isSelected || consonantsFull || vowelsFull;
+                        isDisabled = isSelected || (consonantsFull && !isVowel) || (vowelsFull && isVowel);
                     } else {
                         isDisabled = !gameState.gameInProgress || gameState.guessedLetters.includes(letter) || gameState.isSpinning;
                         if (isVowel) {
@@ -3812,17 +4010,19 @@
                  mainPrizeModal.style.display = 'flex';
                  createAlphabetPanel(mainPrizeAlphabetContainer);
                  
+                 mainPrizeTitle.style.display = 'block';
+                 mainPrizeCategory.style.display = 'block';
+                 mainPrizeHeader.style.display = 'none';
+                 mainPrizeDefinition.style.display = 'none';
                  mainPrizeTitle.textContent = "Fődíj - Betűválasztás";
                  mainPrizeCategory.textContent = "Válassz 5 mássalhangzót és 1 magánhangzót";
-                 mainPrizeInstructions.innerHTML = "Írd be a megfejtést, mielőtt lejár az idő!";
-                 mainPrizeInstructions.style.display = 'none';
+                 mainPrizeAlphabetContainer.style.display = 'flex';
                  mainPrizeSolveInput.style.display = 'none';
                  mainPrizeConfirmBtn.style.display = 'none';
                  mainPrizeCloseBtn.style.display = 'none';
                  mainPrizeFinalAnswer.style.display = 'none';
                  mainPrizeSelectConfirmBtn.style.display = 'inline-flex';
                  mainPrizeSelectConfirmBtn.disabled = true;
-                 mainPrizeTimer.style.display = 'none';
                  mainPrizeBoard.innerHTML = '';
                  setupPuzzleBoard(mainPrizeBoard, mainPrizePuzzle);
                  mainPrizeGivenLetters.innerHTML = '';
@@ -3856,18 +4056,20 @@
 
             function runMainPrizeCountdown() {
                  mainPrizeSelectConfirmBtn.style.display = 'none';
-                 mainPrizeTitle.textContent = "Fődíj Játék";
+                 mainPrizeTitle.style.display = 'none';
+                 mainPrizeCategory.style.display = 'none';
+                 mainPrizeHeader.style.display = 'flex';
+                 
                  const mainPrizePuzzles = allPuzzles.filter(p => p.category === 'Fődíj Feladvány');
                  const mainPrizePuzzle = mainPrizePuzzles[gameState.puzzleHourId % mainPrizePuzzles.length];
-                 mainPrizeCategory.textContent = mainPrizePuzzle.category;
-                 mainPrizeAlphabetContainer.style.display = 'none';
+                 
+                 mainPrizeDefinition.textContent = mainPrizePuzzle.hint || 'Nincs meghatározás';
+                 mainPrizeDefinition.style.display = 'block';
 
-                 mainPrizeInstructions.innerHTML = `Meghatározás: <strong>${mainPrizePuzzle.hint || 'Nincs megadva'}</strong>`;
-                 mainPrizeInstructions.style.display = 'block';
+                 mainPrizeAlphabetContainer.style.display = 'none';
                  mainPrizeSolveInput.style.display = 'block';
                  mainPrizeSolveInput.value = '';
                  mainPrizeConfirmBtn.style.display = 'inline-flex';
-                 mainPrizeTimer.style.display = 'block';
 
                  const chosenLetters = [...gameState.mainPrizeConsonants, ...gameState.mainPrizeVowels];
                  mainPrizeGivenLetters.textContent = `A választott betűid: ${chosenLetters.join(', ')}`;
@@ -3877,8 +4079,9 @@
                  });
                      
                  let timeLeft = MAIN_PRIZE_TIME * 10;
-                 let hint1Given = false;
-                 let hint2Given = false;
+                 let vowelHelpGiven = false;
+                 let consonantHelpGiven = false;
+                 
                  mainPrizeTimer.textContent = (timeLeft / 10).toFixed(1);
                  mainPrizeTimer.classList.remove('timer-low');
                  mainPrizeSolveInput.disabled = false;
@@ -3888,26 +4091,30 @@
                  mainPrizeTimerInterval = setInterval(() => {
                      timeLeft--;
                      mainPrizeTimer.textContent = (timeLeft / 10).toFixed(1);
-                     
-                     if (!hint1Given && timeLeft <= 300) {
-                        hint1Given = true;
-                        if (mainPrizePuzzle.hints && mainPrizePuzzle.hints[0]) {
-                            mainPrizeInstructions.innerHTML += `<br><br>Segítség: <strong>${mainPrizePuzzle.hints[0]}</strong>`;
-                        }
+
+                     const revealHelperLetters = (type, count) => {
+                         const puzzleStr = mainPrizePuzzle.puzzle.toUpperCase();
+                         const unrevealed = [...new Set(puzzleStr.split(''))].filter(char => {
+                            const isOfType = type === 'vowel' ? VOWELS.includes(char) : !VOWELS.includes(char) && FULL_ALPHABET.includes(char);
+                            return isOfType && !mainPrizeBoard.querySelector(`.puzzle-tile[data-letter="${char}"]`).classList.contains('revealed');
+                         });
+
+                         for(let i = 0; i < count && unrevealed.length > 0; i++) {
+                             const letterToReveal = unrevealed.splice(Math.floor(Math.random() * unrevealed.length), 1)[0];
+                             mainPrizeBoard.querySelectorAll(`.puzzle-tile[data-letter="${letterToReveal}"]`).forEach(t => t.classList.add('revealed'));
+                         }
+                     };
+
+                     if (!vowelHelpGiven && timeLeft <= 400) { // 40.0s
+                        vowelHelpGiven = true;
+                        mainPrizeGivenLetters.innerHTML += `<br><br><strong>Magánhangzó segítség aktiválva!</strong>`;
+                        revealHelperLetters('vowel', 2);
                      }
 
-                     if (!hint2Given && timeLeft <= 150) {
-                         hint2Given = true;
-                         if (mainPrizePuzzle.puzzle.replace(/ /g,'').length > 8) {
-                             const unrevealedLetters = [...mainPrizePuzzle.puzzle].filter(c => FULL_ALPHABET.includes(c) && !mainPrizeBoard.querySelector(`.puzzle-tile[data-letter="${c}"]`).classList.contains('revealed'));
-                             const uniqueUnrevealed = [...new Set(unrevealedLetters)];
-                             for(let i=0; i<2 && uniqueUnrevealed.length > 0; i++){
-                                 const randIndex = Math.floor(Math.random() * uniqueUnrevealed.length);
-                                 const letterToReveal = uniqueUnrevealed.splice(randIndex, 1)[0];
-                                 mainPrizeBoard.querySelectorAll(`.puzzle-tile[data-letter="${letterToReveal}"]`).forEach(t => t.classList.add('revealed'));
-                             }
-                             mainPrizeInstructions.innerHTML += `<br><br><strong>Betűsegítség aktiválva!</strong>`;
-                         }
+                     if (!consonantHelpGiven && timeLeft <= 250) { // 25.0s
+                         consonantHelpGiven = true;
+                         mainPrizeGivenLetters.innerHTML += `<br><strong>Mássalhangzó segítség aktiválva!</strong>`;
+                         revealHelperLetters('consonant', 2);
                      }
 
                      if(timeLeft <= 100 && !mainPrizeTimer.classList.contains('timer-low')) {
@@ -3937,13 +4144,15 @@
                 }
             }
             
-            function endMainPrizeGame(isWin, isTimeout = false) {
+            async function endMainPrizeGame(isWin, isTimeout = false) {
                 clearInterval(mainPrizeTimerInterval);
                 mainPrizeSolveInput.disabled = true;
                 mainPrizeConfirmBtn.disabled = true;
                 const stake = gameState.mainPrizeStake;
                 const isDevTest = gameState.isDevMainPrizeTest;
                 
+                mainPrizeDefinition.style.textAlign = 'center';
+
                 if (isWin) {
                     const winnings = stake; 
                     if (!isDevTest) {
@@ -3952,25 +4161,35 @@
                     }
                     const totalDisplay = (stake + winnings).toLocaleString('hu-HU');
                     
-                    mainPrizeTitle.textContent = "SIKERES MEGFEJTÉS!";
-                    mainPrizeInstructions.innerHTML = `Gratulálok, megdupláztad a pénzed! <br><strong>Nyereményed: ${totalDisplay} Ft</strong>`
+                    updateHostMessage(getRandomMessage('main_prize_win', {winnings: totalDisplay}) + (isDevTest ? ' (TESZT)' : ''), true);
+                    mainPrizeDefinition.innerHTML = `SIKERES MEGFEJTÉS!<br><strong>Nyereményed: ${totalDisplay} Ft</strong>`;
+                    mainPrizeCloseBtn.style.display = 'inline-flex';
                 } else {
+                    updateHostMessage(getRandomMessage(isTimeout ? 'main_prize_lose_timeout' : 'main_prize_lose') + (isDevTest ? ' (TESZT)' : ''), true);
                     if (!isDevTest) {
                         gameState.playerScore -= stake;
-                        gameState.hourlyWinnings = 0;
+                        gameState.hourlyWinnings = 0; // Hourly winnings are lost
                     }
-                    updateHostMessage(getRandomMessage(isTimeout ? 'main_prize_lose_timeout' : 'main_prize_lose') + (isDevTest ? ' (TESZT)' : ''), true);
 
                     const mainPrizePuzzles = allPuzzles.filter(p => p.category === 'Fődíj Feladvány');
                     const mainPrizePuzzle = mainPrizePuzzles[gameState.puzzleHourId % mainPrizePuzzles.length];
+                    mainPrizeDefinition.innerHTML = isTimeout ? "LEJÁRT AZ IDŐ!" : "SIKERTELEN MEGFEJTÉS!";
+                    
+                    mainPrizeFinalAnswer.style.display = 'none'; // Hide text initially
+                    mainPrizeCloseBtn.style.display = 'none'; // Hide button initially
+
+                    const tilesToReveal = Array.from(mainPrizeBoard.querySelectorAll('.puzzle-tile[data-letter]:not(.revealed)'));
+                    for (const tile of tilesToReveal) {
+                        tile.classList.add('revealed');
+                        await new Promise(resolve => setTimeout(resolve, 100)); // 100ms delay between flips
+                    }
+
                     mainPrizeFinalAnswer.textContent = `A helyes megfejtés: ${mainPrizePuzzle.puzzle}`;
                     mainPrizeFinalAnswer.style.display = 'block';
+                    mainPrizeCloseBtn.style.display = 'inline-flex';
                 }
                 
-                mainPrizeCloseBtn.style.display = 'inline-flex';
-                
                 if (!isDevTest) {
-                    gameState.hourlyWinnings = 0;
                     saveWeeklyScore(gameState.playerScore);
                 }
                 gameState.mainPrizeStake = 0;
@@ -3979,12 +4198,18 @@
             function forceEndMainPrize() {
                 mainPrizeModal.style.display = 'none';
                 gameState.inMainPrizeSelection = false;
-                document.getElementById('puzzle-section').insertBefore(alphabetPanel, document.getElementById('desktop-action-buttons'));
+                
+                const desktopActions = document.getElementById('desktop-action-buttons');
+                if (desktopActions) {
+                     document.getElementById('puzzle-section').insertBefore(alphabetPanel, desktopActions);
+                }
                 createAlphabetPanel();
+
                 if (!gameState.isDevMainPrizeTest) {
                      gameOver();
                 } else {
                     gameState.isDevMainPrizeTest = false;
+                    updateUI();
                 }
             }
 
@@ -4039,7 +4264,7 @@
 
                 nyero21State = {
                     stake: stake,
-                    deck: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11].sort(() => 0.5 - Math.random()),
+                    deck: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 2, 3, 4, 5, 6, 'joker'].sort(() => 0.5 - Math.random()),
                     playerSum: 0,
                     cardsDrawn: 0,
                     gameOver: false
@@ -4047,12 +4272,14 @@
                 
                 const winPrize = stake * 2;
                 const jackpotPrize = stake * 5;
+                const jokerPrize = stake * 3;
                 const balanceAfterStake = isDevModeActive ? currentScore : currentScore - stake;
                 nyero21InfoBar.innerHTML = `
-                    Feltett tét: <strong>${stake.toLocaleString('hu-HU')} Ft</strong><br>
+                    Feltett tét: <strong>${stake.toLocaleString('hu-HU')} Ft</strong> |
                     Jelenlegi egyenleg: <strong>${balanceAfterStake.toLocaleString('hu-HU')} Ft</strong><br>
-                    Várható nyeremény (18-20): <strong>${winPrize.toLocaleString('hu-HU')} Ft</strong><br>
-                    Várható nyeremény (21): <strong>${jackpotPrize.toLocaleString('hu-HU')} Ft</strong>
+                    Nyeremények: 18-20: <strong>${winPrize.toLocaleString('hu-HU')} Ft</strong> |
+                    21: <strong>${jackpotPrize.toLocaleString('hu-HU')} Ft</strong> |
+                    Joker: <strong>${jokerPrize.toLocaleString('hu-HU')} Ft</strong>
                 `;
 
                 if (!isDevModeActive) {
@@ -4077,7 +4304,14 @@
                     const card = document.createElement('div');
                     card.className = 'nyero21-card';
                     card.dataset.value = value;
-                    card.innerHTML = `<div class="nyero21-card-face nyero21-card-back"></div><div class="nyero21-card-face nyero21-card-front">${value}</div>`;
+                    let cardFaceHTML = '';
+                    if (value === 'joker') {
+                         cardFaceHTML = pordgesdFelJokerLogo;
+                         card.querySelector('.nyero21-card-front')?.classList.add('joker-logo-card');
+                    } else {
+                         cardFaceHTML = value;
+                    }
+                    card.innerHTML = `<div class="nyero21-card-face nyero21-card-back"></div><div class="nyero21-card-face nyero21-card-front ${value === 'joker' ? 'joker-logo-card' : ''}">${cardFaceHTML}</div>`;
                     card.addEventListener('click', () => drawCard(card));
                     nyero21CardDeck.appendChild(card);
                 });
@@ -4087,8 +4321,14 @@
                 if (nyero21State.gameOver || cardElement.classList.contains('flipped')) return;
 
                 cardElement.classList.add('flipped');
-                const value = parseInt(cardElement.dataset.value, 10);
-                nyero21State.playerSum += value;
+                const value = cardElement.dataset.value;
+
+                if (value === 'joker') {
+                    endNyero21('joker', 'JOKER! Azonnali nyeremény!');
+                    return;
+                }
+                
+                nyero21State.playerSum += parseInt(value, 10);
                 nyero21State.cardsDrawn++;
                 
                 nyero21PlayerScore.textContent = nyero21State.playerSum;
@@ -4111,18 +4351,22 @@
                 }
             }
 
-            function endNyero21(result, message) {
+            async function endNyero21(result, message) {
                 if (nyero21State.gameOver) return;
                 nyero21State.gameOver = true;
                 nyero21HitBtn.style.display = 'none';
                 nyero21StandBtn.style.display = 'none';
                 
                 let winnings = 0;
+                nyero21ResultMessage.className = 'nyero21-result-message';
                 if (result === 'win') {
                     winnings = nyero21State.stake * 2;
                     nyero21ResultMessage.classList.add('win');
                 } else if (result === 'jackpot') {
                     winnings = nyero21State.stake * 5;
+                    nyero21ResultMessage.classList.add('win');
+                } else if (result === 'joker') {
+                    winnings = nyero21State.stake * 3;
                     nyero21ResultMessage.classList.add('win');
                 } else {
                     nyero21ResultMessage.classList.add('lose');
@@ -4143,19 +4387,18 @@
                     nyero21ResultMessage.textContent += " (Teszt Nyeremény)";
                 }
 
+                const unflippedCards = document.querySelectorAll('.nyero21-card:not(.flipped)');
+                for(let i=0; i < unflippedCards.length; i++){
+                    await new Promise(resolve => setTimeout(resolve, 150));
+                    unflippedCards[i].classList.add('flipped');
+                }
+
                 const playsLeft = MINIGAME_PLAYS_PER_HOUR - (gameState ? gameState.nyero21PlaysThisHour : 0);
                 
                 if (isDevModeActive || playsLeft > 0) {
                     nyero21NewGameBtn.style.display = 'inline-flex';
                 }
                 nyero21CloseBtn.style.display = 'inline-flex';
-
-                const unflippedCards = document.querySelectorAll('.nyero21-card:not(.flipped)');
-                unflippedCards.forEach((card, index) => {
-                    setTimeout(() => {
-                        card.classList.add('flipped');
-                    }, 200 * (index + 1));
-                });
             }
 
             function togglePowerMeter() {
@@ -4713,6 +4956,22 @@
                 drawWheel(gameState.currentRound);
                 
                 puzzleCategory.textContent = puzzleData.category;
+
+                const smallLogoSVG = `
+                    <svg viewBox="0 0 100 100">
+                         <circle cx="50" cy="50" r="42" fill="url(#rimGradient)" opacity="0.6" />
+                         <circle cx="50" cy="50" r="40" fill="#37474F" />
+                         <g filter="url(#logoGlow)">
+                            <use href="#blade" transform="scale(0.95) translate(2.5, 2.5)"/>
+                            <use href="#blade" transform="rotate(72, 50, 50) scale(0.95) translate(2.5, 2.5)" />
+                            <use href="#blade" transform="rotate(144, 50, 50) scale(0.95) translate(2.5, 2.5)" />
+                            <use href="#blade" transform="rotate(216, 50, 50) scale(0.95) translate(2.5, 2.5)" />
+                            <use href="#blade" transform="rotate(288, 50, 50) scale(0.95) translate(2.5, 2.5)" />
+                        </g>
+                        <circle cx="50" cy="50" r="5" fill="#FFC107" />
+                    </svg>
+                    <p>Pörgesd Fel!</p>`;
+                puzzleLogoContainer.innerHTML = smallLogoSVG;
                 
                 if (gameState.currentRound === 1 && !isPrizeActive('lotto_bajnok')) {
                      if (!isSunday && localStorage.getItem('quitHourId') == gameState.puzzleHourId) {
@@ -4774,7 +5033,7 @@
                             gameState.hourlyWinnings = MAIN_PRIZE_THRESHOLD;
                             saveWeeklyScore(gameState.playerScore);
                             updateUI();
-                            startMainPrizeGame(false);
+                           startMainPrizeGame(false);
                         } else { 
                             gameState.playerScore += gameState.hourlyWinnings;
                             gameState.hourlyWinnings = 0;
@@ -4900,6 +5159,7 @@
                 isDevModeActive = isDevTest;
                 lottoInfoArea.style.display = 'block';
                 lottoBettingArea.style.display = 'none';
+                lottoSubmissionFeedback.style.display = 'none';
                 lottoModal.classList.add('visible');
                 lottoModal.querySelector('.dev-mode-indicator').style.display = isDevModeActive ? 'block' : 'none';
 
@@ -5016,15 +5276,17 @@
             function submitLottoTicket() {
                 if (lottoState.selectedNumbers.length !== 5) return alert("Kérlek, válassz ki 5 számot!");
                 
+                lottoSubmissionFeedback.innerHTML = 'Szelvény feladva! Várd a sorsolást este 7-kor! Sok szerencsét!';
+                lottoSubmissionFeedback.style.display = 'block';
+                setTimeout(() => { lottoSubmissionFeedback.style.display = 'none'; }, 5000);
+
                 if (isDevModeActive) {
-                    alert("TESZT MÓD: Szelvény feladva tét nélkül!");
+                    // No cost in dev mode
                 } else if (gameState.hasFreeLottoTicket) {
                     gameState.hasFreeLottoTicket = false;
-                    alert("Ingyenes szelvény feladva! Sok szerencsét!");
                 } else {
                     gameState.playerScore -= LOTTO_COST;
                     saveWeeklyScore(gameState.playerScore);
-                    alert("Szelvény feladva! Sok szerencsét!");
                 }
                 updateUI();
                 
@@ -5084,6 +5346,7 @@
                     gameState.isMillionaire = true;
                     document.body.classList.add('millionaire-active');
                 } else {
+                    document.body.classList.remove('millionaire-active');
                     localStorage.removeItem('millionaireUntilWeekId');
                 }
 
@@ -5220,4 +5483,4 @@
         });
     </script>
 </body>
-</html>```
+</html>
