@@ -25,7 +25,7 @@
             --halver-orange: #FF8A65;
             --surprise-purple: #9575CD;
             --lotto-green: #4CAF50;
-            --slot-machine-green: '#2ECC71';
+            --slot-machine-green: #2ECC71;
             --bet-multiplier-orange: '#FF7043';
             --bet-saver-green: '#81C784';
         }
@@ -1579,6 +1579,7 @@
     <div id="slot-machine-modal" class="modal-overlay">
         <div class="modal-content" style="max-width: 800px; background-color: #311B92; border-color: var(--slot-machine-green);">
             <h3>Nyerőgép</h3>
+             <span class="dev-mode-indicator" style="display: none;">TESZT MÓD</span>
             <div id="slot-machine-game-area">
                 <div id="slot-machine-info-bar" style="margin-bottom: 20px; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px; text-align: center; line-height: 1.5;">
                 </div>
@@ -1599,7 +1600,7 @@
                 <h4>Nyerőgép Játékszabályzat</h4>
                 <ul>
                     <li><strong>Kezdés:</strong> A játék indításához <strong>30.000 Ft</strong> kerül levonásra az Összes Zsetonodból.</li>
-                    <li><strong>Pörgetés:</strong> Az 'Indít' gombbal pörgethetsz. A pörgetés közben a gomb 'Leállít'-ra változik, amivel megállíthatod a tárcsákat.</li>
+                    <li><strong>Pörgetés:</strong> Az 'Indít' gombbal pörgethetsz. A pörgetés közben a gomb 'Leállít'-ra változik, amivel megállíthatod a tárcskákat.</li>
                     <li><strong>Szimbólumok és Nyeremények:</strong></li>
                     <li><strong style="color: var(--win-green);">Pénzösszegek (pl. 5.000, 10.000, 50.000 Ft):</strong> A kipörgetett összegek hozzáadódnak a játékban lévő egyenlegedhez.</li>
                     <li><strong style="color: var(--accent-gold);">Pörgesd Fel! Logó (BÓNUSZ):</strong> Ha 3 darabot pörgetsz ki, megnyered a <strong>Heti CSŐD Mentességet</strong>, ami szombat éjfélig tart!</li>
@@ -6258,7 +6259,7 @@
                          });
 
                          for(let i = 0; i < count && unrevealed.length > 0; i++) {
-                             const letterToReveal = unrevealed.splice(Math.floor(Math.random() * unrevealed.length), 1)[0];
+                             const letterToReveal = unrevealed.splice(Math.floor(Math.random() * unrevealed.length),1)[0];
                              mainPrizeBoard.querySelectorAll(`.puzzle-tile[data-letter="${letterToReveal}"]`).forEach(t => t.classList.add('revealed'));
                          }
                      };
@@ -6650,12 +6651,13 @@
                         if (isPrizeActive('weekly_bankrupt_protection') || gameState.hasBankruptProtection || isPrizeActive('one_hit_wonder') || isPrizeActive('four_hit_no_bankrupt')) {
                             updateHostMessage("CSŐD! De a védelmed megmentett! Nem vesztettél semmit.", true);
                             if(gameState.hasBankruptProtection) {
+                                // Remove the consumable protection from inventory
                                 let inventory = getPrizeInventory();
                                 const prizeIndex = inventory.findIndex(p => p.id === 'single_round_bankrupt_protection');
                                 if(prizeIndex > -1) {
                                     inventory.splice(prizeIndex, 1);
                                     savePrizeInventory(inventory);
-                                    gameState.hasBankruptProtection = false;
+                                    gameState.hasBankruptProtection = false; // Reset for the next round
                                 }
                             }
                         } else if(isSunday){
@@ -7879,12 +7881,11 @@
                 devModal.classList.remove('visible');
                 launchNyero21(true);
             });
-            devTestSlotMachineBtn.addEventListener('click', () => {
+             devTestSlotMachineBtn.addEventListener('click', () => {
                 if (!gameState) resetGameState(true);
                 devModal.classList.remove('visible');
                 launchSlotMachine(true);
             });
-
             
             wheelCenterButton.addEventListener('click', togglePowerMeter);
             newGameButton.addEventListener('click', () => { newGameButton.disabled = true; location.reload(); });
